@@ -1,12 +1,14 @@
 ﻿using System.Diagnostics;
 using System.ServiceProcess;
 using System.Timers;
+using WindowsFormsAppTest;
 
 namespace WindowsServiceAppTest
 {
     public partial class WebserviceService : ServiceBase
     {
         private int eventId = 1;
+        private string _name = "";
         public WebserviceService()
         {
             InitializeComponent();
@@ -22,7 +24,10 @@ namespace WindowsServiceAppTest
 
         protected override void OnStart(string[] args)
         {
-            eventLog1.WriteEntry("In OnStart.");
+            LogFile logFile = new LogFile();
+            logFile.MakeLogFile("test");
+            logFile.AddTextToLogFile("test");
+
             Timer timer = new Timer();
             timer.Interval = 60000; // 60 seconds
             timer.Elapsed += new ElapsedEventHandler(this.OnTimer);
