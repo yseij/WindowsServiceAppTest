@@ -26,12 +26,12 @@ namespace WindowsServiceAppTest
         {
             LogFile logFile = new LogFile();
             logFile.MakeLogFile("test");
-            logFile.AddTextToLogFile("test");
+            //logFile.AddTextToLogFile("test");
 
-            Timer timer = new Timer();
-            timer.Interval = 60000; // 60 seconds
-            timer.Elapsed += new ElapsedEventHandler(this.OnTimer);
-            timer.Start();
+            //Timer timer = new Timer();
+            //timer.Interval = 60000; // 60 seconds
+            //timer.Elapsed += new ElapsedEventHandler(this.OnTimer);
+            //timer.Start();
         }
 
         protected override void OnStop()
