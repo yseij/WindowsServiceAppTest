@@ -43,7 +43,6 @@ namespace WindowsServiceAppTest
             this.WindowsServiceAppTest.Description = "Windows Webservice Service";
             this.WindowsServiceAppTest.DisplayName = "Webservice Service Tester";
             this.WindowsServiceAppTest.ServiceName = "WindowsServiceAppTest";
-            this.WindowsServiceAppTest.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
             // 
