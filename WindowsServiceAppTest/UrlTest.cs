@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Diagnostics;
 using System.ServiceProcess;
+using System.Security;
 
 namespace WindowsFormsAppTest
 {
@@ -33,16 +34,9 @@ namespace WindowsFormsAppTest
             {
                 cmd.CommandText = "SELECT * FROM Url";
                 cmd.CommandType = CommandType.Text;
-                eventLog.WriteEntry("Hier 2", EventLogEntryType.Information, eventId++);
-                connection.OpenAsync();
-                eventLog.WriteEntry("Hier 2.1", EventLogEntryType.Information, eventId++);
-                //connection.Open();
-                eventLog.WriteEntry("Hier 3", EventLogEntryType.Information, eventId++);
+                connection.Open();
                 rows_returned = sda.Fill(dt);
-                eventLog.WriteEntry("Hier 4", EventLogEntryType.Information, eventId++);
                 connection.Close();
-                eventLog.WriteEntry("Hier 5", EventLogEntryType.Information, eventId++);
-                eventLog.WriteEntry(dt.Rows + "test", EventLogEntryType.Information, eventId++);
 
                 foreach (DataRow dr in dt.Rows)
                 {

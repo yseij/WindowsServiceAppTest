@@ -21,10 +21,12 @@ namespace WindowsServiceAppTest
         UrlTest _urltest;
         WebserviceTest _webserviceTest;
         KlantTest _klantTest;
+        Timer _timer;
 
         public WebserviceService()
         {
             InitializeComponent();
+            _timer = new Timer();
             _webserviceTest = new WebserviceTest();
             _klantTest = new KlantTest();
             _urltest = new UrlTest();
@@ -42,10 +44,9 @@ namespace WindowsServiceAppTest
 
         protected override void OnStart(string[] args)
         {
-            Timer timer = new Timer();
-            timer.Interval = 10000; // 60 seconds
-            timer.Elapsed += new ElapsedEventHandler(this.OnTimer);
-            timer.Start();
+            _timer.Interval = 10000; // 60 seconds
+            _timer.Elapsed += new ElapsedEventHandler(this.OnTimer);
+            _timer.Start();
         }
 
         protected override void OnStop()
@@ -60,45 +61,54 @@ namespace WindowsServiceAppTest
 
         public void OnTimer(object sender, ElapsedEventArgs args)
         {
-            eventLog1.WriteEntry("OnTimer", EventLogEntryType.Information, eventId++);
-            GetUrls();
-            GetWebservices();
-            GetKlanten();
-
-            LogFile logFile = new LogFile();
-            foreach (UrlData urlData in _urlDatas)
+            _timer.Stop();
+            try
             {
-                logFile.AddTextToLogFile(urlData.Name + "\n");
-                _result = JObject.Parse(_webRequest.GetWebRequest(urlData.Id, urlHttp, urlData.Name, urlData.SecurityId));
-                foreach (JProperty item in _result)
+                eventLog1.WriteEntry("OnTimer", EventLogEntryType.Information, eventId++);
+                GetUrls();
+                GetWebservices();
+                GetKlanten();
+
+                LogFile logFile = new LogFile();
+                foreach (UrlData urlData in _urlDatas)
                 {
-                    if (item.Name == "WebServiceDataId")
+                    logFile.AddTextToLogFile(urlData.Name + "\n");
+                    _result = JObject.Parse(_webRequest.GetWebRequest(urlData.Id, urlHttp, urlData.Name, urlData.SecurityId));
+                    foreach (JProperty item in _result)
                     {
-                        foreach (WebServiceData webServiceData in _webServiceDatas)
+                        if (item.Name == "WebServiceDataId")
                         {
-                            if ((int)item.Value == webServiceData.Id)
+                            foreach (WebServiceData webServiceData in _webServiceDatas)
                             {
-                                logFile.AddTextToLogFile("Webservice --> " + webServiceData.Name);
+                                if ((int)item.Value == webServiceData.Id)
+                                {
+                                    logFile.AddTextToLogFile("Webservice --> " + webServiceData.Name);
+                                }
                             }
                         }
-                    }
-                    else if (item.Name == "KlantDataId")
-                    {
-                        foreach (KlantData klantData in _klantenDatas)
+                        else if (item.Name == "KlantDataId")
                         {
-                            if ((int)item.Value == klantData.Id)
+                            foreach (KlantData klantData in _klantenDatas)
                             {
-                                logFile.AddTextToLogFile("Klant --> " + klantData.Name);
+                                if ((int)item.Value == klantData.Id)
+                                {
+                                    logFile.AddTextToLogFile("Klant --> " + klantData.Name);
+                                }
                             }
                         }
-                    }
-                    logFile.AddTextToLogFile("\n");
-                    if (item.Name != "id")
-                    {
-                        logFile.AddTextToLogFile(item.Name + " = " + item.Value.ToString() + "\n");
+                        logFile.AddTextToLogFile("\n");
+                        if (item.Name != "id")
+                        {
+                            logFile.AddTextToLogFile(item.Name + " = " + item.Value.ToString() + "\n");
+                        }
                     }
                 }
             }
+            finally
+            {
+                _timer.Start();
+            }
+            
         }
 
         private void GetUrls()
