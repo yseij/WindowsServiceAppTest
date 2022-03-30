@@ -17,9 +17,9 @@ namespace WindowsFormsAppTest
         public string Time { get; set; }
         public string FilePath { get; set; }
 
-        public void MakeLogFile(string Name)
+        public void MakeLogFile(string Name, string place)
         {
-            FilePath = "d:\\LogFiles\\" + Name + "_op_datum_" + Date + Time + ".txt";
+            FilePath = @"" + place + "\\" + Name + "_op_datum_" + Date + Time + ".txt";
             File.WriteAllText(FilePath, "All Test" + "\n");
             DirectorySecurity sec = Directory.GetAccessControl(FilePath);
             foreach (FileSystemAccessRule acr in sec.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount)))

@@ -30,9 +30,9 @@ namespace WindowsServiceAppTest
             }
         }
 
-        public static void TestMail(string title, string text, string FilePath)
+        public static void TestMail(string title, string text, string FilePath, string aan)
         {
-            string UserEmail = "yseijkens@hotmail.com";
+            string UserEmail = aan;
             // Command-line argument must be the SMTP host.
             SmtpClient client = new SmtpClient("mail.seijkens.be", 587);
             // Specify the email sender.
