@@ -8,7 +8,6 @@ namespace WindowsFormsAppTest
 {
     class LogFile
     {
-        private int eventId = 1;
         public LogFile()
         {
             Date = DateTime.Today.ToString("d").Replace("/", "");
@@ -21,7 +20,7 @@ namespace WindowsFormsAppTest
         public void MakeLogFile(string Name)
         {
             FilePath = "d:\\LogFiles\\" + Name + "_op_datum_" + Date + Time + ".txt";
-            File.WriteAllText(FilePath, "test");
+            File.WriteAllText(FilePath, "All Test" + "\n");
             DirectorySecurity sec = Directory.GetAccessControl(FilePath);
             foreach (FileSystemAccessRule acr in sec.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount)))
             {
@@ -33,7 +32,8 @@ namespace WindowsFormsAppTest
         {
             using (StreamWriter w = File.AppendText(FilePath))
             {
-                w.WriteLine($"  :{title}:");
+                w.WriteLine("----------------------");
+                w.WriteLine(title);
             }
 
             using (StreamReader r = File.OpenText(FilePath))
@@ -46,8 +46,7 @@ namespace WindowsFormsAppTest
         {
             using (StreamWriter w = File.AppendText(FilePath))
             {
-                w.WriteLine($"  :{text}");
-                w.WriteLine("-------------------------------");
+                w.WriteLine(text);
             }
 
             using (StreamReader r = File.OpenText(FilePath))
