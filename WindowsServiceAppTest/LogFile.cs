@@ -32,7 +32,7 @@ namespace WindowsFormsAppTest
         {
             using (StreamWriter w = File.AppendText(FilePath))
             {
-                w.WriteLine("----------------------");
+                w.WriteLine("----------------------" + "\n");
                 w.WriteLine(title);
             }
 

@@ -42,12 +42,10 @@ namespace WindowsServiceAppTest
 
         protected override void OnStop()
         {
-            eventLog1.WriteEntry("In OnStop.");
         }
 
         protected override void OnContinue()
         {
-            eventLog1.WriteEntry("In OnContinue.");
         }
 
         public void OnTimer(object sender, ElapsedEventArgs args)
@@ -63,21 +61,19 @@ namespace WindowsServiceAppTest
                 logFile.MakeLogFile("AllTestDoorService");
                 foreach (UrlData urlData in _urlDatas)
                 {
-                    logFile.AddTitleToLogFile(urlData.Name + "\n");
+                    logFile.AddTitleToLogFile(urlData.Name);
                     foreach (WebServiceData webServiceData in _webServiceDatas)
                     {
                         if (urlData.WebServiceDataId == webServiceData.Id)
                         {
                             logFile.AddTextToLogFile("---");
                             logFile.AddTextToLogFile("Webservice --> " + webServiceData.Name);
-                            logFile.AddTextToLogFile("---");
                         }
                     }
                     foreach (KlantData klantData in _klantenDatas)
                     {
                         if (urlData.KlantDataId == klantData.Id)
                         {
-                            logFile.AddTextToLogFile("---");
                             logFile.AddTextToLogFile("Klant --> " + klantData.Name);
                             logFile.AddTextToLogFile("---");
                         }
@@ -92,10 +88,13 @@ namespace WindowsServiceAppTest
                     }
                 }
             }
-            finally
+            finally 
             {
                 _timer.Start();
-            }
+                _urlDatas.Clear();
+                _webServiceDatas.Clear();
+                _klantenDatas.Clear();
+            }   
         }
 
         private void GetUrls()
