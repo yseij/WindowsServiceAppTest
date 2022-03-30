@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.ServiceProcess;
@@ -13,7 +14,7 @@ namespace WindowsServiceAppTest
         private List<WebServiceData> _webServiceDatas = new List<WebServiceData>();
         private List<KlantData> _klantenDatas = new List<KlantData>();
 
-        private string urlHttp = "https://wsdev.kraan.com/";
+        private string urlHttp = "https://ws.kraan.com:444/";
         private int eventId = 1;
         private dynamic _result;
 
@@ -35,7 +36,7 @@ namespace WindowsServiceAppTest
 
         protected override void OnStart(string[] args)
         {
-            _timer.Interval = 10000; // 60 seconds
+            _timer.Interval = 60000; // 60 seconds
             _timer.Elapsed += new ElapsedEventHandler(this.OnTimer);
             _timer.Start();
         }
@@ -51,6 +52,7 @@ namespace WindowsServiceAppTest
         public void OnTimer(object sender, ElapsedEventArgs args)
         {
             _timer.Stop();
+            string text = "";
             try
             {
                 GetUrls();
@@ -85,7 +87,15 @@ namespace WindowsServiceAppTest
                         {
                             logFile.AddTextToLogFile(item.Name + " = " + item.Value.ToString());
                         }
+                        if (item.Name == "ex")
+                        {
+                            text += urlData.Name + " --> " + item.Value.ToString() + Environment.NewLine;
+                        }
                     }
+                }
+                if (text != "")
+                {
+                    MailClient.TestMail("TestAll", text, logFile.FilePath);
                 }
             }
             finally 

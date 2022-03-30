@@ -81,6 +81,7 @@
     <Compile Include="KlantData.cs" />
     <Compile Include="KlantTest.cs" />
     <Compile Include="LogFile.cs" />
+    <Compile Include="MailClient.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
