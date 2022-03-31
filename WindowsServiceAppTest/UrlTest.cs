@@ -26,6 +26,7 @@ namespace WindowsFormsAppTest
 
         public List<UrlData> GetUrls(EventLog eventLog)
         {
+            eventLog.WriteEntry("GetUrls", EventLogEntryType.Information, eventId++);
             DataTable dt = new DataTable();
             int rows_returned;
             using (SqlConnection connection = new SqlConnection(ConnectieDB))
