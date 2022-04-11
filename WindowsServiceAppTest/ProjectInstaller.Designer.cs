@@ -30,30 +30,30 @@ namespace WindowsServiceAppTest
         private void InitializeComponent()
         {
             this.serviceProcessInstaller1 = new System.ServiceProcess.ServiceProcessInstaller();
-            this.WindowsServiceAppTest = new System.ServiceProcess.ServiceInstaller();
+            this.KraanWindowsServiceAppTest = new System.ServiceProcess.ServiceInstaller();
             // 
             // serviceProcessInstaller1
             // 
             this.serviceProcessInstaller1.Password = null;
             this.serviceProcessInstaller1.Username = null;
             // 
-            // WindowsServiceAppTest
+            // KraanWindowsServiceAppTest
             // 
-            this.WindowsServiceAppTest.Description = "Windows Webservice Service";
-            this.WindowsServiceAppTest.DisplayName = "Webservice Service Tester";
-            this.WindowsServiceAppTest.ServiceName = "WindowsServiceAppTest";
+            this.KraanWindowsServiceAppTest.Description = "KraanWindowsServiceAppTest";
+            this.KraanWindowsServiceAppTest.DisplayName = "KraanWindowsServiceAppTest";
+            this.KraanWindowsServiceAppTest.ServiceName = "KraanWindowsServiceAppTest";
             // 
             // ProjectInstaller
             // 
             this.Installers.AddRange(new System.Configuration.Install.Installer[] {
             this.serviceProcessInstaller1,
-            this.WindowsServiceAppTest});
+            this.KraanWindowsServiceAppTest});
 
         }
 
         #endregion
 
         private System.ServiceProcess.ServiceProcessInstaller serviceProcessInstaller1;
-        private System.ServiceProcess.ServiceInstaller WindowsServiceAppTest;
+        private System.ServiceProcess.ServiceInstaller KraanWindowsServiceAppTest;
     }
 }
