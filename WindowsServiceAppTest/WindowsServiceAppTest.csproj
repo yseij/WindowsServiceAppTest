@@ -137,8 +137,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebserviceTest.cs" />
     <Compile Include="KrXmlData.cs" />
+    <Compile Include="WebserviceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -414,18 +414,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\YouriWebserviceMaterieel\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\YouriWebserviceMaterieel\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\YouriWebserviceMaterieel\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Connected Services\YouriWebserviceUren\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -445,6 +433,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\YouriWebserviceWorkFlow\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\YouriWebserviceMaterieel\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\YouriWebserviceMaterieel\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\YouriWebserviceMaterieel\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

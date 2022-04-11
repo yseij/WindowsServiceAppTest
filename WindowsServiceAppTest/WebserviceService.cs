@@ -32,16 +32,6 @@ namespace WindowsServiceAppTest
         {
 
             InitializeComponent();
-            eventLog1 = new EventLog();
-            if (!EventLog.SourceExists("MySource"))
-            {
-                EventLog.CreateEventSource(
-                    "MySource", "MyNewLog");
-            }
-            eventLog1.Source = "MySource";
-            eventLog1.Log = "MyNewLog";
-            eventLog1.WriteEntry("inWebservice", EventLogEntryType.Information, eventId++);
-
             _timer = new Timer();
             _httptest = new HttpTest();
             _webserviceTest = new WebserviceTest();
@@ -53,7 +43,6 @@ namespace WindowsServiceAppTest
 
         protected override void OnStart(string[] args)
         {
-            eventLog1.WriteEntry("OnStart", EventLogEntryType.Information, eventId++);
             _krXmlData = _krXml.GetDataOfXmlFile();
             _timer.Interval = _krXmlData.TijdService;
             _timer.Elapsed += new ElapsedEventHandler(this.OnTimer);
@@ -62,17 +51,14 @@ namespace WindowsServiceAppTest
 
         protected override void OnStop()
         {
-            eventLog1.WriteEntry("In OnStop.");
         }
 
         protected override void OnContinue()
         {
-            eventLog1.WriteEntry("In OnContinue.");
         }
 
         public void OnTimer(object sender, ElapsedEventArgs args)
         {
-            eventLog1.WriteEntry("OnTimer", EventLogEntryType.Information, eventId++);
             _timer.Stop();
             _krXmlData = _krXml.GetDataOfXmlFile();
             _timer.Interval = _krXmlData.TijdService;
@@ -124,27 +110,26 @@ namespace WindowsServiceAppTest
                         }
                         if (isSoap && urlData.Name.EndsWith(".svc"))
                         {
-                            //if (urlData.Name == "MessageServiceSoap31.svc")
-                            //{
-                            //    var m = new Sales31CredentialsForm();
-                            //    m.TopMost = true;
-                            //    m.ShowDialog();
-                            //    MaterialMaskedTextBox userName = m._usernameTxtBx;
-                            //    MaterialMaskedTextBox password = m._passwordTxtBx;
-                            //    _result = _webRequest.Get31SalesData(_httpName + _webserviceName, userName, password, ResponseTextBox);
-                            //}
+                            if (urlData.Name == "MessageServiceSoap31.svc")
+                            {
+                                string data = @"{ ex: '" + "Deze service heeft een inlog nodig dus die moet je appart testen" + "'}";
+                                _result = JObject.Parse(data);
+                            }
                             else if (urlData.Name == "MessageServiceSoap.svc")
                             {
-                                _result = _webRequest.Get24SalesData(_httpName + _webserviceName, ResponseTextBox);
-
+                                _result = _webRequest.Get24SalesData(urlHttp + webserviceName);
                             }
                             else
                             {
-                                string data = _webRequest.GetWebRequestSoap(_httpName, _webserviceName, urlData.Name);
+                                string data = _webRequest.GetWebRequestSoap(urlHttp, webserviceName, urlData.Name);
                                 _result = JObject.Parse(data);
                             }
                         }
-                        _result = JObject.Parse(_webRequest.GetWebRequest(urlData.Id, urlHttp, webserviceName, urlData.Name, urlData.SecurityId));
+                        else
+                        {
+                            _result = JObject.Parse(_webRequest.GetWebRequest(urlData.Id, urlHttp, webserviceName, urlData.Name, urlData.SecurityId));
+                        }
+                        
                         foreach (JProperty item in _result)
                         {
                             if (item.Name != "id")
@@ -174,13 +159,12 @@ namespace WindowsServiceAppTest
 
         private void GetUrls()
         {
-            eventLog1.WriteEntry("GetUrls", EventLogEntryType.Information, eventId++);
             _urlDatas = _urltest.GetUrls(eventLog1);
         }
 
         private void GetWebservices()
         {
-            _webServiceDatas = _webserviceTest.GetWebServiceDatas(true);
+            _webServiceDatas = _webserviceTest.GetWebServiceData();
         }
 
         private void GetKlanten()

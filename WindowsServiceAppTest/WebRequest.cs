@@ -1,10 +1,15 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.Xml;
 
-namespace WindowsFormsAppTest
+namespace WindowsServiceAppTest
 {
     class WebRequest
     {
@@ -75,7 +80,7 @@ namespace WindowsFormsAppTest
                                 return "{" + data + ", id: '" + id + "', certVerValDatum: '" + cert.GetExpirationDateString().ToString() + "'}";
                             }
                             return "{" + data + ", id: '" + id + "'}";
-                            
+
                         }
                         return null;
                     }
@@ -115,7 +120,7 @@ namespace WindowsFormsAppTest
             YouriWebserviceCrm.CrmServiceClient clientCrm;
             YouriWebserviceWorkFlow.WorkflowServiceClient clientWorkflow;
             YouriWebserviceUren.UrenServiceClient clientUren;
-            YouriWebserviceMaterieel.MaterieelServiceClient clientMaterieel;
+            //YouriWebserviceMaterieel.Ma clientMaterieel;
             //YouriWebserviceWeb.WebServiceClient clientWeb;
 
             switch (service)
@@ -144,12 +149,12 @@ namespace WindowsFormsAppTest
                     result = clientUren.GetVersion();
                     clientUren.Close();
                     break;
-                case "MaterieelService.svc":
-                    clientMaterieel = NewMateriaalService(host);
-                    clientMaterieel.Open();
-                    result = clientMaterieel.GetVersion();
-                    clientMaterieel.Close();
-                    break;
+                //case "MaterieelService.svc":
+                //    clientMaterieel = NewMateriaalService(host);
+                //    clientMaterieel.Open();
+                //    result = clientMaterieel.GetVersion();
+                //    clientMaterieel.Close();
+                //    break;
                 //case "Webservice.svc":
                 //    clientMaterieel = NewWebSerivce(host);
                 //    clientMaterieel.Open();
@@ -179,13 +184,13 @@ namespace WindowsFormsAppTest
             return new YouriWebserviceCrm.CrmServiceClient(binding, epa);
         }
 
-        private YouriWebserviceMaterieel.MaterieelServiceClient NewMateriaalService(string host)
-        {
-            BasicHttpBinding binding = CreateBinding("MaterieelService");
-            EndpointAddress epa = CreateEndpointAddress(host, "MaterieelService.svc");
+        //private YouriWebserviceMaterieel.MaterieelServiceClient NewMateriaalService(string host)
+        //{
+        //    BasicHttpBinding binding = CreateBinding("MaterieelService");
+        //    EndpointAddress epa = CreateEndpointAddress(host, "MaterieelService.svc");
 
-            return new YouriWebserviceMaterieel.MaterieelServiceClient(binding, epa);
-        }
+        //    return new YouriWebserviceMaterieel.MaterieelServiceClient(binding, epa);
+        //}
 
         private YouriWebserviceUren.UrenServiceClient NewUrenService(string host)
         {
@@ -259,100 +264,67 @@ namespace WindowsFormsAppTest
             return epa;
         }
 
-        public dynamic Get24SalesData(string host, MaterialMultiLineTextBox2 responseTextbox = null)
+        public dynamic Get24SalesData(string host)
         {
             using (Sales24.MessageServiceSoapClient client = NewSales24Client(host))
             {
                 string testResultaat = "Geen verbinding mogelijk.";
-                try
+                client.Open();
+                Sales24.MessageServiceMessage message = new Sales24.MessageServiceMessage();
+                message.MsgType = "CST_KRAAN_VERSION";
+                bool succes = client.PostMessage(null, null, ref message);
+
+                testResultaat = "Er is een beveiligde verbinding gemaakt met de Sales Messageservice ..." + Environment.NewLine;
+                //testResultaat += "\r\nURL: " + CreateEndpointAddress(host, "messageservicesoap.svc").Uri + Environment.NewLine;
+                testResultaat += "\r\nURL: " + CreateEndpointAddress(host).Uri + Environment.NewLine;
+                testResultaat = testResultaat + message.Text[0];
+                if (message != null)
                 {
-                    client.Open();
-                    Sales24.MessageServiceMessage message = new Sales24.MessageServiceMessage();
-                    message.MsgType = "CST_KRAAN_VERSION";
-                    bool succes = client.PostMessage(null, null, ref message);
-
-                    testResultaat = "Er is een beveiligde verbinding gemaakt met de Sales Messageservice ..." + Environment.NewLine;
-                    //testResultaat += "\r\nURL: " + CreateEndpointAddress(host, "messageservicesoap.svc").Uri + Environment.NewLine;
-                    testResultaat += "\r\nURL: " + CreateEndpointAddress(host).Uri + Environment.NewLine;
-                    testResultaat = testResultaat + message.Text[0];
-
                     var data = "{\"" + message.Text[0]
-                        .Replace("\r\n", "\",\"")
-                        .Replace(": ", "\": \"")
-                        .Replace(@"\", " ")
-                        .Replace("Versie\": \"", "Versie: ") + "\"}";
+                    .Replace("\r\n", "\",\"")
+                    .Replace(": ", "\": \"")
+                    .Replace(@"\", " ")
+                    .Replace("Versie\": \"", "Versie: ") + "\"}";
 
                     client.Close();
                     return JObject.Parse(data);
-                }
-                catch (Exception ex)
-                {
-                    responseTextbox.Text = "Fout bij verbinden met server van http Sales 2.4 , melding: " + Environment.NewLine + ex.Message;
                 }
                 return null;
             }
         }
 
-        public dynamic Get31SalesData(string host, MaterialMaskedTextBox TxtBxUsername, MaterialMaskedTextBox TxtBxPassword, MaterialMultiLineTextBox2 responseTextbox = null)
+        public dynamic Get31SalesData(string host, string TxtBxUsername, string TxtBxPassword)
         {
             using (Sales31.MessageServiceSoapClient client = NewSales31Client(host))
             {
                 string testResultaat = "Geen beveiligde verbinding mogelijk.\r\n";
-                if (TxtBxUsername.Text.Trim() == "" || TxtBxPassword.Text.Trim() == "")
-                {
-                    responseTextbox.Text = "gebruikersnaam of wachtwoord is niet ingevuld.";
-                    return null;
-                }
-                client.ClientCredentials.UserName.UserName = TxtBxUsername.Text.Trim();
-                client.ClientCredentials.UserName.Password = TxtBxPassword.Text.Trim();
-                try
-                {
-                    client.Open();
-                    Sales31.MessageType message = new Sales31.MessageType();
-                    message.MsgProperties = new Sales31.MessagePropertiesType();
-                    message.MsgProperties.MsgType = "CST_KRAAN_VERSION";
+                client.ClientCredentials.UserName.UserName = TxtBxUsername.Trim();
+                client.ClientCredentials.UserName.Password = TxtBxPassword.Trim();
+                client.Open();
+                Sales31.MessageType message = new Sales31.MessageType();
+                message.MsgProperties = new Sales31.MessagePropertiesType();
+                message.MsgProperties.MsgType = "CST_KRAAN_VERSION";
 
-                    Sales31.MessageResponseType antwoord = client.PostMessage(null, message);
-                    if (antwoord.Message.MsgContent != null)
-                    {
-                        testResultaat = "Er is een beveiligde verbinding gemaakt met de Sales Messageservice ..." + Environment.NewLine;
-                        testResultaat += "\r\nURL: " + CreateEndpointAddress(host, "messageservicesoap31.svc").Uri;
-                        testResultaat = testResultaat + antwoord.Message.MsgContent;
-                        testResultaat = antwoord.Message.MsgContent;
+                Sales31.MessageResponseType antwoord = client.PostMessage(null, message);
+                if (antwoord.Message.MsgContent != null)
+                {
+                    testResultaat = "Er is een beveiligde verbinding gemaakt met de Sales Messageservice ..." + Environment.NewLine;
+                    testResultaat += "\r\nURL: " + CreateEndpointAddress(host, "messageservicesoap31.svc").Uri;
+                    testResultaat = testResultaat + antwoord.Message.MsgContent;
+                    testResultaat = antwoord.Message.MsgContent;
 
-                        var data = "{\""
-                            + antwoord.Message.MsgContent.Trim()
-                            .Replace("\r\n", "\", \"")
-                            .Replace(": ", "\": \"")
-                            .Replace(@"\", " ")
-                            .Replace("application\": \"", "application: ")
-                            .Replace("Versie\": \"", "Versie: ")
-                            + "\"}";
-                        client.Close();
-                        return JObject.Parse(data);
-                    }
+                    var data = "{\""
+                        + antwoord.Message.MsgContent.Trim()
+                        .Replace("\r\n", "\", \"")
+                        .Replace(": ", "\": \"")
+                        .Replace(@"\", " ")
+                        .Replace("application\": \"", "application: ")
+                        .Replace("Versie\": \"", "Versie: ")
+                        + "\"}";
                     client.Close();
+                    return JObject.Parse(data);
                 }
-                catch (FaultException fex)
-                {
-                    var msgFault = fex.CreateMessageFault();
-                    if (msgFault.HasDetail)
-                    {
-                        var detailNode = msgFault.GetDetail<XmlElement>();
-                        responseTextbox.Text += "Fout bij beveiligd verbinden met Sales 3.1. \r\nFoutcode " + detailNode.GetElementsByTagName("ErrorCode", detailNode.NamespaceURI)[0].InnerText + " : " + detailNode.GetElementsByTagName("Message", detailNode.NamespaceURI)[0].InnerText;
-                    }
-                    else
-                    {
-                        if (fex.Code.Name == "Server" && fex.Message == "Server error")
-                        {
-                            responseTextbox.Text += "Fout bij beveiligd verbinden met Sales 3.1. Credentials incorrect.";
-                        }
-                        else
-                        {
-                            responseTextbox.Text += "Fout bij beveiligd verbinden met Sales 3.1. \r\nFoutmelding: " + fex.Message;
-                        }
-                    }
-                }
+                client.Close();
                 return null;
             }
         }
