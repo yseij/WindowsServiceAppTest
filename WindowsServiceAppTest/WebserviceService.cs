@@ -30,7 +30,18 @@ namespace WindowsServiceAppTest
 
         public WebserviceService()
         {
+
             InitializeComponent();
+            eventLog1 = new EventLog();
+            if (!EventLog.SourceExists("MySource"))
+            {
+                EventLog.CreateEventSource(
+                    "MySource", "MyNewLog");
+            }
+            eventLog1.Source = "MySource";
+            eventLog1.Log = "MyNewLog";
+            eventLog1.WriteEntry("inWebservice", EventLogEntryType.Information, eventId++);
+
             _timer = new Timer();
             _httptest = new HttpTest();
             _webserviceTest = new WebserviceTest();
@@ -42,6 +53,7 @@ namespace WindowsServiceAppTest
 
         protected override void OnStart(string[] args)
         {
+            eventLog1.WriteEntry("OnStart", EventLogEntryType.Information, eventId++);
             _krXmlData = _krXml.GetDataOfXmlFile();
             _timer.Interval = _krXmlData.TijdService;
             _timer.Elapsed += new ElapsedEventHandler(this.OnTimer);
@@ -50,14 +62,17 @@ namespace WindowsServiceAppTest
 
         protected override void OnStop()
         {
+            eventLog1.WriteEntry("In OnStop.");
         }
 
         protected override void OnContinue()
         {
+            eventLog1.WriteEntry("In OnContinue.");
         }
 
         public void OnTimer(object sender, ElapsedEventArgs args)
         {
+            eventLog1.WriteEntry("OnTimer", EventLogEntryType.Information, eventId++);
             _timer.Stop();
             _krXmlData = _krXml.GetDataOfXmlFile();
             _timer.Interval = _krXmlData.TijdService;
@@ -159,6 +174,7 @@ namespace WindowsServiceAppTest
 
         private void GetUrls()
         {
+            eventLog1.WriteEntry("GetUrls", EventLogEntryType.Information, eventId++);
             _urlDatas = _urltest.GetUrls(eventLog1);
         }
 
