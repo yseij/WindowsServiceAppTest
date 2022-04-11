@@ -1,0 +1,453 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AAFFFEFF-C196-4768-9730-10F5D394F537}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>WindowsServiceAppTest</RootNamespace>
+    <AssemblyName>WindowsServiceAppTest</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>WindowsServiceAppTest.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Connected Services\Sales24\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\Sales31\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\YouriWebserviceCrm\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\YouriWebserviceMaterieel\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\YouriWebserviceUren\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\YouriWebserviceWorkFlow\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="HttpData.cs" />
+    <Compile Include="HttpTest.cs" />
+    <Compile Include="KlantData.cs" />
+    <Compile Include="KlantTest.cs" />
+    <Compile Include="KrXml.cs" />
+    <Compile Include="LogFile.cs" />
+    <Compile Include="MailClient.cs" />
+    <Compile Include="ProjectInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProjectInstaller.Designer.cs">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UrlData.cs" />
+    <Compile Include="UrlTest.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebRequest.cs" />
+    <Compile Include="WebServiceData.cs" />
+    <Compile Include="WebserviceService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebserviceService.Designer.cs">
+      <DependentUpon>WebserviceService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebserviceTest.cs" />
+    <Compile Include="KrXmlData.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Connected Services\Sales24\messageservice.wsdl" />
+    <None Include="Connected Services\Sales24\WindowsServiceAppTest.Sales24.DeleteMessageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Sales24\WindowsServiceAppTest.Sales24.GetAvailableMessagesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Sales24\WindowsServiceAppTest.Sales24.GetMessageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Sales24\WindowsServiceAppTest.Sales24.MessageServiceAvailableMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Sales24\WindowsServiceAppTest.Sales24.MessageServiceMessage.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Sales24\WindowsServiceAppTest.Sales24.PostMessageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Sales31\MessageServiceTypes_MessageService31.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\Sales31\Messageservice_messageservice31.wsdl" />
+    <None Include="Connected Services\Sales31\WindowsServiceAppTest.Sales31.DeleteMessageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Sales31\WindowsServiceAppTest.Sales31.GetAvailableMessagesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Sales31\WindowsServiceAppTest.Sales31.GetMessageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Sales31\WindowsServiceAppTest.Sales31.MessagePropertiesType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Sales31\WindowsServiceAppTest.Sales31.MessageRequestResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Sales31\WindowsServiceAppTest.Sales31.MessageResponseType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceCrm\CrmService.wsdl" />
+    <None Include="Connected Services\YouriWebserviceCrm\CrmService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceCrm\CrmService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceCrm\CrmService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceCrm\CrmService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceCrm\CrmService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceCrm\CrmService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceCrm\WindowsServiceAppTest.YouriWebserviceCrm.LoginRegistratie.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceCrm\WindowsServiceAppTest.YouriWebserviceCrm.RelatieLijstModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceCrm\WindowsServiceAppTest.YouriWebserviceCrm.RelatieSingleModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceMaterieel\MaterieelService.wsdl" />
+    <None Include="Connected Services\YouriWebserviceMaterieel\MaterieelService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceMaterieel\MaterieelService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceMaterieel\MaterieelService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceMaterieel\MaterieelService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceMaterieel\MaterieelService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceMaterieel\MaterieelService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceMaterieel\MaterieelService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceMaterieel\MaterieelService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\UrenService.wsdl" />
+    <None Include="Connected Services\YouriWebserviceUren\UrenService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\UrenService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\UrenService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\UrenService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\UrenService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\UrenService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.BewakingsCodeLijst.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.KostenSoortLijst.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.LoginRegistratie.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.ProductieMiddelLijst.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.ProjectenLijst.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.ResponseDefaultKmCodes.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.ResponseDefaultUrenCodes.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.ResponseMeegeredenKilometers.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.ResponseRemoveDocuments.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.ResponseSaveKilometers.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.ResponseSaveUren.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.ResponseSaveUrenDefaults.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.ResponseSaveUrenProject.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.ResponseUploadDocument.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.UrenBasisGegevens.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.UrenSoortLijst.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.VerwerkProcesStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceUren\WindowsServiceAppTest.YouriWebserviceUren.WerkbonLijst.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceWorkFlow\WindowsServiceAppTest.YouriWebserviceWorkFlow.GevondenMedewerkers.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceWorkFlow\WindowsServiceAppTest.YouriWebserviceWorkFlow.LoginRegistratie.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceWorkFlow\WindowsServiceAppTest.YouriWebserviceWorkFlow.VerwerkProcesStatus.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceWorkFlow\WindowsServiceAppTest.YouriWebserviceWorkFlow.WorkflowModel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\YouriWebserviceWorkFlow\WorkflowService.wsdl" />
+    <None Include="Connected Services\YouriWebserviceWorkFlow\WorkflowService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceWorkFlow\WorkflowService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceWorkFlow\WorkflowService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceWorkFlow\WorkflowService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceWorkFlow\WorkflowService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceWorkFlow\WorkflowService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\YouriWebserviceWorkFlow\WorkflowService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ProjectInstaller.resx">
+      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WebserviceService.resx">
+      <DependentUpon>WebserviceService.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\Sales24\" />
+    <WCFMetadataStorage Include="Connected Services\Sales31\" />
+    <WCFMetadataStorage Include="Connected Services\YouriWebserviceCrm\" />
+    <WCFMetadataStorage Include="Connected Services\YouriWebserviceMaterieel\" />
+    <WCFMetadataStorage Include="Connected Services\YouriWebserviceUren\" />
+    <WCFMetadataStorage Include="Connected Services\YouriWebserviceWorkFlow\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Sales24\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Sales24\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Sales24\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Sales31\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Sales31\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\Sales31\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\YouriWebserviceCrm\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\YouriWebserviceCrm\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\YouriWebserviceCrm\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\YouriWebserviceMaterieel\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\YouriWebserviceMaterieel\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\YouriWebserviceMaterieel\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\YouriWebserviceUren\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\YouriWebserviceUren\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\YouriWebserviceUren\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\YouriWebserviceWorkFlow\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\YouriWebserviceWorkFlow\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\YouriWebserviceWorkFlow\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

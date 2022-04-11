@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WorkflowService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="BasicHttpsBinding_IWorkflowService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="https://wsdev.kraan.com/Rasenprod/WorkflowService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="https://wsdev.kraan.com/Rasenprod/WorkflowService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="https://wsdev.kraan.com/Rasenprod/WorkflowService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" />
+      <xsd:import schemaLocation="https://wsdev.kraan.com/Rasenprod/WorkflowService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="https://wsdev.kraan.com/Rasenprod/WorkflowService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" />
+      <xsd:import schemaLocation="https://wsdev.kraan.com/Rasenprod/WorkflowService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Kraan.Model.Probis.Processen" />
+      <xsd:import schemaLocation="https://wsdev.kraan.com/Rasenprod/WorkflowService.svc?xsd=xsd6" namespace="http://schemas.microsoft.com/Message" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IWorkflowService_GetVersion_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetVersion" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_GetVersion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_RegisterUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUser" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_RegisterUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_UnRegisterUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnRegisterUser" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_UnRegisterUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnRegisterUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_CheckLogin_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckLogin" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_CheckLogin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_DownloadLogFiles_InputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadLogFiles" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_DownloadLogFiles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadLogFilesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_SaveException_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveException" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_SaveException_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveExceptionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_GetFullData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFullData" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_GetFullData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFullDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_GetFileStream_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFileStream" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_GetFileStream_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFileStreamResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_ProcesStapVerwerken_InputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesStapVerwerken" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_ProcesStapVerwerken_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProcesStapVerwerkenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_GetMedewerkers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMedewerkers" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_GetMedewerkers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMedewerkersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_RegistreerKeuzeVoorPushNotificatie_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistreerKeuzeVoorPushNotificatie" />
+  </wsdl:message>
+  <wsdl:message name="IWorkflowService_RegistreerKeuzeVoorPushNotificatie_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistreerKeuzeVoorPushNotificatieResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IWorkflowService">
+    <wsdl:operation name="GetVersion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthWebservice/GetVersion" message="tns:IWorkflowService_GetVersion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthWebservice/GetVersionResponse" message="tns:IWorkflowService_GetVersion_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthWebservice/RegisterUser" message="tns:IWorkflowService_RegisterUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthWebservice/RegisterUserResponse" message="tns:IWorkflowService_RegisterUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnRegisterUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthWebservice/UnRegisterUser" message="tns:IWorkflowService_UnRegisterUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthWebservice/UnRegisterUserResponse" message="tns:IWorkflowService_UnRegisterUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckLogin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthWebservice/CheckLogin" message="tns:IWorkflowService_CheckLogin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthWebservice/CheckLoginResponse" message="tns:IWorkflowService_CheckLogin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DownloadLogFiles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthWebservice/DownloadLogFiles" message="tns:IWorkflowService_DownloadLogFiles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthWebservice/DownloadLogFilesResponse" message="tns:IWorkflowService_DownloadLogFiles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveException">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthWebservice/SaveException" message="tns:IWorkflowService_SaveException_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthWebservice/SaveExceptionResponse" message="tns:IWorkflowService_SaveException_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFullData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWorkflowService/GetFullData" message="tns:IWorkflowService_GetFullData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWorkflowService/GetFullDataResponse" message="tns:IWorkflowService_GetFullData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFileStream">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWorkflowService/GetFileStream" message="tns:IWorkflowService_GetFileStream_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWorkflowService/GetFileStreamResponse" message="tns:IWorkflowService_GetFileStream_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ProcesStapVerwerken">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWorkflowService/ProcesStapVerwerken" message="tns:IWorkflowService_ProcesStapVerwerken_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWorkflowService/ProcesStapVerwerkenResponse" message="tns:IWorkflowService_ProcesStapVerwerken_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMedewerkers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWorkflowService/GetMedewerkers" message="tns:IWorkflowService_GetMedewerkers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWorkflowService/GetMedewerkersResponse" message="tns:IWorkflowService_GetMedewerkers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistreerKeuzeVoorPushNotificatie">
+      <wsdl:input wsaw:Action="http://tempuri.org/IWorkflowService/RegistreerKeuzeVoorPushNotificatie" message="tns:IWorkflowService_RegistreerKeuzeVoorPushNotificatie_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IWorkflowService/RegistreerKeuzeVoorPushNotificatieResponse" message="tns:IWorkflowService_RegistreerKeuzeVoorPushNotificatie_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpsBinding_IWorkflowService" type="tns:IWorkflowService">
+    <wsp:PolicyReference URI="#BasicHttpsBinding_IWorkflowService_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetVersion">
+      <soap:operation soapAction="http://tempuri.org/IAuthWebservice/GetVersion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <soap:operation soapAction="http://tempuri.org/IAuthWebservice/RegisterUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnRegisterUser">
+      <soap:operation soapAction="http://tempuri.org/IAuthWebservice/UnRegisterUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckLogin">
+      <soap:operation soapAction="http://tempuri.org/IAuthWebservice/CheckLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadLogFiles">
+      <soap:operation soapAction="http://tempuri.org/IAuthWebservice/DownloadLogFiles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveException">
+      <soap:operation soapAction="http://tempuri.org/IAuthWebservice/SaveException" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFullData">
+      <soap:operation soapAction="http://tempuri.org/IWorkflowService/GetFullData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFileStream">
+      <soap:operation soapAction="http://tempuri.org/IWorkflowService/GetFileStream" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ProcesStapVerwerken">
+      <soap:operation soapAction="http://tempuri.org/IWorkflowService/ProcesStapVerwerken" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMedewerkers">
+      <soap:operation soapAction="http://tempuri.org/IWorkflowService/GetMedewerkers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegistreerKeuzeVoorPushNotificatie">
+      <soap:operation soapAction="http://tempuri.org/IWorkflowService/RegistreerKeuzeVoorPushNotificatie" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WorkflowService">
+    <wsdl:port name="BasicHttpsBinding_IWorkflowService" binding="tns:BasicHttpsBinding_IWorkflowService">
+      <soap:address location="https://wsdev.kraan.com/Rasenprod/WorkflowService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

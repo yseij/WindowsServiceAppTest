@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="https://www.ketenstandaard.nl/WS/MessageService/3.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" targetNamespace="https://www.ketenstandaard.nl/WS/MessageService/3.1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="UP_policy">
+    <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+      <wsp:Policy>
+        <sp:TransportToken>
+          <wsp:Policy>
+            <sp:HttpsToken RequireClientCertificate="false" />
+          </wsp:Policy>
+        </sp:TransportToken>
+        <sp:AlgorithmSuite>
+          <wsp:Policy>
+            <sp:Basic256 />
+          </wsp:Policy>
+        </sp:AlgorithmSuite>
+        <sp:Layout>
+          <wsp:Policy>
+            <sp:Lax />
+          </wsp:Policy>
+        </sp:Layout>
+        <sp:IncludeTimestamp />
+      </wsp:Policy>
+    </sp:TransportBinding>
+    <sp:SignedSupportingTokens>
+      <wsp:Policy>
+        <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+          <wsp:Policy>
+            <sp:WssUsernameToken10 />
+          </wsp:Policy>
+        </sp:UsernameToken>
+      </wsp:Policy>
+    </sp:SignedSupportingTokens>
+    <sp:Wss10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+      <wsp:Policy />
+    </sp:Wss10>
+  </wsp:Policy>
+  <wsdl:import namespace="https://www.ketenstandaard.nl/WS/MessageService/3.1" location="MessageServiceTypes_MessageService31.xsd" />
+  <wsdl:types />
+  <wsdl:message name="AvailableMessagesSoapRequest">
+    <wsdl:part name="AvailableMessagesRequest" element="tns:AvailableMessagesRequest" />
+  </wsdl:message>
+  <wsdl:message name="AvailableMessagesSoapResponse">
+    <wsdl:part name="AvailableMessagesResponse" element="tns:AvailableMessagesResponse" />
+  </wsdl:message>
+  <wsdl:message name="MessageRequestSoapGetRequest">
+    <wsdl:part name="MessageRequest" element="tns:MessageRequest" />
+  </wsdl:message>
+  <wsdl:message name="MessageRequestSoapDeleteRequest">
+    <wsdl:part name="MessageRequest" element="tns:MessageRequest" />
+  </wsdl:message>
+  <wsdl:message name="MessageRequestSoapResponse">
+    <wsdl:part name="MessageResponse" element="tns:MessageRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="MessageSoapRequest">
+    <wsdl:part name="Message" element="tns:Message" />
+  </wsdl:message>
+  <wsdl:message name="MessageSoapResponse">
+    <wsdl:part name="MessageResponse" element="tns:MessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="MessageCustomInfo">
+    <wsdl:part name="CustomInfo" element="tns:CustomInfo" />
+  </wsdl:message>
+  <wsdl:portType name="MessageServiceSoap">
+    <wsdl:operation name="GetAvailableMessages">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Geeft een lijst terug
+				van alle berichten van het opgeven msgtype. Indien geen msgtype wordt meegeven
+				dienen alle berichten (ongeacht berichttype) teruggegeven te worden. De return value
+				van de functie is een array met messageserviceavailablemessage
+				elementen.</wsdl:documentation>
+      <wsdl:input message="tns:AvailableMessagesSoapRequest" />
+      <wsdl:output message="tns:AvailableMessagesSoapResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMessage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deze functie wordt
+				aangeroepen met een msgid van het bericht dat men wil ophalen. Je kunt per aanroep
+				dus maximaal 1 message opvragen. De functie geeft een message element terug met
+				daarin het bericht. msgcontent is een string waarin het bericht kan worden
+				opgenomen. Als de berichten XML berichten zijn dan dienen de berichten (zonder SOAP
+				envelop, de webservice aanroep is immers al een soap envelop) in zijn geheel in de
+				msgcontent geplaatst te worden waarbij het bericht xml encoded (i.e. &lt;) is met UTF-8 character encoding. ASCII
+				berichten of andere (binaire) content kan als BASE64 string worden opgenomen. Aan de
+				hand van het msgtype en msgversionid moet de klant het bericht kunnen
+				verwerken.</wsdl:documentation>
+      <wsdl:input message="tns:MessageRequestSoapGetRequest" />
+      <wsdl:output message="tns:MessageRequestSoapResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMessage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">De functie wordt
+				aangeroepen met het msgid dat moet worden verwijderd. Je kunt per aanroep dus
+				maximaal 1 message verwijderen. Deze functie moet worden aangeroepen nadat een
+				bericht is opgehaald via de 'GetMessage' functie ongeacht of het bericht ook
+				succesvol kan worden verwerkt.</wsdl:documentation>
+      <wsdl:input message="tns:MessageRequestSoapDeleteRequest" />
+      <wsdl:output message="tns:MessageSoapResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="PostMessage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Biedt een bericht aan
+				dat door de webservice moet worden opgeslagen en verwerkt. Msgid moet door de klant
+				voorzien worden van een uniek ID. Hierdoor kan de leverancier controleren of
+				betreffende bericht al eens eerder is aangeleverd. Bij deze functie is het
+				msgcontent element verplicht.</wsdl:documentation>
+      <wsdl:input message="tns:MessageSoapRequest" />
+      <wsdl:output message="tns:MessageSoapResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MessageServiceSoapBinding" type="tns:MessageServiceSoap">
+    <wsp:PolicyReference URI="#UP_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAvailableMessages">
+      <soap:operation soapAction="messageservice/GetAvailableMessages" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:MessageCustomInfo" part="CustomInfo" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessage">
+      <soap:operation soapAction="messageservice/GetMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:MessageCustomInfo" part="CustomInfo" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMessage">
+      <soap:operation soapAction="messageservice/DeleteMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:MessageCustomInfo" part="CustomInfo" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostMessage">
+      <soap:operation soapAction="messageservice/PostMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:MessageCustomInfo" part="CustomInfo" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MessageService">
+    <wsdl:port name="MessageServiceSoap" binding="tns:MessageServiceSoapBinding">
+      <soap:address location="https://sys134w10.kraan.lokaal:1337/MessageServiceSoap.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

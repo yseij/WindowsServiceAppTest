@@ -11,15 +11,10 @@ namespace WindowsFormsAppTest
     class UrlTest : ServiceBase
     {
         private List<UrlData> _urlDatas = new List<UrlData>();
-        private List<UrlData> _urlDatasByForeignKeyWebservice = new List<UrlData>();
-        private List<UrlData> _urlDatasByForeignKeyKlant = new List<UrlData>();
-        private UrlData _urlDataById= new UrlData();
-
-        private int eventId = 1;
 
         public UrlTest()
         {
-            //GetUrls();
+            
         }
 
         private string ConnectieDB => ConfigurationManager.AppSettings["connectieString"];
@@ -40,7 +35,7 @@ namespace WindowsFormsAppTest
 
                 foreach (DataRow dr in dt.Rows)
                 {
-                    _urlDatas.Add(new UrlData((int)dr[0], dr[1].ToString(), dr[2].ToString(), (int)dr[3], (int)dr[4]));
+                    _urlDatas.Add(new UrlData((int)dr[0], dr[1].ToString(), dr[2].ToString(), (int)dr[3], (int)dr[4], (int)dr[5]));
                 }
             }
             return _urlDatas;

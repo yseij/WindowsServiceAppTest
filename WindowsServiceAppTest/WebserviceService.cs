@@ -14,12 +14,13 @@ namespace WindowsServiceAppTest
         private List<UrlData> _urlDatas = new List<UrlData>();
         private List<WebServiceData> _webServiceDatas = new List<WebServiceData>();
         private List<KlantData> _klantenDatas = new List<KlantData>();
+        private List<HttpData> _httpDatas = new List<HttpData>();
         private KrXmlData _krXmlData = new KrXmlData();
 
-        private string urlHttp = "https://ws.kraan.com:444/";
         private int eventId = 1;
         private dynamic _result;
 
+        HttpTest _httptest;
         WebRequest _webRequest;
         UrlTest _urltest;
         WebserviceTest _webserviceTest;
@@ -31,6 +32,7 @@ namespace WindowsServiceAppTest
         {
             InitializeComponent();
             _timer = new Timer();
+            _httptest = new HttpTest();
             _webserviceTest = new WebserviceTest();
             _klantTest = new KlantTest();
             _urltest = new UrlTest();
@@ -41,7 +43,7 @@ namespace WindowsServiceAppTest
         protected override void OnStart(string[] args)
         {
             _krXmlData = _krXml.GetDataOfXmlFile();
-            _timer.Interval = _krXmlData.TijdService; // 60 seconds
+            _timer.Interval = _krXmlData.TijdService;
             _timer.Elapsed += new ElapsedEventHandler(this.OnTimer);
             _timer.Start();
         }
@@ -59,7 +61,10 @@ namespace WindowsServiceAppTest
             _timer.Stop();
             _krXmlData = _krXml.GetDataOfXmlFile();
             _timer.Interval = _krXmlData.TijdService;
-            string text = "";
+            string text = string.Empty;
+            string webserviceName = string.Empty;
+            string urlHttp = string.Empty;
+            bool isSoap = false;
             if (_krXmlData.ServiceAanOfUit == "aan")
             {
                 try
@@ -67,18 +72,31 @@ namespace WindowsServiceAppTest
                     GetUrls();
                     GetWebservices();
                     GetKlanten();
+                    GetHttp();
 
                     LogFile logFile = new LogFile();
                     logFile.MakeLogFile("AllTestDoorService", _krXmlData.SaveLogFilePlace);
                     foreach (UrlData urlData in _urlDatas)
                     {
                         logFile.AddTitleToLogFile(urlData.Name);
+                        foreach (HttpData httpData in _httpDatas)
+                        {
+                            if (urlData.HttpDataId == httpData.Id)
+                            {
+                                logFile.AddTextToLogFile("Http --> " + httpData.Name);
+                                logFile.AddTextToLogFile("---");
+                                urlHttp = httpData.Name;
+                            }
+                        }
                         foreach (WebServiceData webServiceData in _webServiceDatas)
                         {
                             if (urlData.WebServiceDataId == webServiceData.Id)
                             {
                                 logFile.AddTextToLogFile("---");
                                 logFile.AddTextToLogFile("Webservice --> " + webServiceData.Name);
+
+                                webserviceName = webServiceData.Name;
+                                isSoap = webServiceData.Soap;
                             }
                         }
                         foreach (KlantData klantData in _klantenDatas)
@@ -89,7 +107,29 @@ namespace WindowsServiceAppTest
                                 logFile.AddTextToLogFile("---");
                             }
                         }
-                        _result = JObject.Parse(_webRequest.GetWebRequest(urlData.Id, urlHttp, urlData.Name, urlData.SecurityId));
+                        if (isSoap && urlData.Name.EndsWith(".svc"))
+                        {
+                            //if (urlData.Name == "MessageServiceSoap31.svc")
+                            //{
+                            //    var m = new Sales31CredentialsForm();
+                            //    m.TopMost = true;
+                            //    m.ShowDialog();
+                            //    MaterialMaskedTextBox userName = m._usernameTxtBx;
+                            //    MaterialMaskedTextBox password = m._passwordTxtBx;
+                            //    _result = _webRequest.Get31SalesData(_httpName + _webserviceName, userName, password, ResponseTextBox);
+                            //}
+                            else if (urlData.Name == "MessageServiceSoap.svc")
+                            {
+                                _result = _webRequest.Get24SalesData(_httpName + _webserviceName, ResponseTextBox);
+
+                            }
+                            else
+                            {
+                                string data = _webRequest.GetWebRequestSoap(_httpName, _webserviceName, urlData.Name);
+                                _result = JObject.Parse(data);
+                            }
+                        }
+                        _result = JObject.Parse(_webRequest.GetWebRequest(urlData.Id, urlHttp, webserviceName, urlData.Name, urlData.SecurityId));
                         foreach (JProperty item in _result)
                         {
                             if (item.Name != "id")
@@ -130,6 +170,11 @@ namespace WindowsServiceAppTest
         private void GetKlanten()
         {
             _klantenDatas = _klantTest.GetKlantData();
+        }
+
+        private void GetHttp()
+        {
+            _httpDatas = _httptest.GetHttpData();
         }
     }
 }

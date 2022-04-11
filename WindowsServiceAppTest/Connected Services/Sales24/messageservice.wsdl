@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://etim.nl/xmlschemas/messageservice/2.40" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://etim.nl/xmlschemas/messageservice/2.40" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://etim.nl/xmlschemas/messageservice/2.40">
+      <s:element name="GetAvailableMessagesRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="MsgType" nillable="true" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAvailableMessagesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="unbounded" name="MessageServiceAvailableMessage" type="tns:MessageServiceAvailableMessage" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MessageServiceAvailableMessage">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="MsgId" nillable="true" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MsgDateTime" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="AvailableFormat" type="tns:AvailableFormat" />
+          <s:element minOccurs="1" maxOccurs="1" name="MsgType" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="AvailableFormat">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="MsgFormat" nillable="true" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MsgVersion" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AuthenticationInfo" type="tns:AuthenticationInfo" />
+      <s:complexType name="AuthenticationInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ApplicationId" nillable="true" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="VersionId" nillable="true" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="RelationId" nillable="true" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" nillable="true" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Password" nillable="true" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SessionId" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="CustomInfo" type="tns:CustomInfo" />
+      <s:complexType name="CustomInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="IsTestMessage" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="LanguageCode" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsContentCompressed" nillable="true" type="s:boolean" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="GetMessageRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="MsgId" nillable="true" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="MsgFormat" nillable="true" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="MsgVersion" nillable="true" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMessageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="MessageServiceMessage" nillable="true" type="tns:MessageServiceMessage" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="MessageServiceMessage" mixed="true">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="MsgId" nillable="true" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MsgType" nillable="true" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MsgFormat" nillable="true" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MsgVersion" nillable="true" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MsgDateTime" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Attachment" type="tns:Attachment" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MsgContent">
+            <s:complexType mixed="true">
+              <s:sequence>
+                <s:any />
+              </s:sequence>
+            </s:complexType>
+          </s:element>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Attachment">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="URL" nillable="true" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DocumentType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="AttachedData" nillable="true" type="s:base64Binary" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DeleteMessageRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="MsgId" nillable="true" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteMessageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteMessageResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostMessageRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="MessageServiceMessage" nillable="true" type="tns:MessageServiceMessage" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostMessageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MessageServiceMessage" nillable="true" type="tns:MessageServiceMessage" />
+            <s:element minOccurs="1" maxOccurs="1" name="PostMessageResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAvailableMessagesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAvailableMessagesRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetAvailableMessagesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAvailableMessagesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAvailableMessagesAuthenticationInfo">
+    <wsdl:part name="AuthenticationInfo" element="tns:AuthenticationInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetAvailableMessagesCustomInfo">
+    <wsdl:part name="CustomInfo" element="tns:CustomInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetMessageSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMessageRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetMessageSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMessageAuthenticationInfo">
+    <wsdl:part name="AuthenticationInfo" element="tns:AuthenticationInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetMessageCustomInfo">
+    <wsdl:part name="CustomInfo" element="tns:CustomInfo" />
+  </wsdl:message>
+  <wsdl:message name="DeleteMessageSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteMessageRequest" />
+  </wsdl:message>
+  <wsdl:message name="DeleteMessageSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteMessageAuthenticationInfo">
+    <wsdl:part name="AuthenticationInfo" element="tns:AuthenticationInfo" />
+  </wsdl:message>
+  <wsdl:message name="DeleteMessageCustomInfo">
+    <wsdl:part name="CustomInfo" element="tns:CustomInfo" />
+  </wsdl:message>
+  <wsdl:message name="PostMessageSoapIn">
+    <wsdl:part name="parameters" element="tns:PostMessageRequest" />
+  </wsdl:message>
+  <wsdl:message name="PostMessageSoapOut">
+    <wsdl:part name="parameters" element="tns:PostMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="PostMessageAuthenticationInfo">
+    <wsdl:part name="AuthenticationInfo" element="tns:AuthenticationInfo" />
+  </wsdl:message>
+  <wsdl:message name="PostMessageCustomInfo">
+    <wsdl:part name="CustomInfo" element="tns:CustomInfo" />
+  </wsdl:message>
+  <wsdl:portType name="MessageServiceSoap">
+    <wsdl:operation name="GetAvailableMessages">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Geeft een lijst terug van alle berichten van het opgeven msgtype. Indien geen msgtype wordt meegeven dienen alle berichten (ongeacht berichttype) teruggegeven te worden. De return value van de functie is een array met messageserviceavailablemessage elementen.</wsdl:documentation>
+      <wsdl:input message="tns:GetAvailableMessagesSoapIn" />
+      <wsdl:output message="tns:GetAvailableMessagesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMessage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deze functie wordt aangeroepen met een msgid van het bericht dat men wil ophalen. Je kunt per aanroep dus maximaal 1 message opvragen. De functie geeft een messageservicemessage element terug met daarin het bericht. msgcontent is een string waarin het bericht kan worden opgenomen. Als de berichten XML berichten zijn dan dienen de berichten (zonder SOAP envelop, de webservice aanroep is immers al een soap envelop) in zijn geheel in de msgcontent geplaatst te worden waarbij het xml bericht gecodeerd is als UTF-8. ASCII berichten of andere (binaire) content kan als BASE64 string worden opgenomen. Aan de hand van het msgtype en msgversionid moet de klant het bericht kunnen verwerken.</wsdl:documentation>
+      <wsdl:input message="tns:GetMessageSoapIn" />
+      <wsdl:output message="tns:GetMessageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMessage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">De functie wordt aangeroepen met het msgid dat moet worden verwijderd. Je kunt per aanroep dus maximaal 1 message verwijderen. Deze functie moet worden aangeroepen nadat een bericht is opgehaald via de 'GetMessage' functie ongeacht of het bericht ook succesvol kan worden verwerkt.</wsdl:documentation>
+      <wsdl:input message="tns:DeleteMessageSoapIn" />
+      <wsdl:output message="tns:DeleteMessageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PostMessage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Biedt een bericht aan dat door de webservice moet worden opgeslagen en verwerkt. Msgid moet door de klant voorzien worden van een uniek ID. Hierdoor kan de leverancier controleren of betreffende bericht al eens eerder is aangeleverd. Bij deze functie is het msgcontent element verplicht.</wsdl:documentation>
+      <wsdl:input message="tns:PostMessageSoapIn" />
+      <wsdl:output message="tns:PostMessageSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MessageServiceSoap" type="tns:MessageServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAvailableMessages">
+      <soap:operation soapAction="http://www.oosterberg.nl/messageservice/GetAvailableMessages" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetAvailableMessagesAuthenticationInfo" part="AuthenticationInfo" use="literal" />
+        <soap:header message="tns:GetAvailableMessagesCustomInfo" part="CustomInfo" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessage">
+      <soap:operation soapAction="http://www.oosterberg.nl/messageservice/GetMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetMessageAuthenticationInfo" part="AuthenticationInfo" use="literal" />
+        <soap:header message="tns:GetMessageCustomInfo" part="CustomInfo" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMessage">
+      <soap:operation soapAction="http://www.oosterberg.nl/messageservice/DeleteMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:DeleteMessageAuthenticationInfo" part="AuthenticationInfo" use="literal" />
+        <soap:header message="tns:DeleteMessageCustomInfo" part="CustomInfo" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostMessage">
+      <soap:operation soapAction="http://www.oosterberg.nl/messageservice/PostMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:PostMessageAuthenticationInfo" part="AuthenticationInfo" use="literal" />
+        <soap:header message="tns:PostMessageCustomInfo" part="CustomInfo" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MessageServiceSoap12" type="tns:MessageServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAvailableMessages">
+      <soap12:operation soapAction="http://www.oosterberg.nl/messageservice/GetAvailableMessages" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetAvailableMessagesAuthenticationInfo" part="AuthenticationInfo" use="literal" />
+        <soap12:header message="tns:GetAvailableMessagesCustomInfo" part="CustomInfo" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessage">
+      <soap12:operation soapAction="http://www.oosterberg.nl/messageservice/GetMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetMessageAuthenticationInfo" part="AuthenticationInfo" use="literal" />
+        <soap12:header message="tns:GetMessageCustomInfo" part="CustomInfo" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMessage">
+      <soap12:operation soapAction="http://www.oosterberg.nl/messageservice/DeleteMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:DeleteMessageAuthenticationInfo" part="AuthenticationInfo" use="literal" />
+        <soap12:header message="tns:DeleteMessageCustomInfo" part="CustomInfo" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostMessage">
+      <soap12:operation soapAction="http://www.oosterberg.nl/messageservice/PostMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:PostMessageAuthenticationInfo" part="AuthenticationInfo" use="literal" />
+        <soap12:header message="tns:PostMessageCustomInfo" part="CustomInfo" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MessageService">
+    <wsdl:port name="MessageServiceSoap" binding="tns:MessageServiceSoap">
+      <soap:address location="http://www.oosterberg.nl/messageservice/messageservice.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MessageServiceSoap12" binding="tns:MessageServiceSoap12">
+      <soap12:address location="http://www.oosterberg.nl/messageservice/messageservice.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

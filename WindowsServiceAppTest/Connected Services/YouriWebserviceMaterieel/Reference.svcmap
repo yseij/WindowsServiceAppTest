@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b6e41b59-f695-498e-b118-6baf7f4b6975" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="D:\School\Stage\TestApp\WindowsFormsAppTest\WindowsFormsAppTest\Connected Services\YouriWebserviceMaterieel\MaterieelService.wsdl" Protocol="file" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="MaterieelService.xsd" MetadataType="Schema" ID="2191043b-99e7-4a39-8230-9cd1e5e8e5be" SourceId="1" SourceUrl="https://wsdev.kraan.com/Rasenprod/MaterieelService.svc?xsd=xsd3" />
+    <MetadataFile FileName="MaterieelService1.xsd" MetadataType="Schema" ID="88a363e1-14cc-4d8e-8245-3f5d31ad29a1" SourceId="1" SourceUrl="https://wsdev.kraan.com/Rasenprod/MaterieelService.svc?xsd=xsd6" />
+    <MetadataFile FileName="MaterieelService2.xsd" MetadataType="Schema" ID="9bbcd485-437c-4071-9460-32cee948c8f6" SourceId="1" SourceUrl="https://wsdev.kraan.com/Rasenprod/MaterieelService.svc?xsd=xsd1" />
+    <MetadataFile FileName="MaterieelService3.xsd" MetadataType="Schema" ID="157c2c12-aeda-4f58-9c71-0acae7dde0e3" SourceId="1" SourceUrl="https://wsdev.kraan.com/Rasenprod/MaterieelService.svc?xsd=xsd2" />
+    <MetadataFile FileName="MaterieelService.wsdl" MetadataType="Wsdl" ID="bfa4d764-0d5a-4bf4-a1d4-0acd6e4b3984" SourceId="1" SourceUrl="file:///D:/School/Stage/TestApp/WindowsFormsAppTest/WindowsFormsAppTest/Connected Services/YouriWebserviceMaterieel/MaterieelService.wsdl" />
+    <MetadataFile FileName="MaterieelService4.xsd" MetadataType="Schema" ID="87778902-d4f3-49b9-8e00-94379f196164" SourceId="1" SourceUrl="https://wsdev.kraan.com/Rasenprod/MaterieelService.svc?xsd=xsd0" />
+    <MetadataFile FileName="MaterieelService5.xsd" MetadataType="Schema" ID="c81cad93-5351-487f-94b6-ed81fd8ec749" SourceId="1" SourceUrl="https://wsdev.kraan.com/Rasenprod/MaterieelService.svc?xsd=xsd4" />
+    <MetadataFile FileName="MaterieelService6.xsd" MetadataType="Schema" ID="068c81e2-2082-47c1-8d3c-2497625b5c0b" SourceId="1" SourceUrl="https://wsdev.kraan.com/Rasenprod/MaterieelService.svc?xsd=xsd7" />
+    <MetadataFile FileName="MaterieelService7.xsd" MetadataType="Schema" ID="41734b57-f431-4174-8472-cc4f3156044c" SourceId="1" SourceUrl="https://wsdev.kraan.com/Rasenprod/MaterieelService.svc?xsd=xsd5" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="https://www.ketenstandaard.nl/WS/MessageService/3.1" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="https://www.ketenstandaard.nl/WS/MessageService/3.1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="CustomInfo" type="tns:CustomInfoType" />
+  <xs:element name="Message" type="tns:MessageType" />
+  <xs:element name="MessageResponse" type="tns:MessageResponseType" />
+  <xs:element name="MessageRequest" type="tns:MessageRequestType" />
+  <xs:element name="MessageRequestResponse" type="tns:MessageRequestResponseType" />
+  <xs:element name="AvailableMessagesRequest" type="tns:AvailableMessagesRequestType" />
+  <xs:element name="AvailableMessagesResponse" type="tns:AvailableMessagesResponseType" />
+  <xs:complexType name="MessageType">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="MsgProperties" nillable="true" type="tns:MessagePropertiesType" />
+      <xs:element minOccurs="1" maxOccurs="1" name="MsgContent" type="tns:MsgContentType" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Attachment" type="tns:AttachmentType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MessageResponseType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Message" type="tns:MessageType" />
+      <xs:element minOccurs="1" maxOccurs="1" name="MessageResult" type="tns:ResultType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MessageRequestType">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="MsgId" nillable="true" type="tns:MsgIdType" />
+      <xs:element minOccurs="1" maxOccurs="1" name="MsgFormat" nillable="true" type="tns:MsgFormatType" />
+      <xs:element minOccurs="1" maxOccurs="1" name="MsgVersion" nillable="true" type="tns:MsgVersionType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MessageRequestResponseType">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="MessageRequestResult" type="tns:MessageType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AvailableMessagesRequestType">
+    <xs:sequence>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="1" name="MsgType" nillable="true" type="tns:MsgTypeType" />
+      </xs:sequence>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AvailableMessagesResponseType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MessageList" nillable="true" type="tns:MessagePropertiesType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="MsgIdType">
+    <xs:restriction base="tns:GUID" />
+  </xs:simpleType>
+  <xs:simpleType name="GUID">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+				The representation of a GUID, generally the id of an element.
+			</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MsgFormatType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MsgVersionType">
+    <xs:restriction base="xs:string" />
+  </xs:simpleType>
+  <xs:simpleType name="MsgDateTimeType">
+    <xs:restriction base="xs:dateTime" />
+  </xs:simpleType>
+  <xs:simpleType name="MsgTypeType">
+    <xs:restriction base="xs:string" />
+  </xs:simpleType>
+  <xs:simpleType name="ResultType">
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+  <xs:simpleType name="MsgContentType">
+    <xs:restriction base="xs:string" />
+  </xs:simpleType>
+  <xs:complexType name="AttachmentType">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="URL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="DocumentType" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="FileType" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="FileName" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="AttachedData" nillable="true" type="xs:base64Binary" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MessagePropertiesType">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="MsgId" nillable="true" type="tns:MsgIdType" />
+      <xs:element minOccurs="1" maxOccurs="1" name="MsgDateTime" type="tns:MsgDateTimeType" />
+      <xs:element minOccurs="1" maxOccurs="1" name="MsgFormat" nillable="true" type="tns:MsgFormatType" />
+      <xs:element minOccurs="1" maxOccurs="1" name="MsgVersion" nillable="true" type="tns:MsgVersionType" />
+      <xs:element minOccurs="1" maxOccurs="1" name="MsgType" nillable="true" type="tns:MsgTypeType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CustomInfoType">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="IsTestMessage" type="xs:boolean" />
+      <xs:element minOccurs="0" maxOccurs="1" name="LanguageCode" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="IsContentCompressed" nillable="true" type="xs:boolean" />
+      <xs:element minOccurs="1" maxOccurs="1" name="ApplicationId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="VersionId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="RelationId" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

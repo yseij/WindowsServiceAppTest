@@ -1,0 +1,898 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://wsdev.kraan.com/Rasenprod/UrenService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="https://wsdev.kraan.com/Rasenprod/UrenService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" />
+  <xs:import schemaLocation="https://wsdev.kraan.com/Rasenprod/UrenService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="RequestProjectenLijst">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" base="q1:RequestAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="MedewerkerId" type="ser:guid" />
+          <xs:element minOccurs="0" name="alleProjecten" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestProjectenLijst" nillable="true" type="tns:RequestProjectenLijst" />
+  <xs:complexType name="ProjectenLijst">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="InloggenGelukt" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Projecten" nillable="true" type="tns:ArrayOfProject" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProjectenLijst" nillable="true" type="tns:ProjectenLijst" />
+  <xs:complexType name="ArrayOfProject">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Project" nillable="true" type="tns:Project" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProject" nillable="true" type="tns:ArrayOfProject" />
+  <xs:complexType name="Project">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="GrootboekRekening" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HeeftOpenRegels" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="IsBurgerwerkOpdracht" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsUrenAdministratieProject" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProfielId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Project" nillable="true" type="tns:Project" />
+  <xs:complexType name="RequestUrenCodes">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" base="q2:RequestAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="MedewerkerId" type="ser:guid" />
+          <xs:element minOccurs="0" name="ProductieMiddelId" type="ser:guid" />
+          <xs:element minOccurs="0" name="ProjectId" type="ser:guid" />
+          <xs:element minOccurs="0" name="UurSoortId" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestUrenCodes" nillable="true" type="tns:RequestUrenCodes" />
+  <xs:complexType name="WerkbonLijst">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="InloggenGelukt" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Werkbonnen" nillable="true" type="tns:ArrayOfWerkbon" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WerkbonLijst" nillable="true" type="tns:WerkbonLijst" />
+  <xs:complexType name="ArrayOfWerkbon">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Werkbon" nillable="true" type="tns:Werkbon" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWerkbon" nillable="true" type="tns:ArrayOfWerkbon" />
+  <xs:complexType name="Werkbon">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Werkbon" nillable="true" type="tns:Werkbon" />
+  <xs:complexType name="KostenSoortLijst">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="InloggenGelukt" type="xs:boolean" />
+      <xs:element minOccurs="0" name="KostenSoorten" nillable="true" type="tns:ArrayOfKostenSoort" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="KostenSoortLijst" nillable="true" type="tns:KostenSoortLijst" />
+  <xs:complexType name="ArrayOfKostenSoort">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KostenSoort" nillable="true" type="tns:KostenSoort" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKostenSoort" nillable="true" type="tns:ArrayOfKostenSoort" />
+  <xs:complexType name="KostenSoort">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Beschikbaar" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="KostenSoort" nillable="true" type="tns:KostenSoort" />
+  <xs:complexType name="BewakingsCodeLijst">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BewakingsCodes" nillable="true" type="tns:ArrayOfBewakingsCode" />
+      <xs:element minOccurs="0" name="InloggenGelukt" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BewakingsCodeLijst" nillable="true" type="tns:BewakingsCodeLijst" />
+  <xs:complexType name="ArrayOfBewakingsCode">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BewakingsCode" nillable="true" type="tns:BewakingsCode" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBewakingsCode" nillable="true" type="tns:ArrayOfBewakingsCode" />
+  <xs:complexType name="BewakingsCode">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Beschikbaar" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="IsAanvullenToegestaan" type="xs:boolean" />
+      <xs:element minOccurs="0" name="KostenSoortId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BewakingsCode" nillable="true" type="tns:BewakingsCode" />
+  <xs:complexType name="ProductieMiddelLijst">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="InloggenGelukt" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ProductieMiddelen" nillable="true" type="tns:ArrayOfProductieMiddel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProductieMiddelLijst" nillable="true" type="tns:ProductieMiddelLijst" />
+  <xs:complexType name="ArrayOfProductieMiddel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProductieMiddel" nillable="true" type="tns:ProductieMiddel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProductieMiddel" nillable="true" type="tns:ArrayOfProductieMiddel" />
+  <xs:complexType name="ProductieMiddel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProductieMiddel" nillable="true" type="tns:ProductieMiddel" />
+  <xs:complexType name="ResponseDefaultUrenCodes">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BewakingsCode" nillable="true" type="tns:BewakingsCode" />
+      <xs:element minOccurs="0" name="KostenSoort" nillable="true" type="tns:KostenSoort" />
+      <xs:element minOccurs="0" name="LoginSucces" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ProductieMiddel" nillable="true" type="tns:ProductieMiddel" />
+      <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+      <xs:element minOccurs="0" name="UrenProject" nillable="true" type="tns:Project" />
+      <xs:element minOccurs="0" name="UrenSoort" nillable="true" type="tns:UrenSoort" />
+      <xs:element minOccurs="0" name="Werkbon" nillable="true" type="tns:Werkbon" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResponseDefaultUrenCodes" nillable="true" type="tns:ResponseDefaultUrenCodes" />
+  <xs:complexType name="UrenSoort">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BedrijfId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Beschikbaar" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="MeetellenInUrenControle" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MemoVerplicht" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProjectVerplicht" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UrenSoort" nillable="true" type="tns:UrenSoort" />
+  <xs:complexType name="RequestKmCodes">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" base="q3:RequestAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="KmSoortId" type="ser:guid" />
+          <xs:element minOccurs="0" name="MedewerkerId" type="ser:guid" />
+          <xs:element minOccurs="0" name="ProjectId" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestKmCodes" nillable="true" type="tns:RequestKmCodes" />
+  <xs:complexType name="ResponseDefaultKmCodes">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="KmProject" nillable="true" type="tns:Project" />
+      <xs:element minOccurs="0" name="KmSoort" nillable="true" type="tns:KilometerSoort" />
+      <xs:element minOccurs="0" name="LoginSucces" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Werkbon" nillable="true" type="tns:Werkbon" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResponseDefaultKmCodes" nillable="true" type="tns:ResponseDefaultKmCodes" />
+  <xs:complexType name="KilometerSoort">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BedrijfId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Beschikbaar" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProjectVerplicht" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="KilometerSoort" nillable="true" type="tns:KilometerSoort" />
+  <xs:complexType name="RequestMeegeredenKilometers">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" base="q4:RequestAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DatumTm" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="DatumVan" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="MedewerkerId" type="ser:guid" />
+          <xs:element minOccurs="0" name="Ondergeschikten" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestMeegeredenKilometers" nillable="true" type="tns:RequestMeegeredenKilometers" />
+  <xs:complexType name="ResponseMeegeredenKilometers">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LoginSucces" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MeegeredenKilometers" nillable="true" type="tns:ArrayOfMeegeredenKilometers" />
+      <xs:element minOccurs="0" name="Melding" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResponseMeegeredenKilometers" nillable="true" type="tns:ResponseMeegeredenKilometers" />
+  <xs:complexType name="ArrayOfMeegeredenKilometers">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MeegeredenKilometers" nillable="true" type="tns:MeegeredenKilometers" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMeegeredenKilometers" nillable="true" type="tns:ArrayOfMeegeredenKilometers" />
+  <xs:complexType name="MeegeredenKilometers">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AantalKilometers" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Chauffeur" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ChauffeurId" nillable="true" type="ser:guid" />
+      <xs:element minOccurs="0" name="Datum" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Medewerker" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MedewerkerId" nillable="true" type="ser:guid" />
+      <xs:element minOccurs="0" name="Periode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Project" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SoortKilometers" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Week" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WerkBon" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MeegeredenKilometers" nillable="true" type="tns:MeegeredenKilometers" />
+  <xs:complexType name="UrenBasisGegevens">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Functies" nillable="true" type="tns:ArrayOfFunctie" />
+      <xs:element minOccurs="0" name="InloggenGelukt" type="xs:boolean" />
+      <xs:element minOccurs="0" name="KilometerRegels" nillable="true" type="tns:ArrayOfKilometerRegel" />
+      <xs:element minOccurs="0" name="KilometerSoorten" nillable="true" type="tns:ArrayOfKilometerSoort" />
+      <xs:element minOccurs="0" name="Medewerkers" nillable="true" type="tns:ArrayOfMedewerker" />
+      <xs:element minOccurs="0" name="MeerijderRegels" nillable="true" type="tns:ArrayOfMeerijderRegel" />
+      <xs:element minOccurs="0" name="UrenDefaults" nillable="true" type="tns:UrenDefaults" />
+      <xs:element minOccurs="0" name="UrenRegels" nillable="true" type="tns:ArrayOfUrenRegel" />
+      <xs:element minOccurs="0" name="UrenSoorten" nillable="true" type="tns:ArrayOfUrenSoort" />
+      <xs:element minOccurs="0" name="UrenWeken" nillable="true" type="tns:ArrayOfUrenWeek" />
+      <xs:element minOccurs="0" name="VerwijderdeGegevens" nillable="true" type="tns:ArrayOfVerwijderdGegeven" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UrenBasisGegevens" nillable="true" type="tns:UrenBasisGegevens" />
+  <xs:complexType name="ArrayOfFunctie">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Functie" nillable="true" type="tns:Functie" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFunctie" nillable="true" type="tns:ArrayOfFunctie" />
+  <xs:complexType name="Functie">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Functie" nillable="true" type="tns:Functie" />
+  <xs:complexType name="ArrayOfKilometerRegel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KilometerRegel" nillable="true" type="tns:KilometerRegel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKilometerRegel" nillable="true" type="tns:ArrayOfKilometerRegel" />
+  <xs:complexType name="KilometerRegel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AantalKilometers" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Actie" type="tns:UrenActieEnum.UrenActie" />
+      <xs:element minOccurs="0" name="AfwijkendeRoute" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AppCreationGuid" type="ser:guid" />
+      <xs:element minOccurs="0" name="AppId" type="xs:int" />
+      <xs:element minOccurs="0" name="Datum" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="IsMuteerbaar" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Medewerker" type="ser:guid" />
+      <xs:element minOccurs="0" name="Memo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Naar" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProjectId" type="ser:guid" />
+      <xs:element minOccurs="0" name="ProjectOmschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SoortKilometer" type="ser:guid" />
+      <xs:element minOccurs="0" name="Van" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WerkbonCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WerkbonId" type="ser:guid" />
+      <xs:element minOccurs="0" name="WerkbonOmschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WoonWerk" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="KilometerRegel" nillable="true" type="tns:KilometerRegel" />
+  <xs:simpleType name="UrenActieEnum.UrenActie">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Toevoegen" />
+      <xs:enumeration value="Bijwerken" />
+      <xs:enumeration value="Verwijderen" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="UrenActieEnum.UrenActie" nillable="true" type="tns:UrenActieEnum.UrenActie" />
+  <xs:complexType name="ArrayOfKilometerSoort">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KilometerSoort" nillable="true" type="tns:KilometerSoort" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKilometerSoort" nillable="true" type="tns:ArrayOfKilometerSoort" />
+  <xs:complexType name="ArrayOfMedewerker">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Medewerker" nillable="true" type="tns:Medewerker" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMedewerker" nillable="true" type="tns:ArrayOfMedewerker" />
+  <xs:complexType name="Medewerker">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BedrijfId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="IsHuidigeGebruiker" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsKostensoortGekoppeldAanBewakingscode" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsOndergeschikte" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsUrenInvoerToegestaan" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MedewerkerFuncties" nillable="true" type="tns:ArrayOfMedewerkerFunctie" />
+      <xs:element minOccurs="0" name="MedewerkerPerioden" nillable="true" type="tns:ArrayOfMedewerkerPeriode" />
+      <xs:element minOccurs="0" name="Naam" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReisUrenHandmatig" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Medewerker" nillable="true" type="tns:Medewerker" />
+  <xs:complexType name="ArrayOfMedewerkerFunctie">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MedewerkerFunctie" nillable="true" type="tns:MedewerkerFunctie" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMedewerkerFunctie" nillable="true" type="tns:ArrayOfMedewerkerFunctie" />
+  <xs:complexType name="MedewerkerFunctie">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FunctieId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="IsHoofdFunctie" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MedewerkerId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MedewerkerFunctie" nillable="true" type="tns:MedewerkerFunctie" />
+  <xs:complexType name="ArrayOfMedewerkerPeriode">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MedewerkerPeriode" nillable="true" type="tns:MedewerkerPeriode" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMedewerkerPeriode" nillable="true" type="tns:ArrayOfMedewerkerPeriode" />
+  <xs:complexType name="MedewerkerPeriode">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BedrijfId" type="ser:guid" />
+      <xs:element minOccurs="0" name="BeginDatum" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ContractUrenPerWeek" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EindDatum" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="MedewerkerId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MedewerkerPeriode" nillable="true" type="tns:MedewerkerPeriode" />
+  <xs:complexType name="ArrayOfMeerijderRegel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MeerijderRegel" nillable="true" type="tns:MeerijderRegel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMeerijderRegel" nillable="true" type="tns:ArrayOfMeerijderRegel" />
+  <xs:complexType name="MeerijderRegel">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:KilometerRegel">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AantalReisUren" type="xs:long" />
+          <xs:element minOccurs="0" name="KilometerRegel" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MeerijderRegel" nillable="true" type="tns:MeerijderRegel" />
+  <xs:complexType name="UrenDefaults">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="KilometerProjectCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="KilometerProjectId" type="ser:guid" />
+      <xs:element minOccurs="0" name="KilometerProjectOmschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="KilometerSoortId" type="ser:guid" />
+      <xs:element minOccurs="0" name="ToonAlleProjecten" type="xs:boolean" />
+      <xs:element minOccurs="0" name="UrenProjectCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UrenProjectId" type="ser:guid" />
+      <xs:element minOccurs="0" name="UrenProjectOmschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UrenSoortId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UrenDefaults" nillable="true" type="tns:UrenDefaults" />
+  <xs:complexType name="ArrayOfUrenRegel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UrenRegel" nillable="true" type="tns:UrenRegel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUrenRegel" nillable="true" type="tns:ArrayOfUrenRegel" />
+  <xs:complexType name="UrenRegel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AantalUur" type="xs:long" />
+      <xs:element minOccurs="0" name="Actie" type="tns:UrenActieEnum.UrenActie" />
+      <xs:element minOccurs="0" name="AppCreationGuid" type="ser:guid" />
+      <xs:element minOccurs="0" name="AppId" type="xs:int" />
+      <xs:element minOccurs="0" name="BewakingsBronCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BewakingsCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BewakingsCodeAanvullenToegestaan" type="xs:boolean" />
+      <xs:element minOccurs="0" name="BewakingsCodeId" type="ser:guid" />
+      <xs:element minOccurs="0" name="BewakingsCodeOmschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Datum" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Documenten" nillable="true" type="tns:ArrayOfDocument" />
+      <xs:element minOccurs="0" name="Functie" type="ser:guid" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="IsMuteerbaar" type="xs:boolean" />
+      <xs:element minOccurs="0" name="KostenSoortCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="KostenSoortId" type="ser:guid" />
+      <xs:element minOccurs="0" name="KostenSoortOmschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Medewerker" type="ser:guid" />
+      <xs:element minOccurs="0" name="Memo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductieMiddelCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProductieMiddelId" type="ser:guid" />
+      <xs:element minOccurs="0" name="ProductieMiddelOmschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProjectCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProjectId" type="ser:guid" />
+      <xs:element minOccurs="0" name="ProjectIsBurgerwerkOpdracht" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ProjectOmschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UrenSoort" type="ser:guid" />
+      <xs:element minOccurs="0" name="UrenSoortBeschikbaar" type="xs:boolean" />
+      <xs:element minOccurs="0" name="UrenSoortCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UrenSoortMeetellenInUrenControle" type="xs:boolean" />
+      <xs:element minOccurs="0" name="UrenSoortMemoVerplicht" type="xs:boolean" />
+      <xs:element minOccurs="0" name="UrenSoortOmschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UrenSoortProjectVerplicht" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Volgnummer" type="xs:int" />
+      <xs:element minOccurs="0" name="WerkbonCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WerkbonId" type="ser:guid" />
+      <xs:element minOccurs="0" name="WerkbonOmschrijving" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UrenRegel" nillable="true" type="tns:UrenRegel" />
+  <xs:complexType name="ArrayOfDocument">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Document" nillable="true" type="tns:Document" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDocument" nillable="true" type="tns:ArrayOfDocument" />
+  <xs:complexType name="Document">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AanmaakDatum" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="AppCreationGuid" type="ser:guid" />
+      <xs:element minOccurs="0" name="Bestand" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Docutype" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Extensie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Pad" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Document" nillable="true" type="tns:Document" />
+  <xs:complexType name="ArrayOfUrenSoort">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UrenSoort" nillable="true" type="tns:UrenSoort" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUrenSoort" nillable="true" type="tns:ArrayOfUrenSoort" />
+  <xs:complexType name="ArrayOfUrenWeek">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UrenWeek" nillable="true" type="tns:UrenWeek" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUrenWeek" nillable="true" type="tns:ArrayOfUrenWeek" />
+  <xs:complexType name="UrenWeek">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BedrijfId" type="ser:guid" />
+      <xs:element minOccurs="0" name="BeginDatum" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EindDatum" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Geblokkeerd" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UrenWeek" nillable="true" type="tns:UrenWeek" />
+  <xs:complexType name="ArrayOfVerwijderdGegeven">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="VerwijderdGegeven" nillable="true" type="tns:VerwijderdGegeven" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfVerwijderdGegeven" nillable="true" type="tns:ArrayOfVerwijderdGegeven" />
+  <xs:complexType name="VerwijderdGegeven">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DatumTijd" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="GegevensType" type="tns:GegevensType" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="VerwijderdGegeven" nillable="true" type="tns:VerwijderdGegeven" />
+  <xs:simpleType name="GegevensType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Onbekend" />
+      <xs:enumeration value="Medewerker" />
+      <xs:enumeration value="UrenSoort">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="KilometerSoort">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Project">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="UrenRegel">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="KilometerRegel">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MedewerkerPeriode">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">11</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MeerijderRegel">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">12</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Document">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">13</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="UrenWeek">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">14</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MedewerkerFunctie">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">15</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Functie">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Mutatiecodes">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">17</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Locatie">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">18</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SoortLocatie">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">19</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="InhoudBon">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">20</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BonNummer">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">21</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MaterieelDatumKeuringen">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">22</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="GegevensType" nillable="true" type="tns:GegevensType" />
+  <xs:complexType name="RequestSaveKilometers">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" base="q5:RequestAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="regels" nillable="true" type="tns:ArrayOfKilometersToSave" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestSaveKilometers" nillable="true" type="tns:RequestSaveKilometers" />
+  <xs:complexType name="ArrayOfKilometersToSave">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KilometersToSave" nillable="true" type="tns:KilometersToSave" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKilometersToSave" nillable="true" type="tns:ArrayOfKilometersToSave" />
+  <xs:complexType name="KilometersToSave">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="KmRegel" nillable="true" type="tns:KilometerRegel" />
+      <xs:element minOccurs="0" name="MeerijderRegels" nillable="true" type="tns:ArrayOfMeerijderRegel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="KilometersToSave" nillable="true" type="tns:KilometersToSave" />
+  <xs:complexType name="ResponseSaveKilometers">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="GefaaldeKmRegels" nillable="true" type="tns:ArrayOfKilometerRegelSaveResponse" />
+      <xs:element minOccurs="0" name="GefaaldeMeerijderRegels" nillable="true" type="tns:ArrayOfMeerijderRegelSaveResponse" />
+      <xs:element minOccurs="0" name="LoginSucces" type="xs:boolean" />
+      <xs:element minOccurs="0" name="NieuweKmRegels" nillable="true" type="tns:ArrayOfKilometerRegelAddedResponse" />
+      <xs:element minOccurs="0" name="NieuweMeerijderRegels" nillable="true" type="tns:ArrayOfMeerijderRegelAddedResponse" />
+      <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResponseSaveKilometers" nillable="true" type="tns:ResponseSaveKilometers" />
+  <xs:complexType name="ArrayOfKilometerRegelSaveResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KilometerRegelSaveResponse" nillable="true" type="tns:KilometerRegelSaveResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKilometerRegelSaveResponse" nillable="true" type="tns:ArrayOfKilometerRegelSaveResponse" />
+  <xs:complexType name="KilometerRegelSaveResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:KilometerRegel">
+        <xs:sequence>
+          <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Meldingen" nillable="true" type="q6:ArrayOfstring" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="KilometerRegelSaveResponse" nillable="true" type="tns:KilometerRegelSaveResponse" />
+  <xs:complexType name="ArrayOfMeerijderRegelSaveResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MeerijderRegelSaveResponse" nillable="true" type="tns:MeerijderRegelSaveResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMeerijderRegelSaveResponse" nillable="true" type="tns:ArrayOfMeerijderRegelSaveResponse" />
+  <xs:complexType name="MeerijderRegelSaveResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:MeerijderRegel">
+        <xs:sequence>
+          <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Meldingen" nillable="true" type="q7:ArrayOfstring" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MeerijderRegelSaveResponse" nillable="true" type="tns:MeerijderRegelSaveResponse" />
+  <xs:complexType name="ArrayOfKilometerRegelAddedResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KilometerRegelAddedResponse" nillable="true" type="tns:KilometerRegelAddedResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKilometerRegelAddedResponse" nillable="true" type="tns:ArrayOfKilometerRegelAddedResponse" />
+  <xs:complexType name="KilometerRegelAddedResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AppCreationGuid" type="ser:guid" />
+      <xs:element minOccurs="0" name="AppId" type="xs:int" />
+      <xs:element minOccurs="0" name="Kraan2Id" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="KilometerRegelAddedResponse" nillable="true" type="tns:KilometerRegelAddedResponse" />
+  <xs:complexType name="ArrayOfMeerijderRegelAddedResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MeerijderRegelAddedResponse" nillable="true" type="tns:MeerijderRegelAddedResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMeerijderRegelAddedResponse" nillable="true" type="tns:ArrayOfMeerijderRegelAddedResponse" />
+  <xs:complexType name="MeerijderRegelAddedResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AppCreationGuid" type="ser:guid" />
+      <xs:element minOccurs="0" name="AppId" type="xs:int" />
+      <xs:element minOccurs="0" name="Kraan2Id" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MeerijderRegelAddedResponse" nillable="true" type="tns:MeerijderRegelAddedResponse" />
+  <xs:complexType name="RequestSaveUren">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q8="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" base="q8:RequestAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="regels" nillable="true" type="tns:ArrayOfUrenRegel" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestSaveUren" nillable="true" type="tns:RequestSaveUren" />
+  <xs:complexType name="ResponseSaveUren">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="GefaaldeRegels" nillable="true" type="tns:ArrayOfUrenRegelSaveResponse" />
+      <xs:element minOccurs="0" name="LoginSucces" type="xs:boolean" />
+      <xs:element minOccurs="0" name="NieuweRegels" nillable="true" type="tns:ArrayOfUrenRegelAddedResponse" />
+      <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResponseSaveUren" nillable="true" type="tns:ResponseSaveUren" />
+  <xs:complexType name="ArrayOfUrenRegelSaveResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UrenRegelSaveResponse" nillable="true" type="tns:UrenRegelSaveResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUrenRegelSaveResponse" nillable="true" type="tns:ArrayOfUrenRegelSaveResponse" />
+  <xs:complexType name="UrenRegelSaveResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:UrenRegel">
+        <xs:sequence>
+          <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Meldingen" nillable="true" type="q9:ArrayOfstring" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UrenRegelSaveResponse" nillable="true" type="tns:UrenRegelSaveResponse" />
+  <xs:complexType name="ArrayOfUrenRegelAddedResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UrenRegelAddedResponse" nillable="true" type="tns:UrenRegelAddedResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUrenRegelAddedResponse" nillable="true" type="tns:ArrayOfUrenRegelAddedResponse" />
+  <xs:complexType name="UrenRegelAddedResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AppCreationGuid" type="ser:guid" />
+      <xs:element minOccurs="0" name="AppId" type="xs:int" />
+      <xs:element minOccurs="0" name="Kraan2Id" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UrenRegelAddedResponse" nillable="true" type="tns:UrenRegelAddedResponse" />
+  <xs:complexType name="RequestSaveUrenProject">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q10="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" base="q10:RequestAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Actie" type="tns:UrenActieEnum.UrenActie" />
+          <xs:element minOccurs="0" name="projecten" nillable="true" type="tns:ArrayOfProject" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestSaveUrenProject" nillable="true" type="tns:RequestSaveUrenProject" />
+  <xs:complexType name="ResponseSaveUrenProject">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="GefaaldeProjecten" nillable="true" type="tns:ArrayOfUrenProjectSaveResponse" />
+      <xs:element minOccurs="0" name="LoginSucces" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResponseSaveUrenProject" nillable="true" type="tns:ResponseSaveUrenProject" />
+  <xs:complexType name="ArrayOfUrenProjectSaveResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UrenProjectSaveResponse" nillable="true" type="tns:UrenProjectSaveResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUrenProjectSaveResponse" nillable="true" type="tns:ArrayOfUrenProjectSaveResponse" />
+  <xs:complexType name="UrenProjectSaveResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Project">
+        <xs:sequence>
+          <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Meldingen" nillable="true" type="q11:ArrayOfstring" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UrenProjectSaveResponse" nillable="true" type="tns:UrenProjectSaveResponse" />
+  <xs:complexType name="RequestSaveUrenDefaults">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q12="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" base="q12:RequestAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="UrenDefaults" nillable="true" type="tns:UrenDefaults" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestSaveUrenDefaults" nillable="true" type="tns:RequestSaveUrenDefaults" />
+  <xs:complexType name="ResponseSaveUrenDefaults">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LoginSucces" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Melding" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResponseSaveUrenDefaults" nillable="true" type="tns:ResponseSaveUrenDefaults" />
+  <xs:complexType name="ResponseUploadDocument">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Document" nillable="true" type="tns:Document" />
+      <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Meldingen" nillable="true" type="q13:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResponseUploadDocument" nillable="true" type="tns:ResponseUploadDocument" />
+  <xs:complexType name="RequestRemoveDocuments">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q14="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" base="q14:RequestAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Documents" nillable="true" type="tns:ArrayOfDocument" />
+          <xs:element minOccurs="0" name="MasterObjectId" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestRemoveDocuments" nillable="true" type="tns:RequestRemoveDocuments" />
+  <xs:complexType name="ResponseRemoveDocuments">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="GefaaldeDocumenten" nillable="true" type="tns:ArrayOfDocumentRemoveResponse" />
+      <xs:element minOccurs="0" name="LoginSucces" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResponseRemoveDocuments" nillable="true" type="tns:ResponseRemoveDocuments" />
+  <xs:complexType name="ArrayOfDocumentRemoveResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DocumentRemoveResponse" nillable="true" type="tns:DocumentRemoveResponse" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDocumentRemoveResponse" nillable="true" type="tns:ArrayOfDocumentRemoveResponse" />
+  <xs:complexType name="DocumentRemoveResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Document">
+        <xs:sequence>
+          <xs:element xmlns:q15="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Meldingen" nillable="true" type="q15:ArrayOfstring" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DocumentRemoveResponse" nillable="true" type="tns:DocumentRemoveResponse" />
+  <xs:complexType name="UrenSoortLijst">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="InloggenGelukt" type="xs:boolean" />
+      <xs:element minOccurs="0" name="UrenSoorten" nillable="true" type="tns:ArrayOfUrenSoort" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UrenSoortLijst" nillable="true" type="tns:UrenSoortLijst" />
+  <xs:complexType name="RequestPushnotificatie">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q16="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" base="q16:RequestAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ExternToken" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="StaatAan" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestPushnotificatie" nillable="true" type="tns:RequestPushnotificatie" />
+  <xs:complexType name="VerwerkProcesStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="InloggenGelukt" type="xs:boolean" />
+      <xs:element xmlns:q17="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Meldingen" nillable="true" type="q17:ArrayOfstring" />
+      <xs:element minOccurs="0" name="ResultingId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="VerwerkProcesStatus" nillable="true" type="tns:VerwerkProcesStatus" />
+</xs:schema>
