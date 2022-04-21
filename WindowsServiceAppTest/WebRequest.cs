@@ -90,9 +90,9 @@ namespace WindowsServiceAppTest
                     }
                 }
             }
-            catch (WebException ex)
+            catch (Exception ex)
             {
-                return @"{ ex: '" + ex.Message.ToString() + ex.Response.ToString() + "'}";
+                return @"{ ex: '" + ex.Message.ToString() + "'}";
             }
         }
 
