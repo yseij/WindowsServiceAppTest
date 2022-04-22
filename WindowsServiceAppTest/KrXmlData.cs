@@ -14,5 +14,6 @@ namespace WindowsServiceAppTest
         public double TijdService { get; set; }
         public string SaveLogFilePlace { get; set; }
         public string Email { get; set; }
+        public string ServerNaam { get; set; }
     }
 }

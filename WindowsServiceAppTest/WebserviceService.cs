@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.ServiceProcess;
@@ -17,7 +18,10 @@ namespace WindowsServiceAppTest
         private List<HttpData> _httpDatas = new List<HttpData>();
         private KrXmlData _krXmlData = new KrXmlData();
 
-        private int eventId = 1;
+        string _text = string.Empty;
+        string _webserviceName = string.Empty;
+        string _urlHttp = string.Empty;
+        bool _isSoap = false;
         private dynamic _result;
 
         HttpTest _httptest;
@@ -44,6 +48,7 @@ namespace WindowsServiceAppTest
         protected override void OnStart(string[] args)
         {
             _krXmlData = _krXml.GetDataOfXmlFile();
+            ConfigurationManager.AppSettings["connectieString"] = @"data source =" + _krXmlData.ServerNaam + "; Initial Catalog = KraanTestTool; Integrated Security = True";
             _timer.Interval = _krXmlData.TijdService;
             _timer.Elapsed += new ElapsedEventHandler(this.OnTimer);
             _timer.Start();
@@ -62,10 +67,6 @@ namespace WindowsServiceAppTest
             _timer.Stop();
             _krXmlData = _krXml.GetDataOfXmlFile();
             _timer.Interval = _krXmlData.TijdService;
-            string text = string.Empty;
-            string webserviceName = string.Empty;
-            string urlHttp = string.Empty;
-            bool isSoap = false;
             if (_krXmlData.ServiceAanOfUit == "aan")
             {
                 try
@@ -77,75 +78,24 @@ namespace WindowsServiceAppTest
 
                     LogFile logFile = new LogFile();
                     logFile.MakeLogFile("AllTestDoorService", _krXmlData.SaveLogFilePlace);
+
                     foreach (UrlData urlData in _urlDatas)
                     {
                         logFile.AddTitleToLogFile(urlData.Name);
-                        foreach (HttpData httpData in _httpDatas)
-                        {
-                            if (urlData.HttpDataId == httpData.Id)
-                            {
-                                logFile.AddTextToLogFile("Http --> " + httpData.Name);
-                                logFile.AddTextToLogFile("---");
-                                urlHttp = httpData.Name;
-                            }
-                        }
-                        foreach (WebServiceData webServiceData in _webServiceDatas)
-                        {
-                            if (urlData.WebServiceDataId == webServiceData.Id)
-                            {
-                                logFile.AddTextToLogFile("---");
-                                logFile.AddTextToLogFile("Webservice --> " + webServiceData.Name);
 
-                                webserviceName = webServiceData.Name;
-                                isSoap = webServiceData.Soap;
-                            }
-                        }
-                        foreach (KlantData klantData in _klantenDatas)
-                        {
-                            if (urlData.KlantDataId == klantData.Id)
-                            {
-                                logFile.AddTextToLogFile("Klant --> " + klantData.Name);
-                                logFile.AddTextToLogFile("---");
-                            }
-                        }
-                        if (isSoap && urlData.Name.EndsWith(".svc"))
-                        {
-                            if (urlData.Name == "MessageServiceSoap31.svc")
-                            {
-                                string data = @"{ ex: '" + "Deze service heeft een inlog nodig dus die moet je appart testen" + "'}";
-                                _result = JObject.Parse(data);
-                            }
-                            else if (urlData.Name == "MessageServiceSoap.svc")
-                            {
-                                _result = _webRequest.Get24SalesData(urlHttp + webserviceName);
-                            }
-                            else
-                            {
-                                string data = _webRequest.GetWebRequestSoap(urlHttp, webserviceName, urlData.Name);
-                                _result = JObject.Parse(data);
-                            }
-                        }
-                        else
-                        {
-                            _result = JObject.Parse(_webRequest.GetWebRequest(urlData.Id, urlHttp, webserviceName, urlData.Name, urlData.SecurityId));
-                        }
-                        
-                        foreach (JProperty item in _result)
-                        {
-                            if (item.Name != "id")
-                            {
-                                logFile.AddTextToLogFile(item.Name + " = " + item.Value.ToString());
-                            }
-                            if (item.Name == "ex")
-                            {
-                                text += urlData.Name + " --> " + item.Value.ToString() + Environment.NewLine;
-                            }
-                        }
+                        GetHttpOfUrl(urlData, logFile);
+                        GetWebserviceOfUrl(urlData, logFile);
+                        GetKlantOfUrl(urlData, logFile);
+                        CheckResult(urlData, logFile);
                     }
-                    if (text != "")
+                    if (_text != "")
                     {
-                        MailClient.TestMail("TestAll", text, logFile.FilePath, _krXmlData.Email);
+                        MailClient.TestMail("TestAll", _text, logFile.FilePath, _krXmlData.Email);
                     }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
                 }
                 finally
                 {
@@ -159,7 +109,7 @@ namespace WindowsServiceAppTest
 
         private void GetUrls()
         {
-            _urlDatas = _urltest.GetUrls(eventLog1);
+            _urlDatas = _urltest.GetUrls();
         }
 
         private void GetWebservices()
@@ -175,6 +125,81 @@ namespace WindowsServiceAppTest
         private void GetHttp()
         {
             _httpDatas = _httptest.GetHttpData();
+        }
+
+        private void GetHttpOfUrl(UrlData urlData, LogFile logFile)
+        {
+            foreach (HttpData httpData in _httpDatas)
+            {
+                if (urlData.HttpDataId == httpData.Id)
+                {
+                    logFile.AddTextToLogFile("Http --> " + httpData.Name);
+                    logFile.AddTextToLogFile("---");
+                    _urlHttp = httpData.Name;
+                }
+            }
+        }
+
+        private void GetWebserviceOfUrl(UrlData urlData, LogFile logFile)
+        {
+            foreach (WebServiceData webServiceData in _webServiceDatas)
+            {
+                if (urlData.WebServiceDataId == webServiceData.Id)
+                {
+                    logFile.AddTextToLogFile("---");
+                    logFile.AddTextToLogFile("Webservice --> " + webServiceData.Name);
+
+                    _webserviceName = webServiceData.Name;
+                    _isSoap = webServiceData.Soap;
+                }
+            }
+        }
+
+        private void GetKlantOfUrl(UrlData urlData, LogFile logFile)
+        {
+            foreach (KlantData klantData in _klantenDatas)
+            {
+                if (urlData.KlantDataId == klantData.Id)
+                {
+                    logFile.AddTextToLogFile("Klant --> " + klantData.Name);
+                    logFile.AddTextToLogFile("---");
+                }
+            }
+        }
+
+        private void CheckResult(UrlData urlData, LogFile logFile)
+        {
+            if (_isSoap && urlData.Name.EndsWith(".svc"))
+            {
+                if (urlData.Name == "MessageServiceSoap31.svc")
+                {
+                    _result = JObject.Parse(@"{ ex: '" + "Deze service heeft een inlog nodig dus die moet je appart testen" + "'}");
+                }
+                else if (urlData.Name == "MessageServiceSoap.svc")
+                {
+                    _result = _webRequest.Get24SalesData(_urlHttp + _webserviceName);
+                }
+                else
+                {
+                    _result = JObject.Parse(_webRequest.GetWebRequestSoap(_urlHttp, _webserviceName, urlData.Name));
+                }
+            }
+            else
+            {
+                _result = JObject.Parse(_webRequest.GetWebRequest(urlData.Id, _urlHttp, _webserviceName, urlData.Name, urlData.SecurityId));
+            }
+
+            foreach (JProperty item in _result)
+            {
+                if (item.Name != "id")
+                {
+                    logFile.AddTextToLogFile(item.Name + " = " + item.Value.ToString());
+                }
+                if (item.Name == "ex")
+                {
+                    _text += urlData.Name + " --> " + item.Value.ToString() + Environment.NewLine;
+                }
+            }
         }
     }
 }

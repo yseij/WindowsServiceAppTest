@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,9 @@ namespace WindowsServiceAppTest
                         break;
                     case "Email":
                         xmlData.Email = aNode.FirstChild.Value;
+                        break;
+                    case "ServerNaam":
+                        xmlData.ServerNaam = aNode.FirstChild.Value;
                         break;
                     default:
                         break;

@@ -19,7 +19,7 @@ namespace WindowsFormsAppTest
 
         private string ConnectieDB => ConfigurationManager.AppSettings["connectieString"];
 
-        public List<UrlData> GetUrls(EventLog eventLog)
+        public List<UrlData> GetUrls()
         {
             DataTable dt = new DataTable();
             int rows_returned;
