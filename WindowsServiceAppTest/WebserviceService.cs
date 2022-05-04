@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
-using System.IO;
 using System.ServiceProcess;
 using System.Timers;
 using WindowsFormsAppTest;
@@ -12,43 +9,45 @@ namespace WindowsServiceAppTest
 {
     public partial class WebserviceService : ServiceBase
     {
-        private List<UrlData> _urlDatas = new List<UrlData>();
-        private List<WebServiceData> _webServiceDatas = new List<WebServiceData>();
-        private List<KlantData> _klantenDatas = new List<KlantData>();
-        private List<HttpData> _httpDatas = new List<HttpData>();
+        private List<Url> _urls = new List<Url>();
+        private List<Webservice> _webservices = new List<Webservice>();
+        private List<Klant> _klanten = new List<Klant>();
+        private List<KlantWebservice> _klantWebservices = new List<KlantWebservice>();
         private KrXmlData _krXmlData = new KrXmlData();
 
-        string _text = string.Empty;
-        string _webserviceName = string.Empty;
-        string _urlHttp = string.Empty;
-        bool _isSoap = false;
+        private string _text = string.Empty;
+        private string _webserviceName = string.Empty;
+        private string _urlHttp = string.Empty;
+        private bool _isSoap = false;
         private dynamic _result;
 
-        HttpTest _httptest;
+        UrlXml _urlXml;
+        KlantXml _klantXml;
+        WebserviceXml _webserviceXml;
+        KlantWebserviceXml _klantWebserviceXml;
+
         WebRequest _webRequest;
-        UrlTest _urltest;
-        WebserviceTest _webserviceTest;
-        KlantTest _klantTest;
         Timer _timer;
         KrXml _krXml;
+        LogFile _logFile = new LogFile();
 
         public WebserviceService()
         {
 
             InitializeComponent();
             _timer = new Timer();
-            _httptest = new HttpTest();
-            _webserviceTest = new WebserviceTest();
-            _klantTest = new KlantTest();
-            _urltest = new UrlTest();
             _webRequest = new WebRequest();
             _krXml = new KrXml();
+
+            _urlXml = new UrlXml();
+            _klantXml = new KlantXml();
+            _webserviceXml = new WebserviceXml();
+            _klantWebserviceXml = new KlantWebserviceXml();
         }
 
         protected override void OnStart(string[] args)
         {
             _krXmlData = _krXml.GetDataOfXmlFile();
-            ConfigurationManager.AppSettings["connectieString"] = @"data source =" + _krXmlData.ServerNaam + "; Initial Catalog = KraanTestTool; Integrated Security = True";
             _timer.Interval = _krXmlData.TijdService;
             _timer.Elapsed += new ElapsedEventHandler(this.OnTimer);
             _timer.Start();
@@ -74,19 +73,49 @@ namespace WindowsServiceAppTest
                     GetUrls();
                     GetWebservices();
                     GetKlanten();
-                    GetHttp();
+                    GetKlantWebservices();
 
                     LogFile logFile = new LogFile();
                     logFile.MakeLogFile("AllTestDoorService", _krXmlData.SaveLogFilePlace);
-
-                    foreach (UrlData urlData in _urlDatas)
+                    foreach (KlantWebservice klantWebservice in _klantWebservices)
                     {
-                        logFile.AddTitleToLogFile(urlData.Name);
-
-                        GetHttpOfUrl(urlData, logFile);
-                        GetWebserviceOfUrl(urlData, logFile);
-                        GetKlantOfUrl(urlData, logFile);
-                        CheckResult(urlData, logFile);
+                        string basisUrl = string.Empty;
+                        Url url = new Url();
+                        Webservice webService = new Webservice();
+                        Klant klant = _klanten.Find(k => k.Id == klantWebservice.Klant);
+                        logFile.AddTitleToLogFile(klant.Name);
+                        if (klantWebservice.BasisUrl1)
+                        {
+                            basisUrl = klant.BasisUrl1;
+                        }
+                        else
+                        {
+                            basisUrl = klant.BasisUrl2;
+                        }
+                        foreach (Webservice webservice in _webservices)
+                        {
+                            if (webservice.Id == klantWebservice.Webservice)
+                            {
+                                webService = webservice;
+                                url.Name = basisUrl + webservice.Name;
+                                _isSoap = webservice.Soap;
+                            }
+                        }
+                        for (int i = 0; i < 2; i++)
+                        {
+                            if (i == 0)
+                            {
+                                CheckUrl(url);
+                            }
+                            else
+                            {
+                                GetWebserviceVersion(url);
+                            }
+                        }
+                    }
+                    foreach (Url url in _urls)
+                    {
+                        GetUrl(url);
                     }
                     if (_text != "")
                     {
@@ -99,105 +128,126 @@ namespace WindowsServiceAppTest
                 }
                 finally
                 {
-                    _urlDatas.Clear();
-                    _webServiceDatas.Clear();
-                    _klantenDatas.Clear();
+                    _urls.Clear();
+                    _webservices.Clear();
+                    _klanten.Clear();
                 }
             }
             _timer.Start();
         }
 
+        private void CheckUrl(Url url)
+        {
+            bool isGood = _webRequest.CheckUrl(url.Name);
+            if (!isGood)
+            {
+                _text += url.Name + " --> De geteste webservice is niet online" + Environment.NewLine;
+                _logFile.AddTextToLogFile(url.Name + " --> De geteste webservice is niet online" + Environment.NewLine);
+            }
+            else
+            {
+                _text += url.Name + " --> De geteste webservice is online" + Environment.NewLine;
+                _logFile.AddTextToLogFile(url.Name + " --> De geteste webservice is online" + Environment.NewLine);
+            }
+        }
+
+        private void GetWebserviceVersion(Url url)
+        {
+            url.Name += "/GetWebserviceVersion";
+            _logFile.AddTextToLogFile(Environment.NewLine);
+            _logFile.AddTextToLogFile(url.Name + Environment.NewLine);
+            CheckResult(url, true);
+        }
+
+        private void GetUrl(Url url)
+        {
+            _logFile.AddTextToLogFile(Environment.NewLine);
+            CheckResult(url, false);
+            foreach (JProperty item in _result)
+            {
+                _text += url.Name + " --> " + item.Value.ToString() + Environment.NewLine;
+                _logFile.AddTextToLogFile(url.Name + " --> " + item.Value.ToString() + Environment.NewLine);
+            }
+        }
+
         private void GetUrls()
         {
-            _urlDatas = _urltest.GetUrls();
+            _urls = _urlXml.GetAll();
         }
 
         private void GetWebservices()
         {
-            _webServiceDatas = _webserviceTest.GetWebServiceData();
+            _webservices = _webserviceXml.GetAll();
         }
 
         private void GetKlanten()
         {
-            _klantenDatas = _klantTest.GetKlantData();
+            _klanten = _klantXml.GetAll();
         }
 
-        private void GetHttp()
+        private void GetKlantWebservices()
         {
-            _httpDatas = _httptest.GetHttpData();
+            _klantWebservices = _klantWebserviceXml.GetAll();
         }
 
-        private void GetHttpOfUrl(UrlData urlData, LogFile logFile)
+        //private void GetWebserviceOfUrl(Url url, LogFile logFile)
+        //{
+        //    foreach (Webservice webServiceData in _webservices)
+        //    {
+        //        if (url.WebserviceId == webServiceData.Id)
+        //        {
+        //            logFile.AddTextToLogFile("---");
+        //            logFile.AddTextToLogFile("Webservice --> " + webServiceData.Name);
+
+        //            _webserviceName = webServiceData.Name;
+        //            _isSoap = webServiceData.Soap;
+        //        }
+        //    }
+        //}
+
+        //private void GetKlantOfUrl(Url url, LogFile logFile)
+        //{
+        //    foreach (Klant klantData in _klanten)
+        //    {
+        //        if (url.KlantId == klantData.Id)
+        //        {
+        //            logFile.AddTextToLogFile("Klant --> " + klantData.Name);
+        //            logFile.AddTextToLogFile("---");
+        //        }
+        //    }
+        //}
+
+        private void CheckResult(Url url, bool isWebserviceVersion)
         {
-            foreach (HttpData httpData in _httpDatas)
+            if (_isSoap && url.Name.EndsWith(".svc"))
             {
-                if (urlData.HttpDataId == httpData.Id)
-                {
-                    logFile.AddTextToLogFile("Http --> " + httpData.Name);
-                    logFile.AddTextToLogFile("---");
-                    _urlHttp = httpData.Name;
-                }
-            }
-        }
-
-        private void GetWebserviceOfUrl(UrlData urlData, LogFile logFile)
-        {
-            foreach (WebServiceData webServiceData in _webServiceDatas)
-            {
-                if (urlData.WebServiceDataId == webServiceData.Id)
-                {
-                    logFile.AddTextToLogFile("---");
-                    logFile.AddTextToLogFile("Webservice --> " + webServiceData.Name);
-
-                    _webserviceName = webServiceData.Name;
-                    _isSoap = webServiceData.Soap;
-                }
-            }
-        }
-
-        private void GetKlantOfUrl(UrlData urlData, LogFile logFile)
-        {
-            foreach (KlantData klantData in _klantenDatas)
-            {
-                if (urlData.KlantDataId == klantData.Id)
-                {
-                    logFile.AddTextToLogFile("Klant --> " + klantData.Name);
-                    logFile.AddTextToLogFile("---");
-                }
-            }
-        }
-
-        private void CheckResult(UrlData urlData, LogFile logFile)
-        {
-            if (_isSoap && urlData.Name.EndsWith(".svc"))
-            {
-                if (urlData.Name == "MessageServiceSoap31.svc")
+                if (url.Name.Contains("MessageServiceSoap31.svc"))
                 {
                     _result = JObject.Parse(@"{ ex: '" + "Deze service heeft een inlog nodig dus die moet je appart testen" + "'}");
                 }
-                else if (urlData.Name == "MessageServiceSoap.svc")
+                else if (url.Name.Contains("MessageServiceSoap.svc"))
                 {
-                    _result = _webRequest.Get24SalesData(_urlHttp + _webserviceName);
+                    _result = _webRequest.Get24SalesData(url.Name);
                 }
                 else
                 {
-                    _result = JObject.Parse(_webRequest.GetWebRequestSoap(_urlHttp, _webserviceName, urlData.Name));
+                    _result = JObject.Parse(_webRequest.GetWebRequestSoap(url.Name, ServiceName));
                 }
             }
             else
             {
-                _result = JObject.Parse(_webRequest.GetWebRequest(urlData.Id, _urlHttp, _webserviceName, urlData.Name, urlData.SecurityId));
+                _result = JObject.Parse(_webRequest.GetWebRequestRest(url.Id, url.Name, isWebserviceVersion));
             }
 
             foreach (JProperty item in _result)
             {
                 if (item.Name != "id")
                 {
-                    logFile.AddTextToLogFile(item.Name + " = " + item.Value.ToString());
+                    _logFile.AddTextToLogFile(item.Name + " = " + item.Value.ToString());
                 }
                 if (item.Name == "ex")
                 {
-                    _text += urlData.Name + " --> " + item.Value.ToString() + Environment.NewLine;
+                    _text += url.Name + " --> " + item.Value.ToString() + Environment.NewLine;
                 }
             }
         }

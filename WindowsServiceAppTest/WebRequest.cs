@@ -13,17 +13,7 @@ namespace WindowsServiceAppTest
 {
     class WebRequest
     {
-        private string webserviceVersie;
-        private string kraanDll;
-        private string kraanIni;
-        private string kraanDatabase;
-
-        private int positionKraanDll;
-        private int positionKraanIni;
-        private int positionDatabaseConnect;
-        private int positionDatabaseMelding;
-
-        private bool certIsGoed = false;
+        private bool _certIsGoed = false;
 
         WebClient _wc;
 
@@ -32,38 +22,32 @@ namespace WindowsServiceAppTest
             _wc = new WebClient();
         }
 
-        public string GetWebRequest(int id, string http, string webservice, string url, string securityId = "")
+        public string GetWebRequestRest(Guid id, string host, bool isWebserviceVersion)
         {
-            string webRequestUrl = http + webservice + '/' + url + securityId;
-            Uri uri = new Uri(webRequestUrl);
+            string url = host;
+            Uri uri = new Uri(url);
             try
             {
-                HttpWebRequest request = HttpWebRequest.Create(webRequestUrl) as HttpWebRequest;
+                HttpWebRequest request = HttpWebRequest.Create(host) as HttpWebRequest;
                 HttpClient client = new HttpClient();
                 using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
                 {
-                    X509Certificate cert = request.ServicePoint.Certificate;
-                    X509Certificate2 cert2 = null;
-                    if (cert != null)
-                    {
-                        cert2 = new X509Certificate2(cert);
-                        certIsGoed = cert2.Verify();
-                    }
+                    X509Certificate cert = GetCertificate(request);
                     int statusCode = (int)response.StatusCode;
                     if (statusCode >= 100 && statusCode < 400) //Good requests
                     {
                         client.BaseAddress = uri;
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                        // List data response.
                         HttpResponseMessage response1 = client.GetAsync(uri).Result;  // Blocking call! Program will wait here until a response is received or a timeout occurs.
+                        string data = response1.Content.ReadAsStringAsync().Result;
                         if (response1.IsSuccessStatusCode)
                         {
                             //Parse the response body.
-                            string data = response1.Content.ReadAsStringAsync().Result; //Make sure to add a reference to System.Net.Http.Formatting.dll
-                            if (securityId == string.Empty)
+                            //Make sure to add a reference to System.Net.Http.Formatting.dll
+                            if (isWebserviceVersion)
                             {
-                                if (certIsGoed)
+                                if (_certIsGoed)
                                 {
                                     return GetDataOfWebRequest(data, cert.GetExpirationDateString().ToString());
                                 }
@@ -72,22 +56,19 @@ namespace WindowsServiceAppTest
                                     return GetDataOfWebRequest(data, "");
                                 }
                             }
-                            int Pos1 = data.IndexOf('{');
-                            int Pos2 = data.IndexOf('}');
-                            data = data.Substring(Pos1 + 1, Pos2 - Pos1 - 1);
-                            if (certIsGoed)
+                            else
                             {
-                                return "{" + data + ", id: '" + id + "', certVerValDatum: '" + cert.GetExpirationDateString().ToString() + "'}";
+                                int Pos1 = data.IndexOf('{');
+                                int Pos2 = data.IndexOf('}');
+                                data = data.Substring(Pos1 + 1, Pos2 - Pos1 - 1);
+                                if (_certIsGoed)
+                                {
+                                    return "{" + data + ", id: '" + id + "', certVerValDatum: '" + cert.GetExpirationDateString().ToString() + "'}";
+                                }
                             }
-                            return "{" + data + ", id: '" + id + "'}";
-
                         }
-                        return null;
                     }
-                    else
-                    {
-                        return null;
-                    }
+                    return @"{ ex: '" + "krijg geen data terug" + "'}";
                 }
             }
             catch (Exception ex)
@@ -98,22 +79,46 @@ namespace WindowsServiceAppTest
 
         private string GetDataOfWebRequest(string data, string verValDatum = "")
         {
-            positionKraanDll = data.IndexOf("KraanDLL");
-            positionKraanIni = data.IndexOf("Kraan.ini");
-            positionDatabaseConnect = data.IndexOf("Database connectie");
-            positionDatabaseMelding = data.IndexOf("Database melding");
+            int positionKraanDll = data.IndexOf("KraanDLL");
+            int positionKraanIni = data.IndexOf("Kraan.ini");
+            int positionDatabaseConnect = data.IndexOf("Database connectie");
+            int positionDatabaseMelding = data.IndexOf("Database melding");
 
-            webserviceVersie = data.Substring(0, positionKraanDll);
-            kraanDll = data.Substring(positionKraanDll, positionKraanIni - positionKraanDll);
-            kraanIni = data.Substring(positionKraanIni, positionDatabaseConnect - positionKraanIni);
-            kraanDatabase = data.Substring(positionDatabaseConnect, positionDatabaseMelding - positionDatabaseConnect);
+            string webserviceVersie = data.Substring(0, positionKraanDll);
+            string kraanDll = data.Substring(positionKraanDll, positionKraanIni - positionKraanDll);
+            string kraanIni = data.Substring(positionKraanIni, positionDatabaseConnect - positionKraanIni);
+            string kraanDatabase = data.Substring(positionDatabaseConnect, positionDatabaseMelding - positionDatabaseConnect);
 
             return @"{ WebserviceVersie: '" + webserviceVersie + "', KraanDll: '" + kraanDll + "', KraanIni: '" + kraanIni + "', KraanDatabase: '" + kraanDatabase + "', certVerValDatum: '" + verValDatum + "'}";
         }
 
-        public string GetWebRequestSoap(string http, string webservice, string service)
+        public bool CheckUrl(string host)
         {
-            string host = http + webservice + "/";
+            Uri uri = new Uri(host);
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response1 = client.GetAsync(uri).Result;
+            if (response1.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private X509Certificate GetCertificate(HttpWebRequest request)
+        {
+            X509Certificate cert = request.ServicePoint.Certificate;
+            X509Certificate2 cert2 = null;
+            if (cert != null)
+            {
+                cert2 = new X509Certificate2(cert);
+                _certIsGoed = cert2.Verify();
+            }
+            return cert;
+        }
+
+
+        public string GetWebRequestSoap(string host, string service)
+        {
             string result = "";
 
             //YouriWebserviceCrm.CrmServiceClient clientAuth;
