@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Xml.Linq;
 using WindowsFormsAppTest;
 
@@ -7,7 +8,7 @@ namespace WindowsServiceAppTest
 {
     class KlantXml
     {
-        private string _path = @"D://db.xml";
+        private string _path = ConfigurationManager.AppSettings["PlaceDb"];
         public List<Klant> GetAll()
         {
             XDocument doc = XDocument.Load(_path);

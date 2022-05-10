@@ -17,7 +17,9 @@ namespace WindowsServiceAppTest
 
         private string _text = string.Empty;
         private bool _isSoap = false;
-        private dynamic _result;
+        private dynamic _result; 
+        private string _https = "https:";
+        private string _http = "http:";
 
         UrlXml _urlXml;
         KlantXml _klantXml;
@@ -144,16 +146,21 @@ namespace WindowsServiceAppTest
 
         private void CheckUrl(Url url)
         {
-            bool isGood = _webRequest.CheckUrl(url.Name);
-            if (!isGood)
+            string checkUrl = _webRequest.CheckUrl(url.Name);
+            if (checkUrl.StartsWith("false"))
             {
-                _text += url.Name + " --> De geteste webservice is niet online" + Environment.NewLine;
-                _logFile.AddTextToLogFile(url.Name + " --> De geteste webservice is niet online");
+                _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> Webservice = " + checkUrl + Environment.NewLine;
+                _logFile.AddTextToLogFile(url.Name + " --> Webservice = " + checkUrl + Environment.NewLine);
+            }
+            else if (checkUrl.StartsWith("true"))
+            {
+                _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> Webservice = true" + Environment.NewLine;
+                _logFile.AddTextToLogFile(url.Name + " --> Webservice = true" + Environment.NewLine);
             }
             else
             {
-                _text += url.Name + " --> De geteste webservice is online" + Environment.NewLine;
-                _logFile.AddTextToLogFile(url.Name + " --> De geteste webservice is online");
+                _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> ex = " + checkUrl + Environment.NewLine;
+                _logFile.AddTextToLogFile(url.Name + " --> ex = " + checkUrl + Environment.NewLine);
             }
         }
 
@@ -163,18 +170,15 @@ namespace WindowsServiceAppTest
             {
                 url.Name += "/GetWebserviceVersion";
             }
-            _logFile.AddTextToLogFile(url.Name);
+            _logFile.AddTextToLogFile(url.Name.Replace(_https, "").Replace(_http, ""));
             CheckResult(url, true);
         }
 
         private void GetUrl(Url url)
         {
+           
+            _logFile.AddTextToLogFile(url.Name + Environment.NewLine);
             CheckResult(url, false);
-            foreach (JProperty item in _result)
-            {
-                _text += url.Name + " --> " + item.Value.ToString();
-                _logFile.AddTextToLogFile(url.Name + " --> " + item.Value.ToString());
-            }
         }
 
         private void GetUrls()
@@ -229,7 +233,7 @@ namespace WindowsServiceAppTest
                 }
                 if (item.Name == "ex")
                 {
-                    _text += url.Name + " --> " + item.Value.ToString();
+                    _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> " + item.Value.ToString();
                 }
             }
         }

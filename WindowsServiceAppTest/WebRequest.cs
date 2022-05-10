@@ -63,7 +63,7 @@ namespace WindowsServiceAppTest
                                 data = data.Substring(Pos1 + 1, Pos2 - Pos1 - 1);
                                 if (_certIsGoed)
                                 {
-                                    return "{" + data + ", id: '" + id + "', certVerValDatum: '" + cert.GetExpirationDateString().ToString() + "'}";
+                                    return "{" + data + "', certVerValDatum: '" + cert.GetExpirationDateString().ToString() + "'}";
                                 }
                             }
                         }
@@ -92,16 +92,23 @@ namespace WindowsServiceAppTest
             return @"{ WebserviceVersie: '" + webserviceVersie + "', KraanDll: '" + kraanDll + "', KraanIni: '" + kraanIni + "', KraanDatabase: '" + kraanDatabase + "', certVerValDatum: '" + verValDatum + "'}";
         }
 
-        public bool CheckUrl(string host)
+        public string CheckUrl(string host)
         {
             Uri uri = new Uri(host);
             HttpClient client = new HttpClient();
-            HttpResponseMessage response1 = client.GetAsync(uri).Result;
-            if (response1.IsSuccessStatusCode)
+            try
             {
-                return true;
+                HttpResponseMessage response1 = client.GetAsync(uri).Result;
+                if (response1.IsSuccessStatusCode)
+                {
+                    return "true";
+                }
+                return "false met statuscode: " + response1.StatusCode;
             }
-            return false;
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         private X509Certificate GetCertificate(HttpWebRequest request)

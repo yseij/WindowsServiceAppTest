@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
 using System.Xml.Linq;
 using WindowsFormsAppTest;
 
@@ -10,7 +8,7 @@ namespace WindowsServiceAppTest
 {
     class UrlXml
     {
-        private string _path = @"D://db.xml";
+        private string _path = ConfigurationManager.AppSettings["PlaceDb"];
 
         public List<Url> GetAll()
         {
