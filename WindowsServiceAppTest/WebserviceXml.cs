@@ -8,10 +8,9 @@ namespace WindowsServiceAppTest
 {
     class WebserviceXml
     {
-        private string _path = ConfigurationManager.AppSettings["PlaceDb"];
-        public List<Webservice> GetAll()
+        public List<Webservice> GetAll(string path)
         {
-            XDocument doc = XDocument.Load(_path);
+            XDocument doc = XDocument.Load(path);
             List<Webservice> webservices = new List<Webservice>();
 
             foreach (XElement element in doc.Descendants("Webservice"))

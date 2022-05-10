@@ -22,7 +22,7 @@ namespace WindowsServiceAppTest
             _wc = new WebClient();
         }
 
-        public string GetWebRequestRest(Guid id, string host, bool isWebserviceVersion)
+        public string GetWebRequestRest(string host, bool isWebserviceVersion)
         {
             string url = host;
             Uri uri = new Uri(url);
@@ -63,7 +63,7 @@ namespace WindowsServiceAppTest
                                 data = data.Substring(Pos1 + 1, Pos2 - Pos1 - 1);
                                 if (_certIsGoed)
                                 {
-                                    return "{" + data + "', certVerValDatum: '" + cert.GetExpirationDateString().ToString() + "'}";
+                                    return "{" + data + ", \"certVerValDatum\": " + "\"" + cert.GetExpirationDateString().ToString() + "\"" + "}";
                                 }
                             }
                         }

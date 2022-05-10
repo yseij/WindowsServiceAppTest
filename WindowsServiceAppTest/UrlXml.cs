@@ -8,13 +8,11 @@ namespace WindowsServiceAppTest
 {
     class UrlXml
     {
-        private string _path = ConfigurationManager.AppSettings["PlaceDb"];
-
-        public List<Url> GetAll()
+        public List<Url> GetAll(string path)
         {
             List<Url> urls = new List<Url>();
 
-            XDocument doc = XDocument.Load(_path);
+            XDocument doc = XDocument.Load(path);
             IEnumerable<XElement> elements = doc.Descendants("Url");
             foreach (XElement element in elements)
             {

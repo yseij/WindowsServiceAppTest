@@ -6,13 +6,11 @@ namespace WindowsServiceAppTest
 {
     class KlantWebserviceXml
     {
-        private string _path = @"D://db.xml";
-
-        public List<KlantWebservice> GetAll()
+        public List<KlantWebservice> GetAll(string path)
         {
             List<KlantWebservice> klantWebservices = new List<KlantWebservice>();
 
-            XDocument doc = XDocument.Load(_path);
+            XDocument doc = XDocument.Load(path);
             IEnumerable<XElement> elements = doc.Descendants("KlantWebservice");
             foreach (XElement element in elements)
             {

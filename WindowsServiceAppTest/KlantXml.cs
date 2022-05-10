@@ -8,10 +8,9 @@ namespace WindowsServiceAppTest
 {
     class KlantXml
     {
-        private string _path = ConfigurationManager.AppSettings["PlaceDb"];
-        public List<Klant> GetAll()
+        public List<Klant> GetAll(string path)
         {
-            XDocument doc = XDocument.Load(_path);
+            XDocument doc = XDocument.Load(path);
             List<Klant> klanten = new List<Klant>();
 
             foreach (XElement element in doc.Descendants("Klant"))

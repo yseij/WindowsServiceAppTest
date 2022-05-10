@@ -35,7 +35,7 @@ namespace WindowsServiceAppTest
                         xmlData.Email = aNode.FirstChild.Value;
                         break;
                     case "PlaceDb":
-                        ConfigurationManager.AppSettings["PlaceDb"] = aNode.FirstChild.Value;
+                        xmlData.PlaceDb = aNode.FirstChild.Value;
                         break;
                     default:
                         break;

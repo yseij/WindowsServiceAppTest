@@ -170,7 +170,7 @@ namespace WindowsServiceAppTest
             {
                 url.Name += "/GetWebserviceVersion";
             }
-            _logFile.AddTextToLogFile(url.Name.Replace(_https, "").Replace(_http, ""));
+            _logFile.AddTextToLogFile(url.Name);
             CheckResult(url, true);
         }
 
@@ -183,22 +183,22 @@ namespace WindowsServiceAppTest
 
         private void GetUrls()
         {
-            _urls = _urlXml.GetAll();
+            _urls = _urlXml.GetAll(_krXmlData.PlaceDb);
         }
 
         private void GetWebservices()
         {
-            _webservices = _webserviceXml.GetAll();
+            _webservices = _webserviceXml.GetAll(_krXmlData.PlaceDb);
         }
 
         private void GetKlanten()
         {
-            _klanten = _klantXml.GetAll();
+            _klanten = _klantXml.GetAll(_krXmlData.PlaceDb);
         }
 
         private void GetKlantWebservices()
         {
-            _klantWebservices = _klantWebserviceXml.GetAll();
+            _klantWebservices = _klantWebserviceXml.GetAll(_krXmlData.PlaceDb);
         }
 
         private void CheckResult(Url url, bool isWebserviceVersion)
@@ -222,7 +222,7 @@ namespace WindowsServiceAppTest
             }
             else
             {
-                _result = JObject.Parse(_webRequest.GetWebRequestRest(url.Id, url.Name, isWebserviceVersion));
+                _result = JObject.Parse(_webRequest.GetWebRequestRest(url.Name, isWebserviceVersion));
             }
 
             foreach (JProperty item in _result)
