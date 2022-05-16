@@ -11,7 +11,7 @@ namespace WindowsFormsAppTest
 
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public Guid WebserviceId { get; set; }
+        public Guid KlantWebserviceId { get; set; }
         public Guid KlantId { get; set; }
     }
 }

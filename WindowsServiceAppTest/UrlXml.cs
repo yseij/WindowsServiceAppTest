@@ -20,7 +20,7 @@ namespace WindowsServiceAppTest
                 newUrl.Id = Guid.Parse(element.Attribute("Id").Value);
                 newUrl.Name = element.Attribute("Name").Value;
                 newUrl.KlantId = Guid.Parse(element.Attribute("KlantId").Value);
-                newUrl.WebserviceId = Guid.Parse(element.Attribute("WebserviceId").Value);
+                newUrl.KlantWebserviceId = Guid.Parse(element.Attribute("KlantWebserviceId").Value);
                 urls.Add(newUrl);
             }
             return urls;

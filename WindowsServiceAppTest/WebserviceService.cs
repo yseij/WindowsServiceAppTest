@@ -21,6 +21,13 @@ namespace WindowsServiceAppTest
         private string _https = "https:";
         private string _http = "http:";
 
+        string[] kraanWebservices = { "AuthService.svc",
+                                      "CrmService.svc",
+                                      "WorkflowService.svc",
+                                      "MaterieelService.svc",
+                                      "MaterieelbeheerService.svc",
+                                      "UrenService.svc" };
+
         UrlXml _urlXml;
         KlantXml _klantXml;
         WebserviceXml _webserviceXml;
@@ -102,6 +109,7 @@ namespace WindowsServiceAppTest
                                     _isSoap = webservice.Soap;
                                 }
                             }
+                            string urlforWebservice = url.Name;
                             for (int i = 0; i < 2; i++)
                             {
                                 if (i == 0)
@@ -111,16 +119,28 @@ namespace WindowsServiceAppTest
                                 else
                                 {
                                     GetWebserviceVersion(url);
-                                    _logFile.AddTextToLogFile(Environment.NewLine);
+                                    _logFile.AddTextToLogFile("\n");
                                 }
+                            }
+                            if (webService.Name == "Kraan2Webservice")
+                            {
+                                UrlsTestKraan2Webservice(urlforWebservice);
                             }
                         }
                         foreach (Url url1 in _urls)
                         {
                             if (url1.KlantId == klant.Id)
                             {
-                                GetUrl(url1);
-                                _logFile.AddTextToLogFile(Environment.NewLine);
+                                KlantWebservice klantWebservice = _klantWebserviceXml.GetByKlantWebserviceId(url1.KlantWebserviceId, _krXmlData.PlaceDb);
+                                string basisUrl1 = FindBasisUrl(klantWebservice, klant);
+                                Webservice webservice = FindWebservice(klantWebservice);
+                                Url newUrl = new Url();
+                                newUrl.Id = url1.Id;
+                                newUrl.Name = basisUrl + webService.Name + "/" + url1.Name;
+                                newUrl.KlantId = url1.KlantId;
+                                newUrl.KlantWebserviceId = klantWebservice.Id;
+                                GetUrl(newUrl);
+                                _logFile.AddTextToLogFile("\n");
                             }
                         }
                     }
@@ -144,23 +164,60 @@ namespace WindowsServiceAppTest
             _timer.Start();
         }
 
+        private string FindBasisUrl(KlantWebservice klantWebservice, Klant klant)
+        {
+            if (klantWebservice.BasisUrl1)
+            {
+                return klant.BasisUrl1;
+            }
+            else
+            {
+                return klant.BasisUrl2;
+            }
+        }
+
+        private Webservice FindWebservice(KlantWebservice klantWebservice)
+        {
+            List<Webservice> webServices = _webserviceXml.GetAll(_krXmlData.PlaceDb);
+            foreach (Webservice webservice in webServices)
+            {
+                if (webservice.Id == klantWebservice.Webservice)
+                {
+                    _isSoap = webservice.Soap;
+                    return webservice;
+                }
+            }
+            return null;
+        }
+
+        private void UrlsTestKraan2Webservice(string urlName)
+        {
+            for (int i = 0; i < kraanWebservices.Length; i++)
+            {
+                Url newUrl = new Url();
+                newUrl.Name = urlName + "/" + kraanWebservices[i];
+                GetUrl(newUrl);
+                _logFile.AddTextToLogFile("\n");
+            }
+        }
+
         private void CheckUrl(Url url)
         {
             string checkUrl = _webRequest.CheckUrl(url.Name);
             if (checkUrl.StartsWith("false"))
             {
-                _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> Webservice = " + checkUrl + Environment.NewLine;
-                _logFile.AddTextToLogFile(url.Name + " --> Webservice = " + checkUrl + Environment.NewLine);
+                _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> Webservice = X " + checkUrl + "\n";
+                _logFile.AddTextToLogFile(url.Name + "--> Webservice = X " + checkUrl);
             }
             else if (checkUrl.StartsWith("true"))
             {
-                _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> Webservice = true" + Environment.NewLine;
-                _logFile.AddTextToLogFile(url.Name + " --> Webservice = true" + Environment.NewLine);
+                _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> Webservice = ✓" + "\n";
+                _logFile.AddTextToLogFile(url.Name + " --> Webservice = ✓");
             }
             else
             {
-                _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> ex = " + checkUrl + Environment.NewLine;
-                _logFile.AddTextToLogFile(url.Name + " --> ex = " + checkUrl + Environment.NewLine);
+                _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> ex = " + checkUrl + "\n";
+                _logFile.AddTextToLogFile(url.Name + " --> ex = " + checkUrl);
             }
         }
 
@@ -176,8 +233,7 @@ namespace WindowsServiceAppTest
 
         private void GetUrl(Url url)
         {
-           
-            _logFile.AddTextToLogFile(url.Name + Environment.NewLine);
+            _logFile.AddTextToLogFile(url.Name);
             CheckResult(url, false);
         }
 
