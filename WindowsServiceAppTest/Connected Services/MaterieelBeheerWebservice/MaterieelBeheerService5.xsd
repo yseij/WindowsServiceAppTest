@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/MaterieelBeheerService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/MaterieelBeheerService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" />
+  <xs:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/MaterieelBeheerService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Kraan.Model.Probis.Voorraad" />
+  <xs:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/MaterieelBeheerService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/System.Drawing" />
+  <xs:complexType name="RequestStamModelData">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" base="q1:RequestAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ServerId" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestStamModelData" nillable="true" type="tns:RequestStamModelData" />
+  <xs:complexType name="ResponseStamTabel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Lijst" nillable="true" type="tns:ArrayOfStamTabel" />
+      <xs:element minOccurs="0" name="LoginSucces" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResponseStamTabel" nillable="true" type="tns:ResponseStamTabel" />
+  <xs:complexType name="ArrayOfStamTabel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StamTabel" nillable="true" type="tns:StamTabel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStamTabel" nillable="true" type="tns:ArrayOfStamTabel" />
+  <xs:complexType name="StamTabel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StamTabel" nillable="true" type="tns:StamTabel" />
+  <xs:complexType name="ResponseLocaties">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Lijst" nillable="true" type="tns:ArrayOfLocatieData" />
+      <xs:element minOccurs="0" name="LoginSucces" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResponseLocaties" nillable="true" type="tns:ResponseLocaties" />
+  <xs:complexType name="ArrayOfLocatieData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LocatieData" nillable="true" type="tns:LocatieData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLocatieData" nillable="true" type="tns:ArrayOfLocatieData" />
+  <xs:complexType name="LocatieData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HeeftWerkbonnen" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="IsNaarLocatie" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsVanLocatie" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsWerf" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Werkbonnen" nillable="true" type="tns:ArrayOfWerkbon" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LocatieData" nillable="true" type="tns:LocatieData" />
+  <xs:complexType name="ArrayOfWerkbon">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Werkbon" nillable="true" type="tns:Werkbon" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWerkbon" nillable="true" type="tns:ArrayOfWerkbon" />
+  <xs:complexType name="Werkbon">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Werkbon" nillable="true" type="tns:Werkbon" />
+  <xs:complexType name="ResponseGetDataVanLocatie">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Besteld" nillable="true" type="tns:ArrayOfVoorraadLocatieGegevens" />
+      <xs:element minOccurs="0" name="EffectiefOpVoorraad" nillable="true" type="tns:ArrayOfVoorraadLocatieGegevens" />
+      <xs:element minOccurs="0" name="LoginSucces" type="xs:boolean" />
+      <xs:element minOccurs="0" name="OpVoorraad" nillable="true" type="tns:ArrayOfVoorraadLocatieGegevens" />
+      <xs:element minOccurs="0" name="Retour" nillable="true" type="tns:ArrayOfVoorraadLocatieGegevens" />
+      <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResponseGetDataVanLocatie" nillable="true" type="tns:ResponseGetDataVanLocatie" />
+  <xs:complexType name="ArrayOfVoorraadLocatieGegevens">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="VoorraadLocatieGegevens" nillable="true" type="tns:VoorraadLocatieGegevens" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfVoorraadLocatieGegevens" nillable="true" type="tns:ArrayOfVoorraadLocatieGegevens" />
+  <xs:complexType name="VoorraadLocatieGegevens">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Aantal" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Afbeelding" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="ArtikelCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ArtikelId" type="ser:guid" />
+      <xs:element minOccurs="0" name="ArtikelOmschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServerId" type="ser:guid" />
+      <xs:element minOccurs="0" name="SoortLocatie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SoortLocatieCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Type" type="tns:VoorraadLocatieGegevens.ArtikelType" />
+      <xs:element minOccurs="0" name="Uniek" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="VoorraadLocatieGegevens" nillable="true" type="tns:VoorraadLocatieGegevens" />
+  <xs:simpleType name="VoorraadLocatieGegevens.ArtikelType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Onbekend">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">-1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Activa" />
+      <xs:enumeration value="Activadefinitie" />
+      <xs:enumeration value="Materieelstuk">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Materieeldefinitie">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Verkoopartikel">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Verkoopartikeldefinitie">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">32</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Verhuurpakket">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">64</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Verkooppakket">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">128</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="VoorraadLocatieGegevens.ArtikelType" nillable="true" type="tns:VoorraadLocatieGegevens.ArtikelType" />
+  <xs:complexType name="ResponseArtikelLijstInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Lijst" nillable="true" type="tns:ArrayOfArtikelLijstInformatie" />
+      <xs:element minOccurs="0" name="LoginSucces" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResponseArtikelLijstInfo" nillable="true" type="tns:ResponseArtikelLijstInfo" />
+  <xs:complexType name="ArrayOfArtikelLijstInformatie">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ArtikelLijstInformatie" nillable="true" type="tns:ArtikelLijstInformatie" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfArtikelLijstInformatie" nillable="true" type="tns:ArrayOfArtikelLijstInformatie" />
+  <xs:complexType name="ArtikelLijstInformatie">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:StamTabel">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Afbeelding" nillable="true" type="xs:base64Binary" />
+          <xs:element minOccurs="0" name="GroepId" type="ser:guid" />
+          <xs:element minOccurs="0" name="GroepNaam" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Zoektermen" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ArtikelLijstInformatie" nillable="true" type="tns:ArtikelLijstInformatie" />
+  <xs:complexType name="RequestArtikelDetail">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" base="q2:RequestAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IsBestellen" type="xs:boolean" />
+          <xs:element minOccurs="0" name="ServerAdministratieId" type="ser:guid" />
+          <xs:element minOccurs="0" name="ServerArtikelId" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestArtikelDetail" nillable="true" type="tns:RequestArtikelDetail" />
+  <xs:complexType name="ResponseArtikelDetail">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:ArtikelInformatie">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="GelinkteArtikelen" nillable="true" type="tns:ArrayOfArtikelLijstInformatie" />
+          <xs:element minOccurs="0" name="LoginSucces" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ResponseArtikelDetail" nillable="true" type="tns:ResponseArtikelDetail" />
+  <xs:complexType name="ArtikelInformatie">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Afbeelding" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="Bijlages" nillable="true" type="tns:ArrayOfDocument" />
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="KeuringsInformatie" nillable="true" type="tns:ArrayOfKeuringsInformatie" />
+      <xs:element minOccurs="0" name="Locaties" nillable="true" type="tns:ArrayOfArtikelLocatieInfo" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TechnischeSpecificaties" nillable="true" type="tns:ArrayOfTechnischeSpecsArtikel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArtikelInformatie" nillable="true" type="tns:ArtikelInformatie" />
+  <xs:complexType name="ArrayOfDocument">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Document" nillable="true" type="tns:Document" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDocument" nillable="true" type="tns:ArrayOfDocument" />
+  <xs:complexType name="Document">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AanmaakDatum" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="AppCreationGuid" type="ser:guid" />
+      <xs:element minOccurs="0" name="Bestand" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Docutype" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Extensie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Pad" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Document" nillable="true" type="tns:Document" />
+  <xs:complexType name="ArrayOfKeuringsInformatie">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeuringsInformatie" nillable="true" type="tns:KeuringsInformatie" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKeuringsInformatie" nillable="true" type="tns:ArrayOfKeuringsInformatie" />
+  <xs:complexType name="KeuringsInformatie">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Datum" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DetailRegels" nillable="true" type="tns:ArrayOfKeuringDetails" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Inhuur" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Memo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SoortKeuring" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Uitgevoerd" type="xs:boolean" />
+      <xs:element minOccurs="0" name="VolgendeKeuring" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="KeuringsInformatie" nillable="true" type="tns:KeuringsInformatie" />
+  <xs:complexType name="ArrayOfKeuringDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KeuringDetails" nillable="true" type="tns:KeuringDetails" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKeuringDetails" nillable="true" type="tns:ArrayOfKeuringDetails" />
+  <xs:complexType name="KeuringDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Eenheid" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Goedgekeurd" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Kraan.Model.Probis.Voorraad" minOccurs="0" name="Status" type="q3:KeuringsTestStatus" />
+      <xs:element minOccurs="0" name="Waarde" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="KeuringDetails" nillable="true" type="tns:KeuringDetails" />
+  <xs:complexType name="ArrayOfArtikelLocatieInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ArtikelLocatieInfo" nillable="true" type="tns:ArtikelLocatieInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfArtikelLocatieInfo" nillable="true" type="tns:ArrayOfArtikelLocatieInfo" />
+  <xs:complexType name="ArtikelLocatieInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Aantal" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Adres" nillable="true" type="tns:ArtikelLocatieInfo.ArtikelLocatieAdres" />
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Naam" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Relaties" nillable="true" type="tns:ArrayOfArtikelLocatieInfo.ArtikelRelatie" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArtikelLocatieInfo" nillable="true" type="tns:ArtikelLocatieInfo" />
+  <xs:complexType name="ArtikelLocatieInfo.ArtikelLocatieAdres">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Nummer" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Plaats" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Postcode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Straat" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Toevoeging" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArtikelLocatieInfo.ArtikelLocatieAdres" nillable="true" type="tns:ArtikelLocatieInfo.ArtikelLocatieAdres" />
+  <xs:complexType name="ArrayOfArtikelLocatieInfo.ArtikelRelatie">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ArtikelLocatieInfo.ArtikelRelatie" nillable="true" type="tns:ArtikelLocatieInfo.ArtikelRelatie" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfArtikelLocatieInfo.ArtikelRelatie" nillable="true" type="tns:ArrayOfArtikelLocatieInfo.ArtikelRelatie" />
+  <xs:complexType name="ArtikelLocatieInfo.ArtikelRelatie">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Naam" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Telefoonnummer" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TelefoonnummerZakelijk" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArtikelLocatieInfo.ArtikelRelatie" nillable="true" type="tns:ArtikelLocatieInfo.ArtikelRelatie" />
+  <xs:complexType name="ArrayOfTechnischeSpecsArtikel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TechnischeSpecsArtikel" nillable="true" type="tns:TechnischeSpecsArtikel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTechnischeSpecsArtikel" nillable="true" type="tns:ArrayOfTechnischeSpecsArtikel" />
+  <xs:complexType name="TechnischeSpecsArtikel">
+    <xs:sequence>
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/System.Drawing" minOccurs="0" name="Afbeelding" nillable="true" type="q4:Image" />
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Datum" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TechnischeSpecsArtikel" nillable="true" type="tns:TechnischeSpecsArtikel" />
+  <xs:complexType name="RequestSaveVerplaatsingData">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" base="q5:RequestAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Administratie" type="ser:guid" />
+          <xs:element minOccurs="0" name="AfleverDatum" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Artikelen" nillable="true" type="tns:ArrayOfArtikelVerplaatsing" />
+          <xs:element minOccurs="0" name="IsRetour" type="xs:boolean" />
+          <xs:element minOccurs="0" name="Memo" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NaarLocatie" type="ser:guid" />
+          <xs:element minOccurs="0" name="NaarSoortlocatie" type="ser:guid" />
+          <xs:element minOccurs="0" name="NaarWerkbon" type="ser:guid" />
+          <xs:element minOccurs="0" name="VanLocatie" type="ser:guid" />
+          <xs:element minOccurs="0" name="Werkbon" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestSaveVerplaatsingData" nillable="true" type="tns:RequestSaveVerplaatsingData" />
+  <xs:complexType name="ArrayOfArtikelVerplaatsing">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ArtikelVerplaatsing" nillable="true" type="tns:ArtikelVerplaatsing" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfArtikelVerplaatsing" nillable="true" type="tns:ArrayOfArtikelVerplaatsing" />
+  <xs:complexType name="ArtikelVerplaatsing">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Aantal" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ArtikelId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArtikelVerplaatsing" nillable="true" type="tns:ArtikelVerplaatsing" />
+  <xs:complexType name="ResponseSaveVerplaatsing">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LoginSucces" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResponseSaveVerplaatsing" nillable="true" type="tns:ResponseSaveVerplaatsing" />
+  <xs:complexType name="RequestRFIDArtikel">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q6="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" base="q6:RequestAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Id" type="ser:guid" />
+          <xs:element minOccurs="0" name="RFID" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ServerId" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestRFIDArtikel" nillable="true" type="tns:RequestRFIDArtikel" />
+</xs:schema>

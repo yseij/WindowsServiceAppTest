@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a09be8ae-3190-4707-a598-8ae82f49c340" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://wsdev.kraan.com/kraan2vorm/CrmService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="CrmService.xsd" MetadataType="Schema" ID="ec519e2b-e15b-44b4-85a2-e41971fad3d0" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/CrmService.svc?xsd=xsd0" />
+    <MetadataFile FileName="CrmService1.xsd" MetadataType="Schema" ID="d7904c5d-ca78-442b-9232-16838b19594b" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/CrmService.svc?xsd=xsd1" />
+    <MetadataFile FileName="CrmService2.xsd" MetadataType="Schema" ID="a9e15e88-93bc-46c5-9149-dfab2c7bafc4" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/CrmService.svc?xsd=xsd2" />
+    <MetadataFile FileName="CrmService3.xsd" MetadataType="Schema" ID="fa01804f-eea0-4929-8b93-d5d6f196638f" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/CrmService.svc?xsd=xsd3" />
+    <MetadataFile FileName="CrmService4.xsd" MetadataType="Schema" ID="8814ef4d-6d5f-4a66-b7cc-5278dfed19e8" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/CrmService.svc?xsd=xsd4" />
+    <MetadataFile FileName="CrmService5.xsd" MetadataType="Schema" ID="8b6c6495-ba23-4bfe-bcbb-a34829e19ee4" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/CrmService.svc?xsd=xsd5" />
+    <MetadataFile FileName="CrmService.wsdl" MetadataType="Wsdl" ID="92fa6c69-0417-4401-be70-e9e008549322" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/CrmService.svc?wsdl" />
+    <MetadataFile FileName="CrmService.disco" MetadataType="Disco" ID="9227b26d-970b-452b-b4fc-39673c24f92c" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/CrmService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

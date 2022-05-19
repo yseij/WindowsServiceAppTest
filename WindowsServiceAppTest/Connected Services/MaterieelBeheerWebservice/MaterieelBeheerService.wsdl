@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MaterieelBeheerService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="BasicHttpsBinding_IMaterieelBeheerService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/MaterieelBeheerService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/MaterieelBeheerService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/MaterieelBeheerService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" />
+      <xsd:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/MaterieelBeheerService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/MaterieelBeheerService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/Message" />
+      <xsd:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/MaterieelBeheerService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" />
+      <xsd:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/MaterieelBeheerService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Kraan.Model.Probis.Voorraad" />
+      <xsd:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/MaterieelBeheerService.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/System.Drawing" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMaterieelBeheerService_GetVersion_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetVersion" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetVersion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_RegisterUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUser" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_RegisterUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_UnRegisterUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnRegisterUser" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_UnRegisterUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnRegisterUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_CheckLogin_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckLogin" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_CheckLogin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_DownloadLogFiles_InputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadLogFiles" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_DownloadLogFiles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DownloadLogFilesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_SaveException_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveException" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_SaveException_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveExceptionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetFileStream_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFileStream" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetFileStream_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFileStreamResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetBedrijven_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBedrijven" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetBedrijven_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBedrijvenResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetWerfLocatieVanBedrijf_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWerfLocatieVanBedrijf" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetWerfLocatieVanBedrijf_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWerfLocatieVanBedrijfResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetLocatiesVanPersoon_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLocatiesVanPersoon" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetLocatiesVanPersoon_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLocatiesVanPersoonResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetDataVanLocatie_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDataVanLocatie" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetDataVanLocatie_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDataVanLocatieResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetArtikelenVanAdministratie_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetArtikelenVanAdministratie" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetArtikelenVanAdministratie_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetArtikelenVanAdministratieResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetArtikelInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetArtikelInfo" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetArtikelInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetArtikelInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_SaveVerplaatsing_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveVerplaatsing" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_SaveVerplaatsing_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveVerplaatsingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetArtikelGuidVanBarCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetArtikelGuidVanBarCode" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetArtikelGuidVanBarCode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetArtikelGuidVanBarCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetLocatieSoortenAdministratie_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLocatieSoortenAdministratie" />
+  </wsdl:message>
+  <wsdl:message name="IMaterieelBeheerService_GetLocatieSoortenAdministratie_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLocatieSoortenAdministratieResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IMaterieelBeheerService">
+    <wsdl:operation name="GetVersion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthWebservice/GetVersion" message="tns:IMaterieelBeheerService_GetVersion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthWebservice/GetVersionResponse" message="tns:IMaterieelBeheerService_GetVersion_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthWebservice/RegisterUser" message="tns:IMaterieelBeheerService_RegisterUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthWebservice/RegisterUserResponse" message="tns:IMaterieelBeheerService_RegisterUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnRegisterUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthWebservice/UnRegisterUser" message="tns:IMaterieelBeheerService_UnRegisterUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthWebservice/UnRegisterUserResponse" message="tns:IMaterieelBeheerService_UnRegisterUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckLogin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthWebservice/CheckLogin" message="tns:IMaterieelBeheerService_CheckLogin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthWebservice/CheckLoginResponse" message="tns:IMaterieelBeheerService_CheckLogin_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DownloadLogFiles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthWebservice/DownloadLogFiles" message="tns:IMaterieelBeheerService_DownloadLogFiles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthWebservice/DownloadLogFilesResponse" message="tns:IMaterieelBeheerService_DownloadLogFiles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveException">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthWebservice/SaveException" message="tns:IMaterieelBeheerService_SaveException_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthWebservice/SaveExceptionResponse" message="tns:IMaterieelBeheerService_SaveException_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFileStream">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetFileStream" message="tns:IMaterieelBeheerService_GetFileStream_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetFileStreamResponse" message="tns:IMaterieelBeheerService_GetFileStream_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBedrijven">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetBedrijven" message="tns:IMaterieelBeheerService_GetBedrijven_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetBedrijvenResponse" message="tns:IMaterieelBeheerService_GetBedrijven_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWerfLocatieVanBedrijf">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetWerfLocatieVanBedrijf" message="tns:IMaterieelBeheerService_GetWerfLocatieVanBedrijf_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetWerfLocatieVanBedrijfResponse" message="tns:IMaterieelBeheerService_GetWerfLocatieVanBedrijf_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLocatiesVanPersoon">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetLocatiesVanPersoon" message="tns:IMaterieelBeheerService_GetLocatiesVanPersoon_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetLocatiesVanPersoonResponse" message="tns:IMaterieelBeheerService_GetLocatiesVanPersoon_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDataVanLocatie">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetDataVanLocatie" message="tns:IMaterieelBeheerService_GetDataVanLocatie_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetDataVanLocatieResponse" message="tns:IMaterieelBeheerService_GetDataVanLocatie_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetArtikelenVanAdministratie">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetArtikelenVanAdministratie" message="tns:IMaterieelBeheerService_GetArtikelenVanAdministratie_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetArtikelenVanAdministratieResponse" message="tns:IMaterieelBeheerService_GetArtikelenVanAdministratie_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetArtikelInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetArtikelInfo" message="tns:IMaterieelBeheerService_GetArtikelInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetArtikelInfoResponse" message="tns:IMaterieelBeheerService_GetArtikelInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveVerplaatsing">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaterieelBeheerService/SaveVerplaatsing" message="tns:IMaterieelBeheerService_SaveVerplaatsing_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaterieelBeheerService/SaveVerplaatsingResponse" message="tns:IMaterieelBeheerService_SaveVerplaatsing_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetArtikelGuidVanBarCode">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetArtikelGuidVanBarCode" message="tns:IMaterieelBeheerService_GetArtikelGuidVanBarCode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetArtikelGuidVanBarCodeResponse" message="tns:IMaterieelBeheerService_GetArtikelGuidVanBarCode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLocatieSoortenAdministratie">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetLocatieSoortenAdministratie" message="tns:IMaterieelBeheerService_GetLocatieSoortenAdministratie_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMaterieelBeheerService/GetLocatieSoortenAdministratieResponse" message="tns:IMaterieelBeheerService_GetLocatieSoortenAdministratie_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpsBinding_IMaterieelBeheerService" type="tns:IMaterieelBeheerService">
+    <wsp:PolicyReference URI="#BasicHttpsBinding_IMaterieelBeheerService_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetVersion">
+      <soap:operation soapAction="http://tempuri.org/IAuthWebservice/GetVersion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <soap:operation soapAction="http://tempuri.org/IAuthWebservice/RegisterUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnRegisterUser">
+      <soap:operation soapAction="http://tempuri.org/IAuthWebservice/UnRegisterUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckLogin">
+      <soap:operation soapAction="http://tempuri.org/IAuthWebservice/CheckLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadLogFiles">
+      <soap:operation soapAction="http://tempuri.org/IAuthWebservice/DownloadLogFiles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveException">
+      <soap:operation soapAction="http://tempuri.org/IAuthWebservice/SaveException" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFileStream">
+      <soap:operation soapAction="http://tempuri.org/IMaterieelBeheerService/GetFileStream" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBedrijven">
+      <soap:operation soapAction="http://tempuri.org/IMaterieelBeheerService/GetBedrijven" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWerfLocatieVanBedrijf">
+      <soap:operation soapAction="http://tempuri.org/IMaterieelBeheerService/GetWerfLocatieVanBedrijf" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLocatiesVanPersoon">
+      <soap:operation soapAction="http://tempuri.org/IMaterieelBeheerService/GetLocatiesVanPersoon" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDataVanLocatie">
+      <soap:operation soapAction="http://tempuri.org/IMaterieelBeheerService/GetDataVanLocatie" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetArtikelenVanAdministratie">
+      <soap:operation soapAction="http://tempuri.org/IMaterieelBeheerService/GetArtikelenVanAdministratie" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetArtikelInfo">
+      <soap:operation soapAction="http://tempuri.org/IMaterieelBeheerService/GetArtikelInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveVerplaatsing">
+      <soap:operation soapAction="http://tempuri.org/IMaterieelBeheerService/SaveVerplaatsing" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetArtikelGuidVanBarCode">
+      <soap:operation soapAction="http://tempuri.org/IMaterieelBeheerService/GetArtikelGuidVanBarCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLocatieSoortenAdministratie">
+      <soap:operation soapAction="http://tempuri.org/IMaterieelBeheerService/GetLocatieSoortenAdministratie" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MaterieelBeheerService">
+    <wsdl:port name="BasicHttpsBinding_IMaterieelBeheerService" binding="tns:BasicHttpsBinding_IMaterieelBeheerService">
+      <soap:address location="https://wsdev.kraan.com/kraan2vorm/MaterieelBeheerService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

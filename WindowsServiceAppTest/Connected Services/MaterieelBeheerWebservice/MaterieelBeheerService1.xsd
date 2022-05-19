@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/MaterieelBeheerService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" />
+  <xs:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/MaterieelBeheerService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/Message" />
+  <xs:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/MaterieelBeheerService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" />
+  <xs:element name="GetVersion">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetVersionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetVersionResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegisterUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" minOccurs="0" name="login" nillable="true" type="q1:Login" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegisterUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" minOccurs="0" name="RegisterUserResult" nillable="true" type="q2:LoginRegistratie" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UnRegisterUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" minOccurs="0" name="login" nillable="true" type="q3:Login" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UnRegisterUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" minOccurs="0" name="UnRegisterUserResult" nillable="true" type="q4:LoginRegistratie" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckLogin">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" minOccurs="0" name="request" nillable="true" type="q5:RequestAuth" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CheckLoginResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" minOccurs="0" name="CheckLoginResult" nillable="true" type="q6:LoginRegistratie" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DownloadLogFiles">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DownloadLogFilesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DownloadLogFilesResult" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveException">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" minOccurs="0" name="exception" nillable="true" type="q7:ExceptionMelding" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveExceptionResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFileStream">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" minOccurs="0" name="request" nillable="true" type="q8:DownloadRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFileStreamResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.microsoft.com/Message" name="GetFileStreamResult" type="q9:StreamBody" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBedrijven">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="request" nillable="true" type="q10:RequestStamModelData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBedrijvenResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="GetBedrijvenResult" nillable="true" type="q11:ResponseStamTabel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWerfLocatieVanBedrijf">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="request" nillable="true" type="q12:RequestStamModelData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWerfLocatieVanBedrijfResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="GetWerfLocatieVanBedrijfResult" nillable="true" type="q13:ResponseStamTabel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLocatiesVanPersoon">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="request" nillable="true" type="q14:RequestStamModelData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLocatiesVanPersoonResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="GetLocatiesVanPersoonResult" nillable="true" type="q15:ResponseLocaties" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDataVanLocatie">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="request" nillable="true" type="q16:RequestStamModelData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDataVanLocatieResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="GetDataVanLocatieResult" nillable="true" type="q17:ResponseGetDataVanLocatie" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetArtikelenVanAdministratie">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="request" nillable="true" type="q18:RequestStamModelData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetArtikelenVanAdministratieResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="GetArtikelenVanAdministratieResult" nillable="true" type="q19:ResponseArtikelLijstInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetArtikelInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="request" nillable="true" type="q20:RequestArtikelDetail" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetArtikelInfoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="GetArtikelInfoResult" nillable="true" type="q21:ResponseArtikelDetail" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveVerplaatsing">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="request" nillable="true" type="q22:RequestSaveVerplaatsingData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SaveVerplaatsingResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="SaveVerplaatsingResult" nillable="true" type="q23:ResponseSaveVerplaatsing" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetArtikelGuidVanBarCode">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="request" nillable="true" type="q24:RequestRFIDArtikel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetArtikelGuidVanBarCodeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="GetArtikelGuidVanBarCodeResult" nillable="true" type="q25:StamTabel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLocatieSoortenAdministratie">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="request" nillable="true" type="q26:RequestStamModelData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLocatieSoortenAdministratieResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" minOccurs="0" name="GetLocatieSoortenAdministratieResult" nillable="true" type="q27:ResponseStamTabel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

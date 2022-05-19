@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Kraan2.Webservices.Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/WorkflowService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/WorkflowService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/WorkflowService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Kraan.Model.Probis.Processen" />
+  <xs:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/WorkflowService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" />
+  <xs:complexType name="WorkflowModel">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GeakkoordeerdeItems" nillable="true" type="q1:ArrayOfguid" />
+      <xs:element minOccurs="0" name="InloggenMislukt" type="xs:boolean" />
+      <xs:element minOccurs="0" name="WorkflowItems" nillable="true" type="tns:ArrayOfWorkflowItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WorkflowModel" nillable="true" type="tns:WorkflowModel" />
+  <xs:complexType name="ArrayOfWorkflowItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WorkflowItem" nillable="true" type="tns:WorkflowItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWorkflowItem" nillable="true" type="tns:ArrayOfWorkflowItem" />
+  <xs:complexType name="WorkflowItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BedragExBtw" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BedragRekening" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Boekstuk" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Btw" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Dagboek" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Documenten" nillable="true" type="tns:ArrayOfDocument" />
+      <xs:element minOccurs="0" name="EerdereItems" nillable="true" type="tns:ArrayOfVorigeItems" />
+      <xs:element minOccurs="0" name="EindDatum" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FactuurDatum" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FactuurProject" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Factuurnummer" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GPercentage" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="IsAdviesaanvraagToegestaan" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAfKeurenEindstap" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsAfkeurenToegestaan" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsGoedKeurenEindstap" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsGoedkeurenToegestaan" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsInDeWacht" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsInDeWachtToegestaan" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsTerugSturenToegestaan" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Kostenregels" nillable="true" type="tns:ArrayOfKostenRegel" />
+      <xs:element minOccurs="0" name="Leverancier" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Loonsom" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Memo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Memos" nillable="true" type="tns:ArrayOfVorigeItems" />
+      <xs:element minOccurs="0" name="MoetMedewerkerSelectieTonen" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProcesCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Relatie" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Kraan.Model.Probis.Processen" minOccurs="0" name="SignaleringsStatus" type="q2:SignaleringsStatus" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Kraan.Model.Probis.Processen" minOccurs="0" name="TaakType" type="q3:TaakType" />
+      <xs:element minOccurs="0" name="TotaalIncBtw" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WorkflowItem" nillable="true" type="tns:WorkflowItem" />
+  <xs:complexType name="ArrayOfDocument">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Document" nillable="true" type="tns:Document" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDocument" nillable="true" type="tns:ArrayOfDocument" />
+  <xs:complexType name="Document">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AanmaakDatum" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="AppCreationGuid" type="ser:guid" />
+      <xs:element minOccurs="0" name="Bestand" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Docutype" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Extensie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Pad" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Document" nillable="true" type="tns:Document" />
+  <xs:complexType name="ArrayOfVorigeItems">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="VorigeItems" nillable="true" type="tns:VorigeItems" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfVorigeItems" nillable="true" type="tns:ArrayOfVorigeItems" />
+  <xs:complexType name="VorigeItems">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Datum" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Memo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Omschrijving" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UitgevoerdOpDatum" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="VerantwoordelijkeMedewerker" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="VorigeItems" nillable="true" type="tns:VorigeItems" />
+  <xs:complexType name="ArrayOfKostenRegel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KostenRegel" nillable="true" type="tns:KostenRegel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKostenRegel" nillable="true" type="tns:ArrayOfKostenRegel" />
+  <xs:complexType name="KostenRegel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Aantal" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Bedrag" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BewakingsCodeCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Bewakingscode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BtwCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BtwProcent" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Credit" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Debet" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Eenheid" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GrootboekrekCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Grootboekrekening" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="Inkoopcontract" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Kostensoort" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="KostensoortCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Project" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProjectCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubContract" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Werkbon" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="KostenRegel" nillable="true" type="tns:KostenRegel" />
+  <xs:complexType name="RequestWorkflowItemUpload">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" base="q4:RequestAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ActieType" type="tns:TypeActie.ActieType" />
+          <xs:element minOccurs="0" name="MedewerkerId" type="ser:guid" />
+          <xs:element minOccurs="0" name="MemoTekst" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TaakId" type="ser:guid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestWorkflowItemUpload" nillable="true" type="tns:RequestWorkflowItemUpload" />
+  <xs:simpleType name="TypeActie.ActieType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Goedkeuren" />
+      <xs:enumeration value="Afkeuren" />
+      <xs:enumeration value="Adviesaanvraag" />
+      <xs:enumeration value="InDeWacht" />
+      <xs:enumeration value="UitDeWacht" />
+      <xs:enumeration value="TerugSturen" />
+      <xs:enumeration value="Memo" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="TypeActie.ActieType" nillable="true" type="tns:TypeActie.ActieType" />
+  <xs:complexType name="VerwerkProcesStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="InloggenGelukt" type="xs:boolean" />
+      <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Meldingen" nillable="true" type="q5:ArrayOfstring" />
+      <xs:element minOccurs="0" name="ResultingId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="VerwerkProcesStatus" nillable="true" type="tns:VerwerkProcesStatus" />
+  <xs:complexType name="RequestMedewerker">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q6="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" base="q6:RequestAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ActieType" type="tns:TypeActie.ActieType" />
+          <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="TakenIds" nillable="true" type="q7:ArrayOfguid" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestMedewerker" nillable="true" type="tns:RequestMedewerker" />
+  <xs:complexType name="GevondenMedewerkers">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MedewerkerSelecteren" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Medewerkers" nillable="true" type="tns:ArrayOfMedewerker" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GevondenMedewerkers" nillable="true" type="tns:GevondenMedewerkers" />
+  <xs:complexType name="ArrayOfMedewerker">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Medewerker" nillable="true" type="tns:Medewerker" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMedewerker" nillable="true" type="tns:ArrayOfMedewerker" />
+  <xs:complexType name="Medewerker">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BedrijfId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="IsHuidigeGebruiker" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsKostensoortGekoppeldAanBewakingscode" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsOndergeschikte" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsUrenInvoerToegestaan" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MedewerkerFuncties" nillable="true" type="tns:ArrayOfMedewerkerFunctie" />
+      <xs:element minOccurs="0" name="MedewerkerPerioden" nillable="true" type="tns:ArrayOfMedewerkerPeriode" />
+      <xs:element minOccurs="0" name="Naam" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReisUrenHandmatig" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Medewerker" nillable="true" type="tns:Medewerker" />
+  <xs:complexType name="ArrayOfMedewerkerFunctie">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MedewerkerFunctie" nillable="true" type="tns:MedewerkerFunctie" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMedewerkerFunctie" nillable="true" type="tns:ArrayOfMedewerkerFunctie" />
+  <xs:complexType name="MedewerkerFunctie">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FunctieId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="IsHoofdFunctie" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MedewerkerId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MedewerkerFunctie" nillable="true" type="tns:MedewerkerFunctie" />
+  <xs:complexType name="ArrayOfMedewerkerPeriode">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MedewerkerPeriode" nillable="true" type="tns:MedewerkerPeriode" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMedewerkerPeriode" nillable="true" type="tns:ArrayOfMedewerkerPeriode" />
+  <xs:complexType name="MedewerkerPeriode">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BedrijfId" type="ser:guid" />
+      <xs:element minOccurs="0" name="BeginDatum" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ContractUrenPerWeek" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EindDatum" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="ser:guid" />
+      <xs:element minOccurs="0" name="MedewerkerId" type="ser:guid" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MedewerkerPeriode" nillable="true" type="tns:MedewerkerPeriode" />
+  <xs:complexType name="RequestPushnotificatie">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q8="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" base="q8:RequestAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ExternToken" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="StaatAan" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RequestPushnotificatie" nillable="true" type="tns:RequestPushnotificatie" />
+</xs:schema>

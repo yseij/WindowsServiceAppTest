@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a78075ee-4b9f-480f-b040-757660aa6015" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://wsdev.kraan.com/kraan2vorm/UrenService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="UrenService.xsd" MetadataType="Schema" ID="0096fce3-53e1-4a17-a8c7-0bf40036bd53" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/UrenService.svc?xsd=xsd4" />
+    <MetadataFile FileName="UrenService1.xsd" MetadataType="Schema" ID="fe8491a0-a539-4bdb-80c1-0d303ae4e72f" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/UrenService.svc?xsd=xsd1" />
+    <MetadataFile FileName="UrenService2.xsd" MetadataType="Schema" ID="a1ebc227-e52a-49ac-bb0b-b886501bd6b6" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/UrenService.svc?xsd=xsd0" />
+    <MetadataFile FileName="UrenService3.xsd" MetadataType="Schema" ID="0c7a4223-9cea-4300-9e75-8a9523c542db" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/UrenService.svc?xsd=xsd3" />
+    <MetadataFile FileName="UrenService.disco" MetadataType="Disco" ID="24571491-7010-4e24-a887-c95543d1e835" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/UrenService.svc?disco" />
+    <MetadataFile FileName="UrenService.wsdl" MetadataType="Wsdl" ID="02572284-f560-409c-82ad-8c1281387784" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/UrenService.svc?wsdl" />
+    <MetadataFile FileName="UrenService4.xsd" MetadataType="Schema" ID="301a0bb4-d771-4b2b-bad3-9b653333d55e" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/UrenService.svc?xsd=xsd2" />
+    <MetadataFile FileName="UrenService5.xsd" MetadataType="Schema" ID="be2ded19-1b97-4404-876a-ad47cb621dbb" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/UrenService.svc?xsd=xsd5" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

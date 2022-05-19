@@ -21,7 +21,7 @@ namespace WindowsServiceAppTest
         private string _https = "https:";
         private string _http = "http:";
 
-        string[] kraanWebservices = { "AuthService.svc",
+        string[] kraan2Webservices = { "AuthService.svc",
                                       "CrmService.svc",
                                       "WorkflowService.svc",
                                       "MaterieelService.svc",
@@ -36,7 +36,7 @@ namespace WindowsServiceAppTest
         WebRequest _webRequest;
         Timer _timer;
         KrXml _krXml;
-        LogFile _logFile = new LogFile();
+        LogFile _logFile;
 
         public WebserviceService()
         {
@@ -70,6 +70,7 @@ namespace WindowsServiceAppTest
 
         public void OnTimer(object sender, ElapsedEventArgs args)
         {
+            _logFile = new LogFile();
             _timer.Stop();
             _krXmlData = _krXml.GetDataOfXmlFile();
             _timer.Interval = _krXmlData.TijdService;
@@ -92,14 +93,6 @@ namespace WindowsServiceAppTest
                         _logFile.AddTitleToLogFile(klant.Name);
                         foreach (KlantWebservice klantWebservice in klantWebservices)
                         {
-                            if (klantWebservice.BasisUrl1)
-                            {
-                                basisUrl = klant.BasisUrl1;
-                            }
-                            else
-                            {
-                                basisUrl = klant.BasisUrl2;
-                            }
                             foreach (Webservice webservice in _webservices)
                             {
                                 if (webservice.Id == klantWebservice.Webservice)
@@ -109,22 +102,26 @@ namespace WindowsServiceAppTest
                                     _isSoap = webservice.Soap;
                                 }
                             }
-                            string urlforWebservice = url.Name;
-                            for (int i = 0; i < 2; i++)
+                            if (klantWebservice.BasisUrl1 && klantWebservice.BasisUrl2)
                             {
-                                if (i == 0)
-                                {
-                                    CheckUrl(url);
-                                }
-                                else
-                                {
-                                    GetWebserviceVersion(url);
-                                    _logFile.AddTextToLogFile("\n");
-                                }
+                                basisUrl = klant.BasisUrl1;
+                                url.Name = basisUrl + webService.Name;
+                                SoapOfRestTest(url, webService);
+                                basisUrl = klant.BasisUrl2;
+                                url.Name = basisUrl + webService.Name;
+                                SoapOfRestTest(url, webService);
                             }
-                            if (webService.Name == "Kraan2Webservice")
+                            else if (klantWebservice.BasisUrl1)
                             {
-                                UrlsTestKraan2Webservice(urlforWebservice);
+                                basisUrl = klant.BasisUrl1;
+                                url.Name = basisUrl + webService.Name;
+                                SoapOfRestTest(url, webService);
+                            }
+                            else
+                            {
+                                basisUrl = klant.BasisUrl2;
+                                url.Name = basisUrl + webService.Name;
+                                SoapOfRestTest(url, webService);
                             }
                         }
                         foreach (Url url1 in _urls)
@@ -164,6 +161,51 @@ namespace WindowsServiceAppTest
             _timer.Start();
         }
 
+        private void SoapOfRestTest(Url url, Webservice webService)
+        {
+            if (!_isSoap)
+            {
+                CheckUrlAndGetWebserviceVersion(url);
+            }
+            else
+            {
+                if (webService.Name == "Kraan2Webservices")
+                {
+                    UrlsTestKraan2Webservice(url);
+                }
+                else
+                {
+                    GetUrl(url);
+                }
+            }
+        }
+
+        private void UrlsTestKraan2Webservice(Url url)
+        {
+            for (int i = 0; i < kraan2Webservices.Length; i++)
+            {
+                Url newUrl = new Url();
+                newUrl.Name = url.Name + "/" + kraan2Webservices[i];
+                GetUrl(newUrl);
+                newUrl.Name = string.Empty;
+            }
+        }
+
+        private void CheckUrlAndGetWebserviceVersion(Url url)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                if (i == 0)
+                {
+                    CheckUrl(url);
+                }
+                else
+                {
+                    GetWebserviceVersion(url);
+                    _logFile.AddTextToLogFile("\n");
+                }
+            }
+        }
         private string FindBasisUrl(KlantWebservice klantWebservice, Klant klant)
         {
             if (klantWebservice.BasisUrl1)
@@ -188,17 +230,6 @@ namespace WindowsServiceAppTest
                 }
             }
             return null;
-        }
-
-        private void UrlsTestKraan2Webservice(string urlName)
-        {
-            for (int i = 0; i < kraanWebservices.Length; i++)
-            {
-                Url newUrl = new Url();
-                newUrl.Name = urlName + "/" + kraanWebservices[i];
-                GetUrl(newUrl);
-                _logFile.AddTextToLogFile("\n");
-            }
         }
 
         private void CheckUrl(Url url)
@@ -267,18 +298,39 @@ namespace WindowsServiceAppTest
                 }
                 else if (url.Name.Contains("MessageServiceSoap.svc"))
                 {
-                    _result = _webRequest.Get24SalesData(url.Name);
+                    try
+                    {
+                        _result = _webRequest.Get24SalesData(url.Name);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logFile.AddTextToLogFile("ging iets mis met het testen van de volgende url:" + url.Name + " --> " + ex.Message);
+                    }
                 }
                 else
                 {
                     int plaatsSlech = url.Name.LastIndexOf("/");
                     string service = url.Name.Substring(plaatsSlech + 1, url.Name.Length - plaatsSlech - 1);
-                    _result = JObject.Parse(_webRequest.GetWebRequestSoap(url.Name, service));
+                    try
+                    {
+                        _result = JObject.Parse(_webRequest.GetWebRequestSoap(url.Name, service));
+                    }
+                    catch (Exception ex)
+                    {
+                        _logFile.AddTextToLogFile("ging iets mis met het testen van de volgende url:" + url.Name + " --> " + ex.Message);
+                    }
                 }
             }
             else
             {
-                _result = JObject.Parse(_webRequest.GetWebRequestRest(url.Name, isWebserviceVersion));
+                try
+                {
+                    _result = JObject.Parse(_webRequest.GetWebRequestRest(url.Name, isWebserviceVersion));
+                }
+                catch (Exception ex)
+                {
+                    _logFile.AddTextToLogFile("ging iets mis met het testen van de volgende url:" + url.Name + " --> " + ex.Message);
+                }
             }
 
             foreach (JProperty item in _result)

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="2a6db1b4-2526-4191-994c-c998c7490712" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://wsdev.kraan.com/kraan2vorm/WorkFlowService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="WorkflowService.xsd" MetadataType="Schema" ID="e0a04598-e12b-46ba-8311-fd702699f8b8" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/WorkflowService.svc?xsd=xsd4" />
+    <MetadataFile FileName="WorkflowService1.xsd" MetadataType="Schema" ID="54c764cf-a352-4f83-bcb3-7edd67eb99ac" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/WorkflowService.svc?xsd=xsd2" />
+    <MetadataFile FileName="WorkflowService2.xsd" MetadataType="Schema" ID="97c2d33d-ec11-42a7-8410-52dee95a1e95" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/WorkflowService.svc?xsd=xsd6" />
+    <MetadataFile FileName="WorkflowService3.xsd" MetadataType="Schema" ID="33d28fe4-40b5-46ac-991e-6a3e2f6ee7c5" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/WorkflowService.svc?xsd=xsd3" />
+    <MetadataFile FileName="WorkflowService4.xsd" MetadataType="Schema" ID="3ac00229-7c75-43a9-bdb2-f0eb52b84ee3" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/WorkflowService.svc?xsd=xsd0" />
+    <MetadataFile FileName="WorkflowService.wsdl" MetadataType="Wsdl" ID="245ddcff-834f-4cf9-ba29-22b1fce0efe4" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/WorkflowService.svc?wsdl" />
+    <MetadataFile FileName="WorkflowService5.xsd" MetadataType="Schema" ID="a664f0cc-2866-4199-a8d4-23019470d349" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/WorkflowService.svc?xsd=xsd5" />
+    <MetadataFile FileName="WorkflowService.disco" MetadataType="Disco" ID="47eb18c1-7c1b-4f90-88d5-143cd4a087b0" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/WorkflowService.svc?disco" />
+    <MetadataFile FileName="WorkflowService6.xsd" MetadataType="Schema" ID="b9e9ba8c-e2e3-4438-b8c0-5b19366027d8" SourceId="1" SourceUrl="https://wsdev.kraan.com/kraan2vorm/WorkflowService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -41,32 +41,7 @@ namespace WindowsServiceAppTest
 
                         HttpResponseMessage response1 = client.GetAsync(uri).Result;  // Blocking call! Program will wait here until a response is received or a timeout occurs.
                         string data = response1.Content.ReadAsStringAsync().Result;
-                        if (response1.IsSuccessStatusCode)
-                        {
-                            //Parse the response body.
-                            //Make sure to add a reference to System.Net.Http.Formatting.dll
-                            if (isWebserviceVersion)
-                            {
-                                if (_certIsGoed)
-                                {
-                                    return GetDataOfWebRequest(data, cert.GetExpirationDateString().ToString());
-                                }
-                                else
-                                {
-                                    return GetDataOfWebRequest(data, "");
-                                }
-                            }
-                            else
-                            {
-                                int Pos1 = data.IndexOf('{');
-                                int Pos2 = data.IndexOf('}');
-                                data = data.Substring(Pos1 + 1, Pos2 - Pos1 - 1);
-                                if (_certIsGoed)
-                                {
-                                    return "{" + data + ", \"certVerValDatum\": " + "\"" + cert.GetExpirationDateString().ToString() + "\"" + "}";
-                                }
-                            }
-                        }
+                        return GetData(response1, isWebserviceVersion, data, cert);
                     }
                     return @"{ ex: '" + "krijg geen data terug" + "'}";
                 }
@@ -77,7 +52,52 @@ namespace WindowsServiceAppTest
             }
         }
 
-        private string GetDataOfWebRequest(string data, string verValDatum = "")
+        private string GetData(HttpResponseMessage response1,
+                               bool isWebserviceVersion,
+                               string data,
+                               X509Certificate cert)
+        {
+            if (response1.IsSuccessStatusCode)
+            {
+                if (_certIsGoed)
+                {
+                    if (isWebserviceVersion)
+                    {
+                        return GetWebserviceVersionDataOfWebRequest(data, cert.GetExpirationDateString().ToString());
+                    }
+                    else
+                    {
+                        return GetDataOfWebRequest(data, cert.GetExpirationDateString().ToString());
+                    }
+                }
+                else
+                {
+                    if (isWebserviceVersion)
+                    {
+                        return GetWebserviceVersionDataOfWebRequest(data, "");
+                    }
+                    else
+                    {
+                        return GetDataOfWebRequest(data, "");
+                    }
+                }
+            }
+            return @"{ ex: '" + "krijg geen data terug" + "'}";
+        }
+
+        private string GetDataOfWebRequest(string data, string verValDatum = "Niet goed")
+        {
+            int Pos1 = data.IndexOf('{');
+            int Pos2 = data.IndexOf('}');
+            data = data.Substring(Pos1 + 1, Pos2 - Pos1 - 1);
+            if (_certIsGoed)
+            {
+                return "{" + data + ", \"certVerValDatum\": " + "\"" + verValDatum + "\"" + "}";
+            }
+            return data;
+        }
+
+        private string GetWebserviceVersionDataOfWebRequest(string data, string verValDatum = "")
         {
             int positionKraanDll = data.IndexOf("KraanDLL");
             int positionKraanIni = data.IndexOf("Kraan.ini");
@@ -126,107 +146,205 @@ namespace WindowsServiceAppTest
 
         public string GetWebRequestSoap(string host, string service)
         {
-            string result = "";
-
-            //YouriWebserviceCrm.CrmServiceClient clientAuth;
-            YouriWebserviceCrm.CrmServiceClient clientCrm;
-            YouriWebserviceWorkFlow.WorkflowServiceClient clientWorkflow;
-            YouriWebserviceUren.UrenServiceClient clientUren;
-            //YouriWebserviceMaterieel.Ma clientMaterieel;
-            //YouriWebserviceWeb.WebServiceClient clientWeb;
+            string result = string.Empty;
 
             switch (service)
             {
-                //case "AuthService.svc":
-                //    clientAuth = NewAuthService(host);
-                //    clientAuth.Open();
-                //    result = clientAuth.GetVersion().ToString();
-                //    clientAuth.Close();
-                //    break;
+                case "AuthService.svc":
+                    return CheckUrlAuthService(host);
                 case "CrmService.svc":
-                    clientCrm = NewCrmService(host);
-                    clientCrm.Open();
-                    result = clientCrm.GetVersion();
-                    clientCrm.Close();
+                    result = GetVersionCrmService(host);
                     break;
                 case "WorkflowService.svc":
-                    clientWorkflow = NewWorkFlowService(host);
-                    clientWorkflow.Open();
-                    result = clientWorkflow.GetVersion();
-                    clientWorkflow.Close();
+                    result = GetVersionWorkFlowService(host);
                     break;
                 case "UrenService.svc":
-                    clientUren = NewUrenService(host);
-                    clientUren.Open();
-                    result = clientUren.GetVersion();
-                    clientUren.Close();
+                    result = GetVersionUrenService(host);
                     break;
                 //case "MaterieelService.svc":
-                //    clientMaterieel = NewMateriaalService(host);
-                //    clientMaterieel.Open();
-                //    result = clientMaterieel.GetVersion();
-                //    clientMaterieel.Close();
+                //    result = GetVersionMaterieelService(host);
                 //    break;
-                //case "Webservice.svc":
-                //    clientMaterieel = NewWebSerivce(host);
-                //    clientMaterieel.Open();
-                //    result = clientMaterieel.GetVersion().ToString();
-                //    clientMaterieel.Close();
+                //case "MaterieelbeheerService.svc":
+                //    result = GetVersionMaterieelbeheerService(host);
                 //    break;
                 default:
                     return @"{ ex: '" + " deze service bestaat niet " + "'}"; ;
 
             }
-            return GetDataOfWebRequestSoap(result);
+            return result;
         }
 
-        //private YouriWebserviceAuth.AuthServiceClient NewAuthService(string host)
-        //{
-        //    BasicHttpBinding binding = CreateBinding("AuthService");
-        //    EndpointAddress epa = CreateEndpointAddress(host, "AuthService.svc");
+        public string CheckUrlAuthService(string host)
+        {
+            Uri uri = new Uri(host);
+            HttpClient client = new HttpClient();
+            HttpWebRequest request = HttpWebRequest.Create(host) as HttpWebRequest;
+            X509Certificate cert = GetCertificate(request);
+            try
+            {
+                HttpResponseMessage response1 = client.GetAsync(uri).Result;
+                if (response1.IsSuccessStatusCode)
+                {
+                    if (_certIsGoed)
+                    {
+                        return @"{ status: '" + "Werkt" + "', certVerValDatum: '" + cert.GetExpirationDateString().ToString() + "'}";
+                    }
+                    else
+                    {
+                        return @"{ status: '" + "Werkt" + "', certVerValDatum: '" + "Niet goed" + "'}";
+                    }
+                }
+                return "Werkt niet met statuscode: " + (int)response1.StatusCode + " = " + response1.StatusCode;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
 
-        //    return new YouriWebserviceAuth.AuthServiceClient(binding, epa);
+        private string GetVersionCrmService(string host)
+        {
+            string result;
+
+            CrmWebservice.CrmServiceClient clientCrm;
+            clientCrm = NewCrmService(host);
+            clientCrm.Open();
+            try
+            {
+                result = clientCrm.GetVersion();
+                result = GetDataOfWebRequestSoap(result, host);
+            }
+            catch (Exception ex)
+            {
+                result = @"{ ex: '" + ex.Message.ToString() + "'}";
+            }
+            clientCrm.Close();
+            return result;
+        }
+
+        private string GetVersionWorkFlowService(string host)
+        {
+            string result;
+
+            WorkFlowWebservice.WorkflowServiceClient clientWorkflow;
+            clientWorkflow = NewWorkFlowService(host);
+            clientWorkflow.Open();
+            try
+            {
+                result = clientWorkflow.GetVersion();
+
+                HttpWebRequest request = HttpWebRequest.Create(host) as HttpWebRequest;
+                X509Certificate cert = GetCertificate(request);
+
+                result = GetDataOfWebRequestSoap(result, host);
+            }
+            catch (Exception ex)
+            {
+                result = @"{ ex: '" + ex.Message.ToString() + "'}"; ;
+            }
+            clientWorkflow.Close();
+            return result;
+        }
+
+        private string GetVersionUrenService(string host)
+        {
+            string result;
+
+            UrenWebservice.UrenServiceClient clientUren;
+            clientUren = NewUrenService(host);
+            clientUren.Open();
+            try
+            {
+                result = clientUren.GetVersion();
+                result = GetDataOfWebRequestSoap(result, host);
+            }
+            catch (Exception ex)
+            {
+                result = @"{ ex: '" + ex.Message.ToString() + "'}"; ;
+            }
+            clientUren.Close();
+            return result;
+        }
+
+
+        //private string GetVersionMaterieelService(string host)
+        //{
+        //    string result;
+
+        //    MaterieelWebservice.MaterieelServiceClient clientMaterieel;
+        //    clientMaterieel = NewMateriaalService(host);
+        //    clientMaterieel.Open();
+        //    try
+        //    {
+        //        result = clientMaterieel.GetVersion();
+        //        result = GetDataOfWebRequestSoap(result, host);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result = @"{ ex: '" + ex.Message.ToString() + "'}"; ;
+        //    }
+        //    clientMaterieel.Close();
+        //    return result;
         //}
 
-        private YouriWebserviceCrm.CrmServiceClient NewCrmService(string host)
+        //private string GetVersionMaterieelbeheerService(string host)
+        //{
+        //    string result;
+        //    MaterieelBeheerWebservice.MaterieelBeheerServiceClient clientMaterieelbeheer;
+        //    clientMaterieelbeheer = NewMaterieelbeheerService(host);
+        //    clientMaterieelbeheer.Open();
+        //    try
+        //    {
+        //        result = clientMaterieelbeheer.GetVersion();
+        //        result = GetDataOfWebRequestSoap(result, host);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result = @"{ ex: '" + ex.Message.ToString() + "'}"; ;
+        //    }
+        //    clientMaterieelbeheer.Close();
+        //    return result;
+        //}
+
+        private CrmWebservice.CrmServiceClient NewCrmService(string host)
         {
             BasicHttpBinding binding = CreateBinding("CrmService");
             EndpointAddress epa = CreateEndpointAddress(host, "");
 
-            return new YouriWebserviceCrm.CrmServiceClient(binding, epa);
+            return new CrmWebservice.CrmServiceClient(binding, epa);
         }
 
-        //private YouriWebserviceMaterieel.MaterieelServiceClient NewMateriaalService(string host)
+        //private MaterieelWebservice.MaterieelServiceClient NewMateriaalService(string host)
         //{
         //    BasicHttpBinding binding = CreateBinding("MaterieelService");
-        //    EndpointAddress epa = CreateEndpointAddress(host, "MaterieelService.svc");
+        //    EndpointAddress epa = CreateEndpointAddress(host, "");
 
-        //    return new YouriWebserviceMaterieel.MaterieelServiceClient(binding, epa);
+        //    return new MaterieelWebservice.MaterieelServiceClient(binding, epa);
         //}
 
-        private YouriWebserviceUren.UrenServiceClient NewUrenService(string host)
+        //private MaterieelBeheerWebservice.MaterieelBeheerServiceClient NewMaterieelbeheerService(string host)
+        //{
+        //    BasicHttpBinding binding = CreateBinding("Materieelbeheer");
+        //    EndpointAddress epa = CreateEndpointAddress(host, "");
+
+        //    return new MaterieelBeheerWebservice.MaterieelBeheerServiceClient(binding, epa);
+        //}
+
+        private UrenWebservice.UrenServiceClient NewUrenService(string host)
         {
             BasicHttpBinding binding = CreateBinding("UrenService");
             EndpointAddress epa = CreateEndpointAddress(host, "");
 
-            return new YouriWebserviceUren.UrenServiceClient(binding, epa);
+            return new UrenWebservice.UrenServiceClient(binding, epa);
         }
 
-        private YouriWebserviceWorkFlow.WorkflowServiceClient NewWorkFlowService(string host)
+        private WorkFlowWebservice.WorkflowServiceClient NewWorkFlowService(string host)
         {
             BasicHttpBinding binding = CreateBinding("WorkflowService");
             EndpointAddress epa = CreateEndpointAddress(host, "");
 
-            return new YouriWebserviceWorkFlow.WorkflowServiceClient(binding, epa);
+            return new WorkFlowWebservice.WorkflowServiceClient(binding, epa);
         }
-
-        //private YouriWebserviceWorkFlow.WorkflowServiceClient NewWebSerivce(string host)
-        //{
-        //    BasicHttpBinding binding = CreateBinding("Webservice");
-        //    EndpointAddress epa = CreateEndpointAddress(host, "Webservice.svc");
-
-        //    return new YouriWebserviceWorkFlow.WorkflowServiceClient(binding, epa);
-        //}
 
         private Sales24.MessageServiceSoapClient NewSales24Client(string host)
         {
@@ -235,21 +353,6 @@ namespace WindowsServiceAppTest
             EndpointAddress epa = CreateEndpointAddress(host, "messageservicesoap.svc");
 
             return new Sales24.MessageServiceSoapClient(binding, epa);
-        }
-
-        private Sales31.MessageServiceSoapClient NewSales31Client(string host)
-        {
-            BasicHttpBinding bindings = new BasicHttpBinding(BasicHttpSecurityMode.TransportWithMessageCredential);
-            bindings.Security.Message.ClientCredentialType = BasicHttpMessageCredentialType.UserName;
-
-            bindings.MaxReceivedMessageSize = 2147483647;
-            var elements = bindings.CreateBindingElements();
-            elements.Find<SecurityBindingElement>().EnableUnsecuredResponse = true;
-            elements.Find<SecurityBindingElement>().IncludeTimestamp = false;
-            CustomBinding cusbinding = new CustomBinding(elements);
-            EndpointAddress epa = CreateEndpointAddress(host, "messageservicesoap31.svc");
-
-            return new Sales31.MessageServiceSoapClient(cusbinding, epa);
         }
 
         private BasicHttpBinding CreateBinding(string bindingName)
@@ -280,69 +383,50 @@ namespace WindowsServiceAppTest
         {
             using (Sales24.MessageServiceSoapClient client = NewSales24Client(host))
             {
-                string testResultaat = "Geen verbinding mogelijk.";
-                client.Open();
-                Sales24.MessageServiceMessage message = new Sales24.MessageServiceMessage();
-                message.MsgType = "CST_KRAAN_VERSION";
-                bool succes = client.PostMessage(null, null, ref message);
-
-                testResultaat = "Er is een beveiligde verbinding gemaakt met de Sales Messageservice ..." + Environment.NewLine;
-                //testResultaat += "\r\nURL: " + CreateEndpointAddress(host, "messageservicesoap.svc").Uri + Environment.NewLine;
-                testResultaat += "\r\nURL: " + CreateEndpointAddress(host).Uri + Environment.NewLine;
-                testResultaat = testResultaat + message.Text[0];
-                if (message != null)
+                try
                 {
-                    var data = "{\"" + message.Text[0]
-                    .Replace("\r\n", "\",\"")
-                    .Replace(": ", "\": \"")
-                    .Replace(@"\", " ")
-                    .Replace("Versie\": \"", "Versie: ") + "\"}";
+                    client.Open();
+                    Sales24.MessageServiceMessage message = new Sales24.MessageServiceMessage();
+                    message.MsgType = "CST_KRAAN_VERSION";
+                    bool succes = client.PostMessage(null, null, ref message);
 
-                    client.Close();
-                    return JObject.Parse(data);
-                }
-                return null;
-            }
-        }
+                    HttpWebRequest request = HttpWebRequest.Create(host) as HttpWebRequest;
+                    X509Certificate cert = GetCertificate(request);
 
-        public dynamic Get31SalesData(string host, string TxtBxUsername, string TxtBxPassword)
-        {
-            using (Sales31.MessageServiceSoapClient client = NewSales31Client(host))
-            {
-                string testResultaat = "Geen beveiligde verbinding mogelijk.\r\n";
-                client.ClientCredentials.UserName.UserName = TxtBxUsername.Trim();
-                client.ClientCredentials.UserName.Password = TxtBxPassword.Trim();
-                client.Open();
-                Sales31.MessageType message = new Sales31.MessageType();
-                message.MsgProperties = new Sales31.MessagePropertiesType();
-                message.MsgProperties.MsgType = "CST_KRAAN_VERSION";
-
-                Sales31.MessageResponseType antwoord = client.PostMessage(null, message);
-                if (antwoord.Message.MsgContent != null)
-                {
-                    testResultaat = "Er is een beveiligde verbinding gemaakt met de Sales Messageservice ..." + Environment.NewLine;
-                    testResultaat += "\r\nURL: " + CreateEndpointAddress(host, "messageservicesoap31.svc").Uri;
-                    testResultaat = testResultaat + antwoord.Message.MsgContent;
-                    testResultaat = antwoord.Message.MsgContent;
-
-                    var data = "{\""
-                        + antwoord.Message.MsgContent.Trim()
-                        .Replace("\r\n", "\", \"")
+                    if (_certIsGoed)
+                    {
+                        string data = "{\"" + message.Text[0]
+                        .Replace("\r\n", "\",\"")
                         .Replace(": ", "\": \"")
                         .Replace(@"\", " ")
-                        .Replace("application\": \"", "application: ")
-                        .Replace("Versie\": \"", "Versie: ")
-                        + "\"}";
-                    client.Close();
-                    return JObject.Parse(data);
+                        .Replace("Versie\": \"", "Versie: ") + "\", \"certVerValDatum\": " + "\"" + cert.GetExpirationDateString().ToString() + "\"" + "}";
+                        client.Close();
+                        return JObject.Parse(data);
+                    }
+                    else
+                    {
+                        string data = "{\"" + message.Text[0]
+                        .Replace("\r\n", "\",\"")
+                        .Replace(": ", "\": \"")
+                        .Replace(@"\", " ")
+                        .Replace("Versie\": \"", "Versie: ") + "\", \"certVerValDatum\": " + "\"" + "Niet goed" + "\"" + "}";
+                        client.Close();
+                        return JObject.Parse(data);
+                    }
                 }
-                client.Close();
-                return null;
+                catch (Exception ex)
+                {
+                    return @"{ ex: '" + ex.Message.ToString() + "'}";
+                }
+                
             }
         }
 
-        private string GetDataOfWebRequestSoap(string result)
+        private string GetDataOfWebRequestSoap(string result, string host)
         {
+            HttpWebRequest request = HttpWebRequest.Create(host) as HttpWebRequest;
+            X509Certificate cert = GetCertificate(request);
+
             string data = result.Replace("----", "");
             int positionWebserviceVersie = data.IndexOf("Webservice versie");
             int positionDevExpressVersie = data.IndexOf("DevExpress versie");
@@ -350,8 +434,22 @@ namespace WindowsServiceAppTest
 
             string webserviceVersie = data.Substring(positionWebserviceVersie, positionDevExpressVersie - positionWebserviceVersie);
             string devExpressVersie = data.Substring(positionDevExpressVersie, positionDatabaseVersie - positionDevExpressVersie);
-            string databaseVersie = data.Substring(positionDatabaseVersie, data.Length - positionDatabaseVersie);
-            return "{ \"Webservice Versie\": " + "\"" + webserviceVersie.Split(':')[1] + "\"" + ", \"DevExpress versie\": " + "\"" + devExpressVersie.Split(':')[1] + "\"" + ", \"DatabaseVersie\": " + "\"" + devExpressVersie.Split(':')[1] + "\"" + "}";
+            string dataBaseVersie = data.Substring(positionDatabaseVersie, data.Length - positionDatabaseVersie);
+
+            if (cert == null)
+            {
+                return "{ \"Webservice Versie\": " + "\"" + webserviceVersie.Split(':')[1]
+                + "\"" + ", \"DevExpress versie\": " + "\"" + devExpressVersie.Split(':')[1]
+                + "\"" + ", \"DatabaseVersie\": " + "\"" + dataBaseVersie.Split(':')[1]
+                + "\"" + ", \"certVerValDatum\": " + "\"" + "Niet goed" + "\"" + "}";
+            }
+            else
+            {
+                return "{ \"Webservice Versie\": " + "\"" + webserviceVersie.Split(':')[1]
+                + "\"" + ", \"DevExpress versie\": " + "\"" + devExpressVersie.Split(':')[1]
+                + "\"" + ", \"DatabaseVersie\": " + "\"" + dataBaseVersie.Split(':')[1]
+                + "\"" + ", \"certVerValDatum\": " + "\"" + cert.GetExpirationDateString().ToString() + "\"" + "}";
+            }
         }
     }
 }

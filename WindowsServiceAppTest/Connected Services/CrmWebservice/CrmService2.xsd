@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Kraan.WebservicesTemplate" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/CrmService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="https://wsdev.kraan.com/kraan2vorm/CrmService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="Login">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AppCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AppVersie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeviceId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeviceOS" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeviceOSVersie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GebruikersNaam" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserPhrase" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Wachtwoord" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Login" nillable="true" type="tns:Login" />
+  <xs:complexType name="LoginRegistratie">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Meldingen" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Succes" type="xs:boolean" />
+      <xs:element minOccurs="0" name="WebserverVersienummer" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LoginRegistratie" nillable="true" type="tns:LoginRegistratie" />
+  <xs:complexType name="RequestAuth">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AppCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AppVersie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Datum" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DeviceId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeviceOS" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeviceOSVersie" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GebruikersNaam" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Token" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RequestAuth" nillable="true" type="tns:RequestAuth" />
+  <xs:complexType name="ExceptionMelding">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ExceptionMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InnerExceptionMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Stacktrace" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ExceptionMelding" nillable="true" type="tns:ExceptionMelding" />
+  <xs:complexType name="DownloadRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Bedrijf" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileId" type="ser:guid" />
+      <xs:element minOccurs="0" name="FileLocation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Filename" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ObjectId" type="ser:guid" />
+      <xs:element minOccurs="0" name="Opdrachtcode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProjectCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Request" nillable="true" type="tns:RequestAuth" />
+      <xs:element minOccurs="0" name="Werkboncode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DownloadRequest" nillable="true" type="tns:DownloadRequest" />
+</xs:schema>
