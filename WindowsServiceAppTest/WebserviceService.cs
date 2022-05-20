@@ -102,22 +102,13 @@ namespace WindowsServiceAppTest
                                     _isSoap = webservice.Soap;
                                 }
                             }
-                            if (klantWebservice.BasisUrl1 && klantWebservice.BasisUrl2)
-                            {
-                                basisUrl = klant.BasisUrl1;
-                                url.Name = basisUrl + webService.Name;
-                                SoapOfRestTest(url, webService);
-                                basisUrl = klant.BasisUrl2;
-                                url.Name = basisUrl + webService.Name;
-                                SoapOfRestTest(url, webService);
-                            }
-                            else if (klantWebservice.BasisUrl1)
+                            if (klantWebservice.BasisUrl1)
                             {
                                 basisUrl = klant.BasisUrl1;
                                 url.Name = basisUrl + webService.Name;
                                 SoapOfRestTest(url, webService);
                             }
-                            else
+                            if (klantWebservice.BasisUrl2)
                             {
                                 basisUrl = klant.BasisUrl2;
                                 url.Name = basisUrl + webService.Name;
@@ -148,14 +139,15 @@ namespace WindowsServiceAppTest
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
                     _logFile.AddTextToLogFile(ex.Message);
                 }
                 finally
                 {
+                    _text = string.Empty;
                     _urls.Clear();
                     _webservices.Clear();
                     _klanten.Clear();
+                    _klantWebservices.Clear();
                 }
             }
             _timer.Start();
@@ -206,6 +198,7 @@ namespace WindowsServiceAppTest
                 }
             }
         }
+
         private string FindBasisUrl(KlantWebservice klantWebservice, Klant klant)
         {
             if (klantWebservice.BasisUrl1)
@@ -237,17 +230,17 @@ namespace WindowsServiceAppTest
             string checkUrl = _webRequest.CheckUrl(url.Name);
             if (checkUrl.StartsWith("false"))
             {
-                _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> Webservice = X " + checkUrl + "\n";
+                _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> Webservice = X " + checkUrl + Environment.NewLine;
                 _logFile.AddTextToLogFile(url.Name + "--> Webservice = X " + checkUrl);
             }
             else if (checkUrl.StartsWith("true"))
             {
-                _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> Webservice = ✓" + "\n";
+                _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> Webservice = ✓" + Environment.NewLine;
                 _logFile.AddTextToLogFile(url.Name + " --> Webservice = ✓");
             }
             else
             {
-                _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> ex = " + checkUrl + "\n";
+                _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> ex = " + checkUrl + Environment.NewLine;
                 _logFile.AddTextToLogFile(url.Name + " --> ex = " + checkUrl);
             }
         }
@@ -304,6 +297,7 @@ namespace WindowsServiceAppTest
                     }
                     catch (Exception ex)
                     {
+                        _text += "ging iets mis met het testen van de volgende url:" + url.Name.Replace(_https, "").Replace(_http, "") + " --> " + ex.Message + Environment.NewLine;
                         _logFile.AddTextToLogFile("ging iets mis met het testen van de volgende url:" + url.Name + " --> " + ex.Message);
                     }
                 }
@@ -317,6 +311,7 @@ namespace WindowsServiceAppTest
                     }
                     catch (Exception ex)
                     {
+                        _text += "ging iets mis met het testen van de volgende url:" + url.Name.Replace(_https, "").Replace(_http, "") + " --> " + ex.Message + Environment.NewLine;
                         _logFile.AddTextToLogFile("ging iets mis met het testen van de volgende url:" + url.Name + " --> " + ex.Message);
                     }
                 }
@@ -329,6 +324,7 @@ namespace WindowsServiceAppTest
                 }
                 catch (Exception ex)
                 {
+                    _text += "ging iets mis met het testen van de volgende url:" + url.Name.Replace(_https, "").Replace(_http, "") + " --> " + ex.Message + Environment.NewLine;
                     _logFile.AddTextToLogFile("ging iets mis met het testen van de volgende url:" + url.Name + " --> " + ex.Message);
                 }
             }
@@ -341,7 +337,7 @@ namespace WindowsServiceAppTest
                 }
                 if (item.Name == "ex")
                 {
-                    _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> " + item.Value.ToString();
+                    _text += url.Name.Replace(_https, "").Replace(_http, "") + " --> " + item.Value.ToString() + Environment.NewLine;
                 }
             }
         }
