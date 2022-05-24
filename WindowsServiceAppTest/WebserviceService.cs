@@ -17,7 +17,7 @@ namespace WindowsServiceAppTest
 
         private string _text = string.Empty;
         private bool _isSoap = false;
-        private dynamic _result; 
+        private dynamic _result;
         private string _https = "https:";
         private string _http = "http:";
 
@@ -27,6 +27,9 @@ namespace WindowsServiceAppTest
                                       "MaterieelService.svc",
                                       "MaterieelbeheerService.svc",
                                       "UrenService.svc" };
+
+        string[] kraanSalesService = { "MessageServiceSoap.svc",
+                                       "MessageServiceSoap31.svc"};
 
         UrlXml _urlXml;
         KlantXml _klantXml;
@@ -106,13 +109,13 @@ namespace WindowsServiceAppTest
                             {
                                 basisUrl = klant.BasisUrl1;
                                 url.Name = basisUrl + webService.Name;
-                                SoapOfRestTest(url, webService);
+                                SoapOfRestTest(url, webService, klantWebservice);
                             }
                             if (klantWebservice.BasisUrl2)
                             {
                                 basisUrl = klant.BasisUrl2;
                                 url.Name = basisUrl + webService.Name;
-                                SoapOfRestTest(url, webService);
+                                SoapOfRestTest(url, webService, klantWebservice);
                             }
                         }
                         foreach (Url url1 in _urls)
@@ -153,22 +156,49 @@ namespace WindowsServiceAppTest
             _timer.Start();
         }
 
-        private void SoapOfRestTest(Url url, Webservice webService)
+        private void SoapOfRestTest(Url url, Webservice webService, KlantWebservice klantWebservice)
         {
-            if (!_isSoap)
+            if (webService.Name == "KraanHomeDNA")
+            {
+                url.Name += "/HomeDna.svc/GetWebserviceVersion";
+                GetUrl(url);
+            }
+            if (webService.Name == "Kraan2Webservices")
+            {
+                UrlsTestKraan2Webservice(url);
+            }
+            else if (webService.Name == "KraanSalesService")
+            {
+                UrlsTestKraanSalesService(url, klantWebservice);
+            }
+            else if (webService.Name == "KraanWerkbonWebservice")
+            {
+                url.Name += "/Webservice.svc";
+                GetUrl(url);
+            }
+            else if (webService.Name == "KraanHandheld")
+            {
+                url.Name += "/HandheldService.svc/rest/GetVersion";
+                GetUrl(url);
+            }
+            else if (!_isSoap)
             {
                 CheckUrlAndGetWebserviceVersion(url);
             }
             else
             {
-                if (webService.Name == "Kraan2Webservices")
-                {
-                    UrlsTestKraan2Webservice(url);
-                }
-                else
-                {
-                    GetUrl(url);
-                }
+                GetUrl(url);
+            }
+        }
+
+        private void UrlsTestKraanSalesService(Url url, KlantWebservice klantWebservice)
+        {
+            for (int i = 0; i < kraanSalesService.Length; i++)
+            {
+                Url newUrl = new Url();
+                newUrl.Name = url.Name + "/" + kraanSalesService[i];
+                newUrl.KlantWebserviceId = klantWebservice.Id;
+                GetUrl(newUrl);
             }
         }
 
