@@ -30,21 +30,17 @@ namespace WindowsServiceAppTest
             }
         }
 
-        public static void TestMail(string title, string text, string FilePath, string aan)
+        public static void TestMail(string title, string text, string FilePath, KrXmlData xmlData)
         {
-            string UserEmail = aan;
+            string UserEmail = xmlData.Email;
             // Command-line argument must be the SMTP host.
-            SmtpClient client = new SmtpClient("mail.seijkens.be", 587);
-            //SmtpClient client = new SmtpClient("mailrelay.kraan.com", 25);
+            SmtpClient client = new SmtpClient(xmlData.MailServerNaam, xmlData.MailServerPoort);
             // Specify the email sender.
             // Create a mailing address that includes a UTF8 character
             // in the display name.
-            MailAddress from = new MailAddress("youri@seijkens.be",
+            MailAddress from = new MailAddress(xmlData.MailVerzendenVanuitEmail,
                            "Foutmelding " + title,
                        System.Text.Encoding.UTF8);
-            //MailAddress from = new MailAddress("info@kraan.com",
-            //                "Foutmelding " + title,
-            //                System.Text.Encoding.UTF8);
             // Set destinations for the email message.
             MailAddress to = new MailAddress(UserEmail);
             // Specify the message content.
@@ -61,7 +57,11 @@ namespace WindowsServiceAppTest
             // The userState can be any object that allows your callback
             // method to identify this send operation.
             // For this example, the userToken is a string constant.
-            client.Credentials = new NetworkCredential("youri@seijkens.be", "yseij211101");
+            if (xmlData.MailServerGebruikersnaam != string.Empty && xmlData.MailServerWachtwoord != string.Empty)
+            {
+                client.Credentials = new NetworkCredential(xmlData.MailServerGebruikersnaam,
+                                                           xmlData.MailServerWachtwoord);
+            }
             client.Send(message);
             string answer = Console.ReadLine();
             // Clean up.

@@ -37,6 +37,21 @@ namespace WindowsServiceAppTest
                     case "PlaceDb":
                         xmlData.PlaceDb = aNode.FirstChild.Value;
                         break;
+                    case "MailServerNaam":
+                        xmlData.MailServerNaam = aNode.FirstChild.Value;
+                        break;
+                    case "MailServerPoort":
+                        xmlData.MailServerPoort = Int32.Parse(aNode.FirstChild.Value);
+                        break;
+                    case "MailVerzendenVanuitEmail":
+                        xmlData.MailVerzendenVanuitEmail = aNode.FirstChild.Value;
+                        break;
+                    case "MailServerGebruikersnaam":
+                        xmlData.MailServerGebruikersnaam = aNode.FirstChild.Value;
+                        break;
+                    case "MailServerWachtwoord":
+                        xmlData.MailServerWachtwoord = aNode.FirstChild.Value;
+                        break;
                     default:
                         break;
                 }

@@ -137,7 +137,7 @@ namespace WindowsServiceAppTest
                     }
                     if (_text != "")
                     {
-                        MailClient.TestMail("TestAll", _text, _logFile.FilePath, _krXmlData.Email);
+                        MailClient.TestMail("TestAll", _text, _logFile.FilePath, _krXmlData);
                     }
                 }
                 catch (Exception ex)
