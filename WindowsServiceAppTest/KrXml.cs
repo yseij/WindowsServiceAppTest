@@ -47,10 +47,16 @@ namespace WindowsServiceAppTest
                         xmlData.MailVerzendenVanuitEmail = aNode.FirstChild.Value;
                         break;
                     case "MailServerGebruikersnaam":
-                        xmlData.MailServerGebruikersnaam = aNode.FirstChild.Value;
+                        if (aNode.FirstChild.Value != string.Empty)
+                        {
+                            xmlData.MailServerGebruikersnaam = aNode.FirstChild.Value;
+                        }            
                         break;
                     case "MailServerWachtwoord":
-                        xmlData.MailServerWachtwoord = aNode.FirstChild.Value;
+                        if (aNode.FirstChild.Value != string.Empty)
+                        {
+                            xmlData.MailServerWachtwoord = aNode.FirstChild.Value;
+                        }
                         break;
                     default:
                         break;

@@ -75,7 +75,7 @@ namespace WindowsServiceAppTest
         {
             _logFile = new LogFile();
             _timer.Stop();
-            _krXmlData = _krXml.GetDataOfXmlFile();
+             _krXmlData = _krXml.GetDataOfXmlFile();
             _timer.Interval = _krXmlData.TijdService;
             if (_krXmlData.ServiceAanOfUit == "aan")
             {

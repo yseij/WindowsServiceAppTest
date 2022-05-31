@@ -57,7 +57,7 @@ namespace WindowsServiceAppTest
             // The userState can be any object that allows your callback
             // method to identify this send operation.
             // For this example, the userToken is a string constant.
-            if (xmlData.MailServerGebruikersnaam != string.Empty && xmlData.MailServerWachtwoord != string.Empty)
+            if (xmlData.MailServerGebruikersnaam != "///" && xmlData.MailServerWachtwoord != "///")
             {
                 client.Credentials = new NetworkCredential(xmlData.MailServerGebruikersnaam,
                                                            xmlData.MailServerWachtwoord);
