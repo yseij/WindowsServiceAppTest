@@ -163,7 +163,7 @@ namespace WindowsServiceAppTest
                 url.Name += "/HomeDna.svc/GetWebserviceVersion";
                 GetUrl(url);
             }
-            if (webService.Name == "Kraan2Webservices")
+            else if (webService.Name == "Kraan2Webservices")
             {
                 UrlsTestKraan2Webservice(url);
             }
